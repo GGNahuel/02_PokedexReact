@@ -1,0 +1,20 @@
+Info a mostrar para cada pokemon
+    Nombre
+    Index pokedex
+    Imagenes
+    Tipos
+    Regiones(con imgns)?
+    Camino evolutivo (con imgns de los pkmns)
+        Condiciones de evolución
+            Nombre de condición y detalles
+    Lugares de encuentro/obtención
+        Lugar
+        Porcentaje de aparición
+        Condición de aparición
+        Metodo
+        Nivel(/es) en el que aparece [min a max]
+        Juego
+    Movimientos
+        Tipo de daño
+        Prescición
+        Descripción
