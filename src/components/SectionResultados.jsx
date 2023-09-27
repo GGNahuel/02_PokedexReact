@@ -6,6 +6,16 @@ import { getPokemonInfo } from "../services/getPokemonInfo"
 export function SectionResultados() {
     const [pkmns, addPkmns] = useState([])
 
+    const [tarjetaExpandida, setTarjetaExpandida] = useState(null)
+
+    function toggleSelected(id) {
+        if (tarjetaExpandida === id) {
+            setTarjetaExpandida(null)
+        } else {
+            setTarjetaExpandida(id)
+        }
+    }
+
     useEffect(() => {
         async function generateContent() {
             const { results } = await getPokedex()
@@ -18,6 +28,8 @@ export function SectionResultados() {
                         id={dataPkmn.id}
                         name={dataPkmn.name}
                         spriteSRC={dataPkmn.sprites.front_default}
+                        idSelected={tarjetaExpandida}
+                        toggleSelected={toggleSelected}
                     />)
                 pokeElements.push(pokemon)
                 // hacer un customHook y que esto retorne el array pokeElements con los dataPkmn pusheados 
@@ -52,6 +64,9 @@ export function SectionResultados() {
             })
         */
     }, [])
+
+    // crear otro useEffect que dependa del estado tarjetaExpandida que no tenga que volver a hacer peticiones a la API,
+    // sino que acceda al array de los elementos (el estado pkmns) y los vuelva a renderizar
 
     return (
         <section id="pokeResultados">
