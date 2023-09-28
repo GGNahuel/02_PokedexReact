@@ -8,3 +8,13 @@ export async function getPokedex() {
         return "Error al obtener los datos de la pokedex"
     }
 }
+
+export async function getPokemonInfo(urlPokemon) {
+    try {
+        const pokemonLink = await fetch(urlPokemon)
+        const pokemonInfo = await pokemonLink.json()
+        return pokemonInfo
+    } catch (error) {
+        return "Error al obtener la info del pokemon." + error
+    }
+}

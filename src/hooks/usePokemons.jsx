@@ -1,30 +1,42 @@
 import { useEffect, useState } from "react";
-import { getPokedex } from "../services/getPokedex"
-import { getPokemonInfo } from "../services/getPokemonInfo"
+import { getPokedex, getPokemonInfo } from "../services/getPokeApis"
 
 export function usePokemons(startIndex) {
     const [pkmns, addPkmns] = useState([])
+    const [resultsOBJ, setResultsOBJ] = useState([])
+
+    startIndex = Number(startIndex * 20)
+
+    async function generatePokeElements(pokeArray) {
+        const pokeElements = []
+        for (let pkmn = startIndex; pkmn < startIndex + 20; pkmn++) {
+            if (pokeArray[pkmn]) {
+                const dataPkmn = await getPokemonInfo(pokeArray[pkmn].url)
+                pokeElements.push(dataPkmn)
+            }
+        }
+        addPkmns(pokeElements)
+    }
 
     useEffect(() => {
         async function generateContent() {
-            //if (pkmns == []) {
+            if (resultsOBJ.length == 0) {
                 const { results } = await getPokedex()
-                console.log(results)
-            //}
-            const pokeElements = []
-            for (let pkmn = startIndex; pkmn < startIndex + 20; pkmn++) {
-                const dataPkmn = await getPokemonInfo(results[pkmn].url)
-                pokeElements.push(dataPkmn)
-            }
-            addPkmns(pokeElements)
+                setResultsOBJ(results)
+                generatePokeElements(results)
 
+                // PARA PROBAR (borrar esto dsps)
+                const infoSwampert = await getPokemonInfo(results[259].url)
+                console.log(infoSwampert)
+            }
+
+            if (resultsOBJ.length > 0) { //probar mover el primer condicional a otro useEffect con dependencia vacia
+                generatePokeElements(resultsOBJ)
+            }
         }
         generateContent()
-
     }, [startIndex])
-    // probar sin usar los hooks nativos NO FUNCIONA
-    // probar solo sin el useEffect pero sí con el useState NO
-    // probar pasar como argumento también la página que se muestra y ponerlo en la dependencia del useEffect
+
     return pkmns
 }
 
