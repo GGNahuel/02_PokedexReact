@@ -1,8 +1,9 @@
 Info a mostrar para cada pokemon
-    Nombre
-    Index pokedex
-    Imagenes
-    Tipos
+✅    Nombre 
+✅    Index pokedex
+✅    Imagenes
+✅    Tipos
+✅    Estadísticas
     Regiones(con imgns)?
     Camino evolutivo (con imgns de los pkmns)
         Condiciones de evolución
@@ -18,3 +19,25 @@ Info a mostrar para cada pokemon
         Tipo de daño
         Prescición
         Descripción
+
+Tipos de búsqueda
+    Nombre
+    Indice
+    Filtros:
+        Generación
+        Pokedex
+        Regiones 
+        Elementos
+
+Formas de ordenar resultados
+    Nombre
+    Indice
+    Generación
+    Estadísticas:
+        Hp
+        Ataque
+        Defensa
+        Ataque especial
+        Defensa especial
+        Velocidad
+    

@@ -15,22 +15,11 @@ export function SectionResultados() {
         }
     }
 
-    const pokemons = usePokemons(page).map(dataPkmn => (
-        <TarjetaPkmn
-            key={dataPkmn.id}
-            id={dataPkmn.id}
-            name={dataPkmn.name}
-            spriteSRC={dataPkmn.sprites.front_default}
-            idSelected={tarjetaExpandida}
-            toggleSelected={toggleSelected}
-        />)
-    )
-
-    function updateInputValue(event){
+    function updateInputValue(event) {
         setInputValue(event.target.value)
     }
+    
     function changePage() {
-        console.log(inputValue)
         setPage(inputValue)
     }
 
@@ -38,7 +27,14 @@ export function SectionResultados() {
         <section id="pokeResultados">
             <input type="number" className="input_page" onChange={updateInputValue}></input>
             <button type="button" onClick={changePage}>Cambiar pagina</button>
-            {pokemons}
+            {usePokemons(page).map(dataPkmn => (
+                <TarjetaPkmn
+                    key={dataPkmn.id}
+                    dataObj={dataPkmn}
+                    idSelected={tarjetaExpandida}
+                    toggleSelected={toggleSelected}
+                />)
+            )}
         </section>
     )
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getPokedex, getPokemonInfo } from "../services/getPokeApis"
+import { getNationalPokedex, getPokemonInfo } from "../services/getPokeApis"
 
 export function usePokemons(startIndex) {
     const [pkmns, addPkmns] = useState([])
-    const [resultsOBJ, setResultsOBJ] = useState([])
+    const [mainResults, setMainResults] = useState([])
 
     startIndex = Number(startIndex * 20)
 
@@ -20,18 +20,14 @@ export function usePokemons(startIndex) {
 
     useEffect(() => {
         async function generateContent() {
-            if (resultsOBJ.length == 0) {
-                const { results } = await getPokedex()
-                setResultsOBJ(results)
+            if (mainResults.length == 0) {
+                const { results } = await getNationalPokedex()
+                setMainResults(results)
                 generatePokeElements(results)
-
-                // PARA PROBAR (borrar esto dsps)
-                const infoSwampert = await getPokemonInfo(results[259].url)
-                console.log(infoSwampert)
             }
 
-            if (resultsOBJ.length > 0) { //probar mover el primer condicional a otro useEffect con dependencia vacia
-                generatePokeElements(resultsOBJ)
+            if (mainResults.length > 0) {
+                generatePokeElements(mainResults)
             }
         }
         generateContent()
