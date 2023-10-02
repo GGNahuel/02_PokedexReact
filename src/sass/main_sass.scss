@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 $color-principal: rgb(116, 0, 0);
 
 * {
     padding: 0;
     margin: 0;
+}
+
+body{
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+}
+
+h3{
+    font-size: 1.5rem;
 }
 
 nav {

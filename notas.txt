@@ -28,6 +28,7 @@ Tipos de búsqueda
         Pokedex
         Regiones 
         Elementos
+    Método de evolución
 
 Formas de ordenar resultados
     Nombre

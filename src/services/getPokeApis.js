@@ -9,6 +9,7 @@ export async function getNationalPokedex() {
     }
 }
 
+// Ejemplo de una urlPokemon https://pokeapi.co/api/v2/pokemon/1/ (el 1 es de la id del pkmn)
 export async function getPokemonInfo(urlPokemon) {
     try {
         const pokemonLink = await fetch(urlPokemon)
