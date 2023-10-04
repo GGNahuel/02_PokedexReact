@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { TarjetaPkmn } from "./TarjetaPkmn"
+import { TarjetaPkmn } from "./PokemonCard"
 import { usePokemons } from "../hooks/usePokemons"
 
 export function SectionResultados() {

@@ -13,13 +13,18 @@ export function renameProps(dataObj){
     return newProperites
 }
 
+// to extract the 259 from "https://pokeapi.co/api/v2/pokemon-species/259/", ex
 export function renameEvolutionProps(dataObj){
+    const regExtractID = /(?<=species\/)[0-9]{1,}/  
+    const IDExtracted = dataObj.species.url.match(regExtractID)
     const newProperites = {
         nameLink: dataObj.species.name,
         evolutionDetails: dataObj.evolution_details,
-        evolvesTo: dataObj.evolves_to
+        evolvesTo: dataObj.evolves_to,
+        idLink: IDExtracted[0]
     }
     return newProperites
 }
 
-export const regExtractID = /[0-9]{1,}(?=\/")/
+
+export const POKEMON_PREFIX_API = "https://pokeapi.co/api/v2/pokemon/"

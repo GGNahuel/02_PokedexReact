@@ -3,19 +3,22 @@ Info a mostrar para cada pokemon
 ✅    Index pokedex
 ✅    Imagenes
 ✅    Tipos
-✅    Estadísticas
-    Regiones(con imgns)?
-    Camino evolutivo (con imgns de los pkmns)
-        Condiciones de evolución
-            Nombre de condición y detalles
-    Lugares de encuentro/obtención
+✅    Estadísticas  📖
+    Regiones(con imgns)? 📖
+    Camino evolutivo 📖
+✅        Imgns,
+        Id y 
+✅        nombre de los pkmns
+✅        Condiciones de evolución
+✅             Nombre de condición y detalles
+    Lugares de encuentro/obtención 📖
         Lugar
         Porcentaje de aparición
         Condición de aparición
         Metodo
         Nivel(/es) en el que aparece [min a max]
         Juego
-    Movimientos
+    Movimientos 📖
         Tipo de daño
         Prescición
         Descripción
