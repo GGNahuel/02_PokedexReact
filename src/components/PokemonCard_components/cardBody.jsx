@@ -1,4 +1,6 @@
-import { renameProps } from "../../services/constantes"
+import { renameProps, renameTypeProps } from "../../services/constantes"
+import { DamageRelationsType } from "./DamageRelationsType"
+import { useTypeInfoGenerator } from "../../hooks/useTypeInfoGenerator"
 
 export function CardBody({ sprite, elements }) {
     return (
@@ -13,7 +15,7 @@ export function CardBody({ sprite, elements }) {
     )
 }
 
-export function ExpandedCardBody({dataObj, evolutionElements}) {
+export function ExpandedCardBody({ dataObj, evolutionElements }) {
     const { stats, weight, height, sprite, elements } = renameProps(dataObj)
 
     return (
@@ -32,6 +34,13 @@ export function ExpandedCardBody({dataObj, evolutionElements}) {
                 {elements.map(typeobj => (
                     <p key={typeobj.slot}>{typeobj.type.name}</p>
                 ))}
+                <div className="tipos_daños">
+                    {useTypeInfoGenerator(elements).map(element => {
+                        const { baseElement } = renameTypeProps(element)
+                        return(
+                        <DamageRelationsType key={baseElement} dataObj={element} />
+                    )})}
+                </div>
             </div>
             <div className="tarjeta_evolutionPath">
                 <div className="evolPath_main">

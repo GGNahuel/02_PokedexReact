@@ -1,15 +1,11 @@
-import { useEffect, useState } from "react";
-
 import { renameProps } from "../services/constantes";
-import { getPokemonSpecie, getPokemonEvolutionChain } from "../services/getPokeApis";
 
-import { EvolutionElements } from "./PokemonCard_components/evolutionChain";
+import { useEvolutionChainGenerator } from "../hooks/useEvolutionChainGenerator";
 import { CardBody, ExpandedCardBody } from "./PokemonCard_components/cardBody";
 
 export function TarjetaPkmn(props) {
     const { dataObj, idSelected, toggleSelected } = props;
-    const { name, id, sprite, elements, speciesURL } = renameProps(dataObj)
-    const [evolutionElements, setevolutionElements] = useState()
+    const { name, id, sprite, elements } = renameProps(dataObj)
 
     const expanded = idSelected === id
 
@@ -19,18 +15,6 @@ export function TarjetaPkmn(props) {
         toggleSelected(id)
     }
 
-    useEffect(() => {
-        if (!expanded) return
-
-        async function getEvolutionInfo() {
-            const specieInfo = await getPokemonSpecie(speciesURL)
-            const evoChainInfo = await getPokemonEvolutionChain(specieInfo.evolution_chain.url)
-            
-            setevolutionElements(<EvolutionElements obj={evoChainInfo.chain} targetName={name} targetSprite={sprite}/>)
-        }
-        getEvolutionInfo()
-    }, [expanded])
-
     return (
         <>
             <article className={classes} id={"pkmn" + id} onClick={clickEvent}>
@@ -39,7 +23,10 @@ export function TarjetaPkmn(props) {
                     <h3>{id}</h3>
                 </div>
                 <div className="tarjeta_body">
-                    {expanded ? <ExpandedCardBody dataObj={dataObj} evolutionElements={evolutionElements} />
+                    {expanded ? 
+                        <ExpandedCardBody dataObj={dataObj} evolutionElements={
+                            useEvolutionChainGenerator({expanded: expanded, dataObj:dataObj})
+                        } />
                         : <CardBody sprite={sprite} elements={elements} />
                     }
                 </div>

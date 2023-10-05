@@ -1,13 +1,21 @@
+📖 (Info que solo se mostrará al seleccionar un pokemon y mostrar los detalles)
+
+A hacer:
+    Manejar errores de api y mostrar en la página que algo salio mal
+    Renderizar un "loading" mientras se cargan las cosas
+    Enrutamiento
+
 Info a mostrar para cada pokemon
 ✅    Nombre 
 ✅    Index pokedex
 ✅    Imagenes
-✅    Tipos
+✅    Elementos
+✅        Debilidades y fortalezas 📖
 ✅    Estadísticas  📖
     Regiones(con imgns)? 📖
-    Camino evolutivo 📖
+✅    Camino evolutivo 📖
 ✅        Imgns,
-        Id y 
+✅        Id y 
 ✅        nombre de los pkmns
 ✅        Condiciones de evolución
 ✅             Nombre de condición y detalles
@@ -26,12 +34,13 @@ Info a mostrar para cada pokemon
 Tipos de búsqueda
     Nombre
     Indice
-    Filtros:
-        Generación
-        Pokedex
-        Regiones 
-        Elementos
-    Método de evolución
+    
+Filtros:
+    Generación
+    Pokedex
+    Regiones 
+    Elementos
+    Método de evolución?
 
 Formas de ordenar resultados
     Nombre
@@ -44,4 +53,8 @@ Formas de ordenar resultados
         Ataque especial
         Defensa especial
         Velocidad
-    
+
+Funciones adicionales:
+    Guardado de equipos
+        Con sus movimientos?
+        Que muestre fortalezas y debilidades de los elementos del equipo?

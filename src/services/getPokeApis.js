@@ -39,3 +39,13 @@ export async function getPokemonEvolutionChain(url){
         return "Error al obtener info de la cadena de evolución. " + error
     }
 }
+
+export async function getTypeInfo(url){
+    try{
+        const res = await fetch(url)
+        const data = await res.json()
+        return data
+    }catch(error){
+        return "Error al obtener las caraterísticas del elemento"
+    }
+}

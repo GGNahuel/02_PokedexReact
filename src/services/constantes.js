@@ -13,7 +13,7 @@ export function renameProps(dataObj){
     return newProperites
 }
 
-// to extract the 259 from "https://pokeapi.co/api/v2/pokemon-species/259/", ex
+// "https://pokeapi.co/api/v2/pokemon-species/259/", ex
 export function renameEvolutionProps(dataObj){
     const regExtractID = /(?<=species\/)[0-9]{1,}/  
     const IDExtracted = dataObj.species.url.match(regExtractID)
@@ -26,5 +26,17 @@ export function renameEvolutionProps(dataObj){
     return newProperites
 }
 
+export function renameTypeProps(dataObj){
+    const newProperites = {
+        baseElement: dataObj.name, 
+        x2DmgFrom: dataObj.damage_relations.double_damage_from, 
+        x2DmgTo: dataObj.damage_relations.double_damage_to, 
+        halfDmgFrom: dataObj.damage_relations.half_damage_from, 
+        halfDmgTo: dataObj.damage_relations.half_damage_to, 
+        noDmgFrom: dataObj.damage_relations.no_damage_from, 
+        noDmgTo: dataObj.damage_relations.no_damage_to
+    }
+    return newProperites
+}
 
 export const POKEMON_PREFIX_API = "https://pokeapi.co/api/v2/pokemon/"

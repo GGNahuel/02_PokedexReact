@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { TarjetaPkmn } from "./PokemonCard"
-import { usePokemons } from "../hooks/usePokemons"
+import { usePokemonsGenerator } from "../hooks/usePokemonsGenerator"
 
 export function SectionResultados() {
     const [tarjetaExpandida, setTarjetaExpandida] = useState(null)
@@ -27,7 +27,7 @@ export function SectionResultados() {
         <section id="pokeResultados">
             <input type="number" className="input_page" onChange={updateInputValue}></input>
             <button type="button" onClick={changePage}>Cambiar pagina</button>
-            {usePokemons(page).map(dataPkmn => (
+            {usePokemonsGenerator({page:page}).map(dataPkmn => (
                 <TarjetaPkmn
                     key={dataPkmn.id}
                     dataObj={dataPkmn}
