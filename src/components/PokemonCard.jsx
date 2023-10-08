@@ -24,9 +24,7 @@ export function TarjetaPkmn(props) {
                 </div>
                 <div className="tarjeta_body">
                     {expanded ? 
-                        <ExpandedCardBody dataObj={dataObj} evolutionElements={
-                            useEvolutionChainGenerator({expanded: expanded, dataObj:dataObj})
-                        } />
+                        <ExpandedCardBody dataObj={dataObj} />
                         : <CardBody sprite={sprite} elements={elements} />
                     }
                 </div>

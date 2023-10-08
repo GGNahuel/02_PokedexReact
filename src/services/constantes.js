@@ -7,7 +7,8 @@ export function renameProps(dataObj){
         stats: dataObj.stats,
         weight: dataObj.weight/10,
         height: dataObj.height*10,
-        speciesURL: dataObj.species.url
+        speciesURL: dataObj.species.url,
+        locationsURL: dataObj.location_area_encounters
     }
 
     return newProperites
@@ -36,6 +37,29 @@ export function renameTypeProps(dataObj){
         noDmgFrom: dataObj.damage_relations.no_damage_from, 
         noDmgTo: dataObj.damage_relations.no_damage_to
     }
+    return newProperites
+}
+
+export function renameLocationEncounterAreas(dataObj){
+    const versionDetails = dataObj.version_details
+    const versionNames = versionDetails.map(element => element.version.name)
+    const maxChances = versionDetails.map(element => element.max_chance)
+    const encounterDetails = versionDetails.map(element => element.encounter_details)
+    // ⚠️ encounterDetails devuelve un array de arrays
+
+    //const methods = encounterDetails.map(element => element.map(object => object.method.name))
+    //const conditions = encounterDetails.map(element => element.map(object => object.condition_values))
+
+    const newProperites = {
+        location: dataObj.location_area.name,
+        versionDetails: versionDetails,
+        versionNames: versionNames,
+        maxChances: maxChances,
+        encounterDetails: encounterDetails,
+        //methods: methods,
+        //conditions: conditions
+    }
+
     return newProperites
 }
 

@@ -49,3 +49,20 @@ export async function getTypeInfo(url){
         return "Error al obtener las caraterísticas del elemento"
     }
 }
+
+export async function getLocationEncounterAreas(url){ // (url, apiTypeKey)
+    /* const errores = {
+        pokemon: "mensaje de error",
+        specie: "",
+        evolutionChain: "",
+        ...
+    } 
+    */
+    try{
+        const res = await fetch(url)
+        const data = await res.json()
+        return data
+    }catch(error){
+        return "Error al obtener las localizaciones"
+    }
+}

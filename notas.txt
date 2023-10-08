@@ -6,20 +6,19 @@ A hacer:
     Enrutamiento
 
 Info a mostrar para cada pokemon
-✅    Nombre 
-✅    Index pokedex
-✅    Imagenes
-✅    Elementos
-✅        Debilidades y fortalezas 📖
-✅    Estadísticas  📖
-    Regiones(con imgns)? 📖
-✅    Camino evolutivo 📖
-✅        Imgns,
-✅        Id y 
-✅        nombre de los pkmns
-✅        Condiciones de evolución
-✅             Nombre de condición y detalles
-    Lugares de encuentro/obtención 📖
+    ✅Nombre 
+    ✅Index pokedex
+    ✅Imagenes
+    ✅Elementos
+        Debilidades y fortalezas 📖
+    ✅Estadísticas  📖
+    ✅Camino evolutivo 📖
+        Imgns, 
+        Id y 
+        nombre de los pkmns
+        Condiciones de evolución
+             Nombre de condición y detalles
+    ✅Lugares de encuentro/obtención 📖
         Lugar
         Porcentaje de aparición
         Condición de aparición
@@ -27,8 +26,10 @@ Info a mostrar para cada pokemon
         Nivel(/es) en el que aparece [min a max]
         Juego
     Movimientos 📖
-        Tipo de daño
+        Tipo de movimiento
+        Tipo de daño(elemento)
         Prescición
+        Objetivo/objetivos
         Descripción
 
 Tipos de búsqueda
