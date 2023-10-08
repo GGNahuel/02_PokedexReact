@@ -2,6 +2,8 @@
 
 A hacer:
     Manejar errores de api y mostrar en la página que algo salio mal
+    Optimizar los dataObj que se pasan a los elementos, por ejemplo sacar solo las propiedades que se vayan a usar 
+        despues desde que se obtienen los objetos de la api
     Renderizar un "loading" mientras se cargan las cosas
     Enrutamiento
 

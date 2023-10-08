@@ -1,6 +1,5 @@
 import { renameProps } from "../services/constantes";
 
-import { useEvolutionChainGenerator } from "../hooks/useEvolutionChainGenerator";
 import { CardBody, ExpandedCardBody } from "./PokemonCard_components/cardBody";
 
 export function TarjetaPkmn(props) {
