@@ -94,7 +94,6 @@ nav .nav_modo {
 }
 .tarjetaPKMN.activa {
   border-color: red;
-  width: 100%;
 }
 
 .evolPath_main {

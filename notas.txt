@@ -34,7 +34,7 @@ Info a mostrar para cada pokemon
         Objetivo/objetivos
         Descripción
 
-Tipos de búsqueda
+✅Tipos de búsqueda (que del array de pokemones saque el nombre aun si no esta escrito al 100%)
     Nombre
     Indice
     
@@ -58,6 +58,7 @@ Formas de ordenar resultados
         Velocidad
 
 Funciones adicionales:
+    Agregar modo nocturno
     Guardado de equipos
         Con sus movimientos?
         Que muestre fortalezas y debilidades de los elementos del equipo?

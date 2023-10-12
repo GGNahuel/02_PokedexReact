@@ -3,6 +3,7 @@ import { renameProps } from "../../services/constantes"
 import { useEvolutionChainGenerator } from "../../hooks/useEvolutionChainGenerator"
 import { useTypeInfoGenerator } from "../../hooks/useTypeInfoGenerator"
 import { useLocationEncounterAreasGenerator } from "../../hooks/useLocationEncounterAreasGenerator"
+import { useMemo } from "react"
 
 export function CardBody({ sprite, elements }) {
     return (
@@ -20,18 +21,8 @@ export function CardBody({ sprite, elements }) {
 export function ExpandedCardBody({ dataObj }) {
     const { stats, weight, height, sprite, elements, locationsURL } = renameProps(dataObj)
 
-    return (
+    const DetailsElements = () => (
         <>
-            <div className="tarjeta_mainInfo">
-                <img src={sprite} alt="" className="tarjeta_img" />
-                <ul className="tarjeta_stats">
-                    {stats.map(statObj => (
-                        <li key={statObj.stat.name}>{statObj.stat.name}: {statObj.base_stat}</li>
-                    ))}
-                    <li>{weight} kg</li>
-                    <li>{height} cm</li>
-                </ul>
-            </div>
             <div className="tarjeta_tipos">
                 {elements.map(typeobj => (
                     <p key={typeobj.slot}>{typeobj.type.name}</p>
@@ -50,5 +41,21 @@ export function ExpandedCardBody({ dataObj }) {
                 {useLocationEncounterAreasGenerator({ locationsURL: locationsURL })}
             </ul>
         </>
+    )
+
+    return (
+        <aside>
+            <div className="tarjeta_mainInfo">
+                <img src={sprite} alt="" className="tarjeta_img" />
+                <ul className="tarjeta_stats">
+                    {stats.map(statObj => (
+                        <li key={statObj.stat.name}>{statObj.stat.name}: {statObj.base_stat}</li>
+                    ))}
+                    <li>{weight} kg</li>
+                    <li>{height} cm</li>
+                </ul>
+            </div>
+            <DetailsElements />
+        </aside>
     )
 }

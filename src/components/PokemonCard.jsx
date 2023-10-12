@@ -11,7 +11,7 @@ export function TarjetaPkmn(props) {
     const classes = expanded ? "tarjetaPKMN activa" : "tarjetaPKMN"
 
     function clickEvent() {
-        toggleSelected(id)
+        toggleSelected(id, dataObj)
     }
 
     return (
@@ -22,10 +22,12 @@ export function TarjetaPkmn(props) {
                     <h3>{id}</h3>
                 </div>
                 <div className="tarjeta_body">
-                    {expanded ? 
-                        <ExpandedCardBody dataObj={dataObj} />
-                        : <CardBody sprite={sprite} elements={elements} />
+                    {
+                    // expanded ? 
+                    //     <ExpandedCardBody dataObj={dataObj} />
+                    //     : <CardBody sprite={sprite} elements={elements} />
                     }
+                    <CardBody sprite={sprite} elements={elements} />
                 </div>
             </article>
         </>
