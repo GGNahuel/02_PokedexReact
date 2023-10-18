@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { Nav } from "./components/Navigation"
+import { Nav } from "./components/navigation&search_components/Navigation"
 import { PageSelector } from "./components/navigation&search_components/PageSelector"
 import { SectionResultados } from "./components/SectionResultados"
 import "./styles.css"
