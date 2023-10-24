@@ -6,6 +6,7 @@ export function SearchContextProvider({ children }) {
     const [resultsDetails, setResultsDetails] = useState({
         search: null,
         page: 0,
+        pageInput: 0,
         filters: {
             generation: undefined,
             pokedex: undefined,
