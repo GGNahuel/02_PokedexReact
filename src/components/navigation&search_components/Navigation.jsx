@@ -1,8 +1,17 @@
-export function Nav({ getSearch }) {
+import { useContext } from "react"
+import { SearchContext } from "../../context/searchContext"
+
+export function Nav() {
+    const { setResultsDetails } = useContext(SearchContext);
 
     const updateSearch = (event) => {
         event.preventDefault()
-        getSearch(event.target.searcher.value)
+        const value= event.target.searcher.value;
+        setResultsDetails( prevState => ({
+            ...prevState,
+            search: value,
+            page: 0
+        }))
     }
 
     return (
@@ -10,38 +19,12 @@ export function Nav({ getSearch }) {
             <nav>
                 <img className="nav_logo" src="/logo_pokedex.png" alt="" />
                 <div className="nav_busqueda">
-                    <p>Búsqueda</p>
                     <form onSubmit={updateSearch}>
-                        <input type="search" name="searcher" id="searcher" placeholder="Nombre o id del pokemon" />
+                        <label>Búsqueda
+                            <input type="search" name="searcher" placeholder="Nombre o id del pokemon" />
+                        </label>
                         <button type="submit">Buscar</button>
                     </form>
-                    <p>Filtros:</p>
-                    <div>
-                        <p>Generación</p>
-                        <div>
-                            <input type="radio" name="generation_filter" id="generation1" />
-                            <label htmlFor="generation1">1era generación</label>
-                        </div>
-                        <p>Pokedex</p>
-                        <div>
-                            <input type="checkbox" name="pokedex_filter" id="pokedexHoenn" />
-                            <label htmlFor="pokedexHoenn">Hoenn</label>
-                        </div>
-                        <p>Elementos</p>
-                        <div>
-                            <input type="checkbox" name="type_filter" id="waterType" />
-                            <label htmlFor="waterType">water</label>
-                        </div>
-                    </div>
-                    <p>Ordenar por</p>
-                    <div>
-                        <input type="radio" name="sortResults" id="sortAbc" />
-                        <label htmlFor="sortAbc">Alfabeticamente</label>
-                        <input type="radio" name="sortResults" id="sortId"/>
-                        <label htmlFor="sortId">Índice</label>
-                        <input type="radio" name="sortResults" id="sortHP"/>
-                        <label htmlFor="sortHP">Hp</label>
-                    </div>
                 </div>
                 <button className="nav_modo">Cambiar modo nocturno/diurno</button>
             </nav>

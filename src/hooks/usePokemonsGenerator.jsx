@@ -1,13 +1,28 @@
-import { useEffect, useState } from "react";
-import { getNationalPokedex } from "../services/getPokeApis";
-import { generatePokeElements } from "../services/generatePokeElements";
+import { useEffect, useState, useContext } from "react";
+import { SearchContext } from "../context/searchContext";
+import { getNationalPokedex, getPokemonInfo } from "../services/getPokeApis";
+//import { generatePokeElements } from "../services/generatePokeElements";
 
-export function usePokemonsGenerator({page, searchValue}) {
+export function usePokemonsGenerator() {
+    const { resultsDetails } = useContext(SearchContext);
+    const { page, search } = resultsDetails;
+
     const [pkmns, setPkmns] = useState([])
     const [mainResults, setMainResults] = useState([])
     const [currentResults, setCurrentResults] = useState([])
 
-    page = Number(page * 20)
+    let indexPkmn = page * 20
+
+    async function generatePokeElements(pokeArray) {
+        const pokeElements = []
+        for (let pkmn = indexPkmn; pkmn < indexPkmn + 20; pkmn++) {
+            if (pokeArray[pkmn]) {
+                const dataPkmn = await getPokemonInfo(pokeArray[pkmn].url)
+                pokeElements.push(dataPkmn)
+            }
+        }
+        setPkmns(pokeElements) 
+    }
 
     useEffect(() => {
         async function generateContent() {
@@ -15,34 +30,34 @@ export function usePokemonsGenerator({page, searchValue}) {
                 const { results } = await getNationalPokedex()
                 setMainResults(results)
                 setCurrentResults(results)
-                setPkmns(generatePokeElements(results))
+                generatePokeElements(results)
             }
 
             if (mainResults.length > 0) {
-                setPkmns(generatePokeElements(currentResults))
+                generatePokeElements(currentResults)
             }
         }
         generateContent()
     }, [page])
 
     useEffect(()=>{
-        if  (!searchValue && mainResults.length > 0) {
+        if  (!search && mainResults.length > 0) {
             const tempMainResults = mainResults
             setCurrentResults(tempMainResults)
-            setPkmns(generatePokeElements(tempMainResults))
+            generatePokeElements(tempMainResults)
             return
         }
 
         if(mainResults.length>0){
-            const regExpSearch = new RegExp (searchValue)
+            const regExpSearch = new RegExp (search)
             let searchResults = []
-            if(Number(searchValue)) {
-                searchResults.push(mainResults[searchValue-1])
+            if(Number(search)) {
+                searchResults.push(mainResults[search-1])
             }else searchResults=mainResults.filter(element => regExpSearch.test(element.name))
             setCurrentResults(searchResults)
-            setPkmns(generatePokeElements(searchResults))
+            generatePokeElements(searchResults)
         }
-    }, [searchValue])
+    }, [search])
 
     return pkmns
 }

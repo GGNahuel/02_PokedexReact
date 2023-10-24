@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { TarjetaPkmn } from "./PokemonCard"
 import { usePokemonsGenerator } from "../hooks/usePokemonsGenerator"
+import { TarjetaPkmn } from "./PokemonCard"
 import { ExpandedCardBody } from "./PokemonCard_components/cardBody"
 
-export function SectionResultados({ page, search }) {
+export function SectionResultados() {
     const [tarjetaExpandida, setTarjetaExpandida] = useState(null)
     const [dataObjSelected, setDataObjSelected] = useState(null)
 
@@ -20,7 +20,7 @@ export function SectionResultados({ page, search }) {
     return (
         <>
             <section id="pokeResultados">
-                {usePokemonsGenerator({ page: page, searchValue: search }).map(dataPkmn => (
+                {usePokemonsGenerator().map(dataPkmn => (
                     <TarjetaPkmn
                         key={dataPkmn.id}
                         dataObj={dataPkmn}

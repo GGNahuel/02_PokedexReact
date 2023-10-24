@@ -1,44 +1,28 @@
-import { useState } from "react"
+import { SearchContextProvider } from "./context/searchContext"
 
 import { Nav } from "./components/navigation&search_components/Navigation"
 import { PageSelector } from "./components/navigation&search_components/PageSelector"
 import { SectionResultados } from "./components/SectionResultados"
 import "./styles.css"
+import { Filter_Sort } from "./components/navigation&search_components/Filter_Sort"
 
 export function App() {
-    const [inputValue, setInputValue] = useState(0)
-    const [page, setPage] = useState(0)
-    const [ search, setSearch ] = useState("")
-
-    function getInputValue(page) {
-        setInputValue(page)
-    }
-
-    function sendPageSelected() {
-        setPage(inputValue)
-    }
-
     // para cuando el cambio de pagina sea directamente al seleccionar la pagina (y no al submit)
     // usar solo el estado de page y borrar el del input. Osea pasar al inputValue del PageSelector el estado page
     // y en la funcion getInputValue usar el setPage, el sendPageSelected ya no se usaría.
     // Y agregar el debounce
 
-    const getSearch= (value) => {
-        setSearch(value)
-        setInputValue(0)
-        setPage(0)
-    }
-
     return (
-        <>
-            <Nav getSearch={getSearch} />
+        <SearchContextProvider>
+            <Nav/>
             <main>
-                <PageSelector getInputValue={getInputValue} inputValue={inputValue} sendPageSelected={sendPageSelected} />
+                <Filter_Sort/>
+                <PageSelector/>
                 <div style={{display:"grid",gridTemplateColumns:"80% 20%"}}>
-                    <SectionResultados page={page} search={search}/>
+                    <SectionResultados/>
                 </div>
-                <PageSelector getInputValue={getInputValue} inputValue={inputValue} sendPageSelected={sendPageSelected} />
+                <PageSelector/>
             </main>
-        </>
+        </SearchContextProvider>
     )
 }
