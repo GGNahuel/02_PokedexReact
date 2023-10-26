@@ -10,7 +10,8 @@ export function Nav() {
         setResultsDetails( prevState => ({
             ...prevState,
             search: value,
-            page: 0
+            page: 0,
+            pageInput: 0
         }))
     }
 

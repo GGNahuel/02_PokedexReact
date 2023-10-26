@@ -44,7 +44,7 @@ export function ExpandedCardBody({ dataObj }) {
     )
 
     return (
-        <aside>
+        <aside id="selected_card">
             <div className="tarjeta_mainInfo">
                 <img src={sprite} alt="" className="tarjeta_img" />
                 <ul className="tarjeta_stats">

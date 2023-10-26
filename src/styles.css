@@ -100,4 +100,10 @@ nav .nav_modo {
   border: 1px solid;
 }
 
+#selected_card {
+  background-color: black;
+  color: white;
+  padding: 0.5em;
+}
+
 /*# sourceMappingURL=styles.css.map */
