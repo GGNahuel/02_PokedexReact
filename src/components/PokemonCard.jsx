@@ -1,35 +1,35 @@
-import { renameProps } from "../services/constantes";
+import { renameProps } from '../services/constantes'
 
-import { CardBody, ExpandedCardBody } from "./PokemonCard_components/cardBody";
+import { CardBody } from './PokemonCard_components/cardBody'
 
-export function TarjetaPkmn(props) {
-    const { dataObj, idSelected, toggleSelected } = props;
-    const { name, id, sprite, elements } = renameProps(dataObj)
+export function TarjetaPkmn (props) {
+  const { dataObj, idSelected, toggleSelected } = props
+  const { name, id, sprite, elements } = renameProps(dataObj)
 
-    const expanded = idSelected === id
+  const expanded = idSelected === id
 
-    const classes = expanded ? "tarjetaPKMN activa" : "tarjetaPKMN"
+  const classes = expanded ? 'tarjetaPKMN activa' : 'tarjetaPKMN'
 
-    function clickEvent() {
-        toggleSelected(id, dataObj)
-    }
+  function clickEvent () {
+    toggleSelected(id, dataObj)
+  }
 
-    return (
-        <>
-            <article className={classes} id={"pkmn" + id} onClick={clickEvent}>
-                <div className="tarjeta_header">
-                    <h3>{name}</h3>
-                    <h3>{id}</h3>
-                </div>
-                <div className="tarjeta_body">
-                    {
-                    // expanded ? 
+  return (
+    <>
+      <article className={classes} id={'pkmn' + id} onClick={clickEvent}>
+        <div className='tarjeta_header'>
+          <h3>{name.toUpperCase()}</h3>
+          <h3>{id}</h3>
+        </div>
+        <div className='tarjeta_body'>
+          {
+                    // expanded ?
                     //     <ExpandedCardBody dataObj={dataObj} />
                     //     : <CardBody sprite={sprite} elements={elements} />
                     }
-                    <CardBody sprite={sprite} elements={elements} />
-                </div>
-            </article>
-        </>
-    )
+          <CardBody sprite={sprite} elements={elements} />
+        </div>
+      </article>
+    </>
+  )
 }
