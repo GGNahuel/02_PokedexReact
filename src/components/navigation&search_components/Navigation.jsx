@@ -23,7 +23,7 @@ export function Nav () {
           <label htmlFor='searcher'>Búsqueda
           </label>
           <input type='search' name='searcher' id='searcher' placeholder='Nombre o id del pokemon' />
-          <button type='submit' value="🔎"/>
+          <button type='submit'>Buscar</button>
         </form>
         <button className='nav_modo'>Cambiar modo nocturno/diurno</button>
       </nav>

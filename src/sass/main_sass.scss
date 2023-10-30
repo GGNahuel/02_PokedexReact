@@ -28,10 +28,19 @@ button{
     padding: .5rem .8rem;
     color: $color-secundario;
     font-family: $main-font;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
-    border: 3px solid;
-    border-radius: 10px;
+    border: 3px solid black;
+    border-radius: 20px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: lighten($color-principal, 10%);
+    }
+
+    &:active{
+        border-color: $color-secundario;
+    }
 }
 
 input[type="search"], input[type="number"]{
@@ -84,6 +93,7 @@ main{
     background-color: transparentize($color: $color-principal, $amount: 0.75);
     padding: $padding;
     border-radius: 10px;
+    cursor: default;
 
     &>div{
         align-self: flex-end;

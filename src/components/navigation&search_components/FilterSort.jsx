@@ -41,11 +41,15 @@ export function FilterSort () {
     } getFilterList()
   }, [])
 
+  function handleSubmit (ev) {
+    ev.preventDefault()
+    console.log('Submit')
+  }
+
   return (
     <form
       id='filters_sorts' onSubmit={ev => {
-        ev.preventDefault()
-        console.log(ev.target.pokedex_filter.checked)
+        handleSubmit(ev)
       }}
     >
       <div>
