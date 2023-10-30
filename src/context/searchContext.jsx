@@ -8,16 +8,27 @@ export function SearchContextProvider ({ children }) {
     page: 0,
     pageInput: 0,
     filters: {
-      generation: undefined,
-      pokedex: undefined,
+      generation: 'all',
+      pokedex: [],
       elements: []
     },
     sort: ''
   })
 
+  const resetFilters = () => {
+    setResultsDetails(state => ({
+      ...state,
+      filters: {
+        generation: 'all',
+        pokedex: [],
+        elements: []
+      }
+    }))
+  }
+
   return (
     <SearchContext.Provider value={{
-      resultsDetails, setResultsDetails
+      resultsDetails, setResultsDetails, resetFilters
     }}
     >
       {children}

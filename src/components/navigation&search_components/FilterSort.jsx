@@ -1,49 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { DetailsSummary } from './DetailsSummary'
+import { SearchContext } from '../../context/searchContext'
+import { useFilterNodes } from '../../hooks/useFilterNodes'
 
 export function FilterSort () {
-  const [filterList, setFilterList] = useState({
-    generation: [],
-    pokedex: [],
-    elements: []
-  })
+  const { resultsDetails, setResultsDetails } = useContext(SearchContext)
 
-  useEffect(() => {
-    async function getFilterList () {
-      const SUFIX_LIMIT_API = '?limit=100/'
-      try {
-        const apiGenerations = await fetch('https://pokeapi.co/api/v2/generation/' + SUFIX_LIMIT_API)
-        const dataGenerations = await apiGenerations.json()
-        const generations = dataGenerations.results.map(generation => generation.name)
-        setFilterList(prevState => ({
-          ...prevState,
-          generation: generations
-        }))
+  const { filterNodes, checkboxNames } = useFilterNodes()
 
-        const apiPokedex = await fetch('https://pokeapi.co/api/v2/pokedex/' + SUFIX_LIMIT_API)
-        const dataPokedex = await apiPokedex.json()
-        const pokedexes = dataPokedex.results.map(pokedex => pokedex.name)
-        setFilterList(prevState => ({
-          ...prevState,
-          pokedex: pokedexes
-        }))
-
-        const apiTypes = await fetch('https://pokeapi.co/api/v2/type/' + SUFIX_LIMIT_API)
-        const dataTypes = await apiTypes.json()
-        const types = dataTypes.results.map(element => element.name.toUpperCase())
-        setFilterList(prevState => ({
-          ...prevState,
-          elements: types
-        }))
-      } catch (error) {
-        console.log('error con los filtros de generacion')
-      }
-    } getFilterList()
-  }, [])
-
-  function handleSubmit (ev) {
+  const handleSubmit = (ev) => {
     ev.preventDefault()
-    console.log('Submit')
+
+    const selectedGeneration = ev.target.generation_filter.value
+    const selectedPokedexes = filterNodes.pokedex.map((_, index) => {
+      const pokedexName = checkboxNames.pokedexNames[index]
+      if (ev.target[pokedexName].checked) return pokedexName
+      else return null
+    })
+    const selectedTypes = filterNodes.elements.map((_, index) => {
+      const typeName = checkboxNames.elementNames[index]
+      if (ev.target[typeName].checked) return typeName
+      else return null
+    })
+
+    setResultsDetails(prevState => ({
+      ...prevState,
+      filters: {
+        generation: selectedGeneration,
+        pokedex: selectedPokedexes,
+        elements: selectedTypes
+      }
+    }))
+    console.log(resultsDetails.filters)
   }
 
   return (
@@ -55,25 +43,20 @@ export function FilterSort () {
       <div>
         <button type='submit'>Aplicar Cambios</button>
         <button type='button'>Resetear</button>
+        <button type='button'>Vaciar</button>
       </div>
       <details>
         <summary>Filtros:</summary>
         <ul>
           <DetailsSummary classList='filter_details' title='Generación'>
-            <label><input type='radio' name='generation_filter' /> None</label>
-            {filterList.generation.map(generation => (
-              <label key={generation}><input type='radio' name='generation_filter' value={generation} /> {generation}</label>
-            ))}
+            <label><input type='radio' name='generation_filter' defaultChecked value='all' /> Todas</label>
+            {filterNodes && filterNodes.generation}
           </DetailsSummary>
           <DetailsSummary classList='filter_details' title='Pokedex'>
-            {filterList.pokedex.map(pokedexName => (
-              <label key={pokedexName}><input type='checkbox' name='pokedex_filter' /> {pokedexName}</label>
-            ))}
+            {filterNodes && filterNodes.pokedex}
           </DetailsSummary>
           <DetailsSummary classList='filter_details' title='Elementos'>
-            {filterList.elements.map(type => (
-              <label key={type}><input type='checkbox' name='type_filter' /> {type}</label>
-            ))}
+            {filterNodes && filterNodes.elements}
           </DetailsSummary>
         </ul>
       </details>
