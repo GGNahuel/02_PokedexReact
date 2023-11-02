@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { SearchContext } from '../context/searchContext'
 
 export function useFilterNodes () {
   const [filterNodes, setFilterNodes] = useState({
@@ -6,10 +7,7 @@ export function useFilterNodes () {
     pokedex: [],
     elements: []
   })
-  const [checkboxNames, setCheckboxNames] = useState({
-    pokedexNames: [],
-    elementNames: []
-  })
+  const { checkboxNames } = useContext(SearchContext)
 
   useEffect(() => {
     async function getFilterList () {
@@ -25,13 +23,7 @@ export function useFilterNodes () {
           ))
         }))
 
-        const apiPokedex = await fetch('https://pokeapi.co/api/v2/pokedex/' + SUFIX_LIMIT_API)
-        const dataPokedex = await apiPokedex.json()
-        const pokedexes = dataPokedex.results.map(pokedex => pokedex.name)
-
-        setCheckboxNames(prevState => ({
-          ...prevState, pokedexNames: pokedexes
-        }))
+        const pokedexes = await checkboxNames.pokedexNames
         setFilterNodes(prevState => ({
           ...prevState,
           pokedex: pokedexes.map(pokedexName => (
@@ -39,13 +31,7 @@ export function useFilterNodes () {
           ))
         }))
 
-        const apiTypes = await fetch('https://pokeapi.co/api/v2/type/' + SUFIX_LIMIT_API)
-        const dataTypes = await apiTypes.json()
-        const types = dataTypes.results.map(element => element.name.toUpperCase())
-
-        setCheckboxNames(prevState => ({
-          ...prevState, elementNames: types
-        }))
+        const types = await checkboxNames.elementNames
         setFilterNodes(prevState => ({
           ...prevState,
           elements: types.map(type => (
@@ -58,5 +44,5 @@ export function useFilterNodes () {
     } getFilterList()
   }, [])
 
-  return { filterNodes, checkboxNames }
+  return { filterNodes }
 }

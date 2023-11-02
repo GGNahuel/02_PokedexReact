@@ -4,9 +4,20 @@ import { SearchContext } from '../../context/searchContext'
 import { useFilterNodes } from '../../hooks/useFilterNodes'
 
 export function FilterSort () {
-  const { resultsDetails, setResultsDetails } = useContext(SearchContext)
+  const { filterNodes } = useFilterNodes()
 
-  const { filterNodes, checkboxNames } = useFilterNodes()
+  const { resultsDetails, setResultsDetails, checkboxNames } = useContext(SearchContext)
+
+  const changeForm = (ev, checkedInputs = Boolean) => {
+    const formNode = ev.target.parentNode.parentNode
+    formNode.generation_filter.value = checkedInputs && 'all' // si el checkedInputs es true significa que se reseteó el form
+    checkboxNames.pokedexNames.forEach(pokedexName => {
+      formNode[pokedexName].checked = checkedInputs
+    })
+    checkboxNames.elementNames.forEach(typeName => {
+      formNode[typeName].checked = checkedInputs
+    })
+  }
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
@@ -35,15 +46,11 @@ export function FilterSort () {
   }
 
   return (
-    <form
-      id='filters_sorts' onSubmit={ev => {
-        handleSubmit(ev)
-      }}
-    >
+    <form id='filters_sorts' onSubmit={ev => { handleSubmit(ev) }}>
       <div>
         <button type='submit'>Aplicar Cambios</button>
-        <button type='button'>Resetear</button>
-        <button type='button'>Vaciar</button>
+        <button type='button' onClick={ev => { changeForm(ev, true) }}>Resetear</button>
+        <button type='button' onClick={ev => { changeForm(ev, false) }}>Vaciar</button>
       </div>
       <details>
         <summary>Filtros:</summary>
