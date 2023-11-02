@@ -4,9 +4,9 @@ import { SearchContext } from '../../context/searchContext'
 import { useFilterNodes } from '../../hooks/useFilterNodes'
 
 export function FilterSort () {
-  const { filterNodes } = useFilterNodes()
+  const { filterNodes, checkboxNames } = useFilterNodes()
 
-  const { resultsDetails, setResultsDetails, checkboxNames } = useContext(SearchContext)
+  const { resultsDetails, setResultsDetails } = useContext(SearchContext)
 
   const changeForm = (ev, checkedInputs = Boolean) => {
     const formNode = ev.target.parentNode.parentNode
