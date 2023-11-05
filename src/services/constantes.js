@@ -1,3 +1,5 @@
+export const regExpIdPkmn = /(?<=\/)[0-9]+/
+
 export function renameProps (dataObj) {
   const newProperites = {
     name: dataObj.name,
@@ -16,8 +18,7 @@ export function renameProps (dataObj) {
 
 // "https://pokeapi.co/api/v2/pokemon-species/259/", ex
 export function renameEvolutionProps (dataObj) {
-  const regExtractID = /(?<=species\/)[0-9]{1,}/
-  const IDExtracted = dataObj.species.url.match(regExtractID)
+  const IDExtracted = dataObj.species.url.match(regExpIdPkmn)
   const newProperites = {
     nameLink: dataObj.species.name,
     evolutionDetails: dataObj.evolution_details,
@@ -63,4 +64,5 @@ export function renameLocationEncounterAreas (dataObj) {
   return newProperites
 }
 
+export const PREFIX_API = 'https://pokeapi.co/api/v2/'
 export const POKEMON_PREFIX_API = 'https://pokeapi.co/api/v2/pokemon/'

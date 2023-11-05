@@ -6,7 +6,7 @@ import { useFilterNodes } from '../../hooks/useFilterNodes'
 export function FilterSort () {
   const { filterNodes, checkboxNames } = useFilterNodes()
 
-  const { resultsDetails, setResultsDetails } = useContext(SearchContext)
+  const { setResultsDetails } = useContext(SearchContext)
 
   const changeForm = (ev, checkedInputs = Boolean) => {
     const formNode = ev.target.parentNode.parentNode
@@ -36,13 +36,14 @@ export function FilterSort () {
 
     setResultsDetails(prevState => ({
       ...prevState,
+      page: 0,
+      pageInput: 0,
       filters: {
         generation: selectedGeneration,
         pokedex: selectedPokedexes,
         elements: selectedTypes
       }
     }))
-    console.log(resultsDetails.filters)
   }
 
   return (
