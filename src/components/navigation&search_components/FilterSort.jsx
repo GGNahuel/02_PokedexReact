@@ -48,11 +48,6 @@ export function FilterSort () {
 
   return (
     <form id='filters_sorts' onSubmit={ev => { handleSubmit(ev) }}>
-      <div>
-        <button type='submit'>Aplicar Cambios</button>
-        <button type='button' onClick={ev => { changeForm(ev, true) }}>Resetear</button>
-        <button type='button' onClick={ev => { changeForm(ev, false) }}>Vaciar</button>
-      </div>
       <details>
         <summary>Filtros:</summary>
         <ul>
@@ -74,6 +69,11 @@ export function FilterSort () {
         <label><input type='radio' name='sortResults' /> Índice</label>
         <label><input type='radio' name='sortResults' /> Hp</label>
       </details>
+      <div>
+        <button type='submit'>Aplicar Cambios</button>
+        <button type='button' onClick={ev => { changeForm(ev, true) }}>Resetear</button>
+        <button type='button' onClick={ev => { changeForm(ev, false) }}>Vaciar</button>
+      </div>
     </form>
   )
 }

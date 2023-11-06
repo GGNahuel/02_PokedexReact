@@ -2,7 +2,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { SearchContext } from '../context/searchContext'
 import { getNationalPokedex, getPokemonInfo } from '../services/getPokeApis'
-import { PREFIX_API, POKEMON_PREFIX_API, regExpIdPkmn } from '../services/constantes'
+import { PREFIX_API, POKEMON_PREFIX_API, regExpIDPKMN } from '../services/constantes'
 // import { generatePokeElements } from "../services/generatePokeElements";
 
 export function usePokemonsGenerator () {
@@ -19,7 +19,7 @@ export function usePokemonsGenerator () {
     const pokeElements = []
     for (let pkmn = indexPkmn; pkmn < indexPkmn + 20; pkmn++) {
       if (pokeArray[pkmn]) {
-        const idExtracted = regExpIdPkmn.exec(pokeArray[pkmn].url)
+        const idExtracted = regExpIDPKMN.exec(pokeArray[pkmn].url)
         const dataPkmn = await getPokemonInfo(POKEMON_PREFIX_API + idExtracted)
         pokeElements.push(dataPkmn)
       }
@@ -46,7 +46,7 @@ export function usePokemonsGenerator () {
   useEffect(() => {
     if (!search && mainResults.length > 0) {
       const tempMainResults = mainResults
-      setCurrentResults(tempMainResults)
+      setCurrentResults(tempMainResults) // cambiar
       generatePokeElements(tempMainResults)
       return
     }
@@ -56,7 +56,7 @@ export function usePokemonsGenerator () {
       let searchResults = []
       if (Number(search)) {
         searchResults.push(mainResults[search - 1])
-      } else searchResults = mainResults.filter(element => regExpSearch.test(element.name))
+      } else searchResults = currentResults.filter(element => regExpSearch.test(element.name))
       setCurrentResults(searchResults)
       generatePokeElements(searchResults)
     }
@@ -64,9 +64,7 @@ export function usePokemonsGenerator () {
 
   useEffect(() => {
     if (filters.generation === '' || filters.generation === 'all') {
-      const tempMainResults = mainResults
-      setCurrentResults(tempMainResults)
-      generatePokeElements(tempMainResults)
+      generatePokeElements(currentResults)
       return
     }
 
@@ -75,14 +73,18 @@ export function usePokemonsGenerator () {
       const { pokemon_species } = generationApi
 
       pokemon_species.sort(function (a, b) {
-        const idA = regExpIdPkmn.exec(a.url)
-        const idB = regExpIdPkmn.exec(b.url)
+        const idA = regExpIDPKMN.exec(a.url)
+        const idB = regExpIDPKMN.exec(b.url)
         return idA - idB
       })
 
-      setCurrentResults(pokemon_species)
-      generatePokeElements(pokemon_species)
-    } getGenerationPokemons()
+      const tempResults = pokemon_species.filter(pokemon1 => {
+        return currentResults.some(pokemon2 => pokemon1.name === pokemon2.name)
+      })
+
+      generatePokeElements(tempResults)
+    }
+    getGenerationPokemons()
   }, [filters])
 
   return pkmns
