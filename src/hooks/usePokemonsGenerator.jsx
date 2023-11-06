@@ -27,6 +27,23 @@ export function usePokemonsGenerator () {
     setPkmns(pokeElements)
   }
 
+  async function getGenerationPokemons (results) {
+    const generationApi = await getPokemonInfo(`${PREFIX_API}generation/${filters.generation}`)
+    const { pokemon_species } = generationApi
+
+    pokemon_species.sort(function (a, b) {
+      const idA = regExpIDPKMN.exec(a.url)
+      const idB = regExpIDPKMN.exec(b.url)
+      return idA - idB
+    })
+
+    const tempResults = pokemon_species.filter(pokemon1 => {
+      return results.some(pokemon2 => pokemon1.name === pokemon2.name)
+    })
+
+    generatePokeElements(tempResults)
+  }
+
   useEffect(() => {
     async function generateContent () {
       if (mainResults.length === 0) {
@@ -46,8 +63,9 @@ export function usePokemonsGenerator () {
   useEffect(() => {
     if (!search && mainResults.length > 0) {
       const tempMainResults = mainResults
-      setCurrentResults(tempMainResults) // cambiar
-      generatePokeElements(tempMainResults)
+      setCurrentResults(tempMainResults)
+      if (filters.generation === 'all') generatePokeElements(tempMainResults)
+      else getGenerationPokemons(tempMainResults)
       return
     }
 
@@ -58,7 +76,9 @@ export function usePokemonsGenerator () {
         searchResults.push(mainResults[search - 1])
       } else searchResults = currentResults.filter(element => regExpSearch.test(element.name))
       setCurrentResults(searchResults)
-      generatePokeElements(searchResults)
+
+      if (filters.generation === 'all') generatePokeElements(searchResults)
+      else getGenerationPokemons(searchResults)
     }
   }, [search])
 
@@ -68,23 +88,7 @@ export function usePokemonsGenerator () {
       return
     }
 
-    async function getGenerationPokemons () {
-      const generationApi = await getPokemonInfo(`${PREFIX_API}generation/${filters.generation}`)
-      const { pokemon_species } = generationApi
-
-      pokemon_species.sort(function (a, b) {
-        const idA = regExpIDPKMN.exec(a.url)
-        const idB = regExpIDPKMN.exec(b.url)
-        return idA - idB
-      })
-
-      const tempResults = pokemon_species.filter(pokemon1 => {
-        return currentResults.some(pokemon2 => pokemon1.name === pokemon2.name)
-      })
-
-      generatePokeElements(tempResults)
-    }
-    getGenerationPokemons()
+    getGenerationPokemons(currentResults)
   }, [filters])
 
   return pkmns
