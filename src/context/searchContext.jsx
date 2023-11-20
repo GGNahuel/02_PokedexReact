@@ -16,22 +16,30 @@ export function SearchContextProvider ({ children }) {
     sort: ''
   })
 
+  const [filtersDefault, setFiltersDefault] = useState({})
+
   const { checkboxNames } = useFilterNodes()
 
   useEffect(() => {
-    setResultsDetails(state => ({
-      ...state,
-      filters: {
+    async function setStates () {
+      const newFilters = {
         generation: 'all',
         pokedex: checkboxNames.pokedexNames,
         elements: checkboxNames.elementNames
       }
-    }))
+      setFiltersDefault(newFilters)
+      setResultsDetails(state => ({
+        ...state,
+        filters: newFilters
+      }))
+      console.log(newFilters)
+    }
+    setStates()
   }, [])
 
   return (
     <SearchContext.Provider value={{
-      resultsDetails, setResultsDetails
+      resultsDetails, filtersDefault, setResultsDetails
     }}
     >
       {children}
