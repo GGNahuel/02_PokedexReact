@@ -34,16 +34,18 @@ export function FilterSort () {
       else return null
     })
 
-    setResultsDetails(prevState => ({
-      ...prevState,
-      page: 0,
-      pageInput: 0,
-      filters: {
-        generation: selectedGeneration,
-        pokedex: selectedPokedexes,
-        elements: selectedTypes
-      }
-    }))
+    setResultsDetails(prevState => {
+      const searchValue = prevState.filters.search
+      return ({
+        ...prevState,
+        filters: {
+          search: searchValue,
+          generation: selectedGeneration,
+          pokedex: selectedPokedexes,
+          elements: selectedTypes
+        }
+      })
+    })
   }
 
   return (

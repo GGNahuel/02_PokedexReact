@@ -7,12 +7,17 @@ export function Nav () {
   const updateSearch = (event) => {
     event.preventDefault()
     const value = event.target.searcher.value
-    setResultsDetails(prevState => ({
-      ...prevState,
-      search: value,
-      page: 0,
-      pageInput: 0
-    }))
+    setResultsDetails(prevState => {
+      const prevFilters = prevState.filters
+
+      return ({
+        ...prevState,
+        filters: {
+          ...prevFilters,
+          search: value
+        }
+      })
+    })
   }
 
   return (

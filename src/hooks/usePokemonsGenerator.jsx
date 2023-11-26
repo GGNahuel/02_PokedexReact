@@ -3,11 +3,13 @@ import { useEffect, useState, useContext } from 'react'
 import { SearchContext } from '../context/searchContext'
 import { getNationalPokedex, getPokemonInfo } from '../services/getPokeApis'
 import { PREFIX_API, POKEMON_PREFIX_API, regExpIDPKMN } from '../services/constantes'
-// import { generatePokeElements } from "../services/generatePokeElements";
+import { useFilterNodes } from './useFilterNodes'
 
 export function usePokemonsGenerator () {
-  const { resultsDetails, filtersDefault } = useContext(SearchContext)
-  const { page, search, filters } = resultsDetails
+  const { resultsDetails, setResultsDetails } = useContext(SearchContext)
+  const { page, filters } = resultsDetails
+
+  const { checkboxNames } = useFilterNodes()
 
   const [pkmns, setPkmns] = useState([])
   const [mainResults, setMainResults] = useState([])
@@ -16,6 +18,7 @@ export function usePokemonsGenerator () {
   async function generatePokeElements (pokeArray) {
     const indexPkmn = page * 20
     pokeArray.sort(function (a, b) { return a.id - b.id })
+
     const pokeElements = []
     for (let pkmn = indexPkmn; pkmn < indexPkmn + 20; pkmn++) {
       if (pokeArray[pkmn]) {
@@ -27,21 +30,54 @@ export function usePokemonsGenerator () {
     setPkmns(pokeElements)
   }
 
-  async function getGenerationPokemons (results) {
+  async function getGenerationPokemons (arrayToFilter) {
     const generationApi = await getPokemonInfo(`${PREFIX_API}generation/${filters.generation}`)
-    const { pokemon_species } = generationApi
 
-    pokemon_species && pokemon_species.sort(function (a, b) {
-      const idA = regExpIDPKMN.exec(a.url)
-      const idB = regExpIDPKMN.exec(b.url)
-      return idA - idB
+    if (generationApi) {
+      const { pokemon_species } = generationApi
+      pokemon_species.sort(function (a, b) {
+        const idA = regExpIDPKMN.exec(a.url)
+        const idB = regExpIDPKMN.exec(b.url)
+        return idA - idB
+      })
+
+      const tempResults = generationApi.pokemon_species.filter(pokemon1 => {
+        return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
+      })
+
+      return tempResults
+    }
+  }
+
+  async function getFilterEntries (arrayToFilter, selectedItems, filterType = String) {
+    if (selectedItems.length === 0) return []
+    if (filterType !== 'pokedex' && filterType !== 'type') {
+      console.log('Error al ingresar el parametro filterType en la función getFilterEntries')
+      return []
+    }
+
+    const apiInfo = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[0].toLowerCase()}`)
+    const pokemonsApi = filterType === 'pokedex' ? apiInfo.pokemon_entries : apiInfo.pokemon
+
+    const filterResults = []
+    for (let pokeI = 0; pokeI < pokemonsApi.length; pokeI++) {
+      const pokemonObject = filterType === 'pokedex' ? pokemonsApi[pokeI].pokemon_species : pokemonsApi[pokeI].pokemon
+      const pokemonToCheck = await getPokemonInfo(pokemonObject.url)
+
+      const filterArrayInPokemon = filterType === 'pokedex' ? pokemonToCheck.pokedex_numbers : pokemonToCheck.types
+      const pokemonFilterItems = filterArrayInPokemon.map(element => filterType === 'pokedex' ? element.pokedex.name : element.type.name)
+
+      const hasItems = selectedItems.every(element => pokemonFilterItems.includes(element.toLowerCase()))
+      if (hasItems) {
+        filterResults.push(pokemonObject)
+      }
+    }
+
+    const tempResults = filterResults.filter(pokemon1 => {
+      return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
     })
 
-    const tempResults = generationApi.pokemon_species.filter(pokemon1 => {
-      return results.some(pokemon2 => pokemon1.name === pokemon2.name)
-    })
-
-    generatePokeElements(tempResults)
+    return tempResults
   }
 
   useEffect(() => {
@@ -61,64 +97,41 @@ export function usePokemonsGenerator () {
   }, [page])
 
   useEffect(() => {
-    if (!search && mainResults.length > 0) {
+    async function generateFilteredContent () {
       const tempMainResults = mainResults
-      setCurrentResults(tempMainResults)
-      if (filters.generation === 'all') generatePokeElements(tempMainResults)
-      else getGenerationPokemons(tempMainResults)
-      return
-    }
+      let tempResults = []
 
-    if (mainResults.length > 0) {
-      const regExpSearch = new RegExp(search)
-      let searchResults = []
-      if (Number(search)) {
-        searchResults.push(mainResults[search - 1])
-      } else searchResults = currentResults.filter(element => regExpSearch.test(element.name))
-      setCurrentResults(searchResults)
+      const { search } = filters
+      if (search !== '' && search) {
+        const regExpSearch = new RegExp(search)
+        if (Number(search)) {
+          tempResults.push(mainResults[search - 1])
+        } else tempResults = tempMainResults.filter(element => regExpSearch.test(element.name))
+      } else tempResults = tempMainResults
 
-      if (filters.generation === 'all') generatePokeElements(searchResults)
-      else getGenerationPokemons(searchResults)
-    }
-  }, [search])
+      tempResults = filters.generation !== 'all' ? await getGenerationPokemons(tempResults) : tempResults
 
-  useEffect(() => {
-    if (filters.generation === filtersDefault.generation && filters.pokedex === filtersDefault.pokedex) {
-      generatePokeElements(currentResults)
-      return
-    }
-    async function getPokedexEntries () {
-      const firstPokedex = filters.pokedex.find(element => element && element)
-      if (firstPokedex === undefined) return
+      const selectedPokedexes = filters.pokedex.filter(element => element && element)
+      tempResults = selectedPokedexes.length !== checkboxNames.pokedexNames.length
+        ? await getFilterEntries(tempResults, selectedPokedexes, 'pokedex')
+        : tempResults
 
-      const pokedexInfo = await getPokemonInfo(`${PREFIX_API}pokedex/${firstPokedex}`)
-      const { pokemon_entries } = pokedexInfo
+      const selectedTypes = filters.elements.filter(element => element && element.toLowerCase())
+      tempResults = selectedTypes.length !== checkboxNames.elementNames.length
+        ? await getFilterEntries(tempResults, selectedTypes, 'type')
+        : tempResults
 
-      const filterResults = []
-      for (let pokemon = 0; pokemon < pokemon_entries.length; pokemon++) {
-        const pokemonToCheck = await getPokemonInfo(pokemon_entries[pokemon].pokemon_species.url)
-
-        filters.pokedex.forEach(pokedexFilterName => {
-          if (pokedexFilterName) {
-            const isInPokedex = pokemonToCheck.pokedex_numbers.some(pokemonPokedexName => pokedexFilterName === pokemonPokedexName.pokedex.name)
-            if (isInPokedex) {
-              filterResults.push(pokemon_entries[pokemon].pokemon_species)
-            }
-          }
-        })
+      setCurrentResults(tempResults)
+      if (page === 0) {
+        generatePokeElements(tempResults)
       }
-
-      // Se va a tener que hacer un estado aparte al current results para guardar los resultados de los filtros,
-      // probar tambien, meter el search dentro del filters en el contexto global, y tomarlo como si fuese un filtro más
-      // dentro de este useEffect
-      const tempResults = filterResults.filter(pokemon1 => {
-        return currentResults.some(pokemon2 => pokemon1.name === pokemon2.name)
-      })
-
-      generatePokeElements(tempResults)
+      setResultsDetails(prevState => ({
+        ...prevState,
+        page: 0,
+        pageInput: 0
+      }))
     }
-    if (!filters.pokedex.every(name => name)) getPokedexEntries()
-    if (filters.generation !== 'all') getGenerationPokemons(currentResults)
+    generateFilteredContent()
   }, [filters])
 
   return pkmns
