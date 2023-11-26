@@ -56,25 +56,22 @@ export function usePokemonsGenerator () {
       return []
     }
 
-    const apiInfo = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[0].toLowerCase()}`)
-    const pokemonsApi = filterType === 'pokedex' ? apiInfo.pokemon_entries : apiInfo.pokemon
+    const nameRoute = filterType === 'pokedex' ? 'pokemon_species' : 'pokemon'
 
-    const filterResults = []
-    for (let pokeI = 0; pokeI < pokemonsApi.length; pokeI++) {
-      const pokemonObject = filterType === 'pokedex' ? pokemonsApi[pokeI].pokemon_species : pokemonsApi[pokeI].pokemon
-      const pokemonToCheck = await getPokemonInfo(pokemonObject.url)
+    const itemApi1 = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[0].toLowerCase()}`)
+    let filterResults = filterType === 'pokedex' ? itemApi1.pokemon_entries : itemApi1.pokemon
 
-      const filterArrayInPokemon = filterType === 'pokedex' ? pokemonToCheck.pokedex_numbers : pokemonToCheck.types
-      const pokemonFilterItems = filterArrayInPokemon.map(element => filterType === 'pokedex' ? element.pokedex.name : element.type.name)
+    for (let itemIndx = 1; itemIndx < selectedItems.length; itemIndx++) {
+      const itemApi2 = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[itemIndx].toLowerCase()}`)
+      const pokemonsInApi2 = filterType === 'pokedex' ? itemApi2.pokemon_entries : itemApi2.pokemon
 
-      const hasItems = selectedItems.every(element => pokemonFilterItems.includes(element.toLowerCase()))
-      if (hasItems) {
-        filterResults.push(pokemonObject)
-      }
+      filterResults = filterResults.filter(pokemonA => {
+        return pokemonsInApi2.some(pokemonB => pokemonA[nameRoute].name === pokemonB[nameRoute].name)
+      })
     }
 
-    const tempResults = filterResults.filter(pokemon1 => {
-      return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
+    const tempResults = arrayToFilter.filter(pokemon1 => {
+      return filterResults.some(pokemon2 => pokemon1.name === pokemon2[nameRoute].name)
     })
 
     return tempResults
