@@ -1,9 +1,9 @@
-/* eslint-disable camelcase */
-import { useEffect, useState, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SearchContext } from '../context/searchContext'
+import { POKEMON_PREFIX_API, regExpIDPKMN } from '../services/constantes'
 import { getNationalPokedex, getPokemonInfo } from '../services/getPokeApis'
-import { PREFIX_API, POKEMON_PREFIX_API, regExpIDPKMN } from '../services/constantes'
 import { useFilterNodes } from './useFilterNodes'
+import { getGenerationPokemons, getFilterEntries } from '../services/getFilterEntries'
 
 export function usePokemonsGenerator () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
@@ -28,53 +28,6 @@ export function usePokemonsGenerator () {
       }
     }
     setPkmns(pokeElements)
-  }
-
-  async function getGenerationPokemons (arrayToFilter) {
-    const generationApi = await getPokemonInfo(`${PREFIX_API}generation/${filters.generation}`)
-
-    if (generationApi) {
-      const { pokemon_species } = generationApi
-      pokemon_species.sort(function (a, b) {
-        const idA = regExpIDPKMN.exec(a.url)
-        const idB = regExpIDPKMN.exec(b.url)
-        return idA - idB
-      })
-
-      const tempResults = generationApi.pokemon_species.filter(pokemon1 => {
-        return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
-      })
-
-      return tempResults
-    }
-  }
-
-  async function getFilterEntries (arrayToFilter, selectedItems, filterType = String) {
-    if (selectedItems.length === 0) return []
-    if (filterType !== 'pokedex' && filterType !== 'type') {
-      console.log('Error al ingresar el parametro filterType en la función getFilterEntries')
-      return []
-    }
-
-    const nameRoute = filterType === 'pokedex' ? 'pokemon_species' : 'pokemon'
-
-    const itemApi1 = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[0].toLowerCase()}`)
-    let filterResults = filterType === 'pokedex' ? itemApi1.pokemon_entries : itemApi1.pokemon
-
-    for (let itemIndx = 1; itemIndx < selectedItems.length; itemIndx++) {
-      const itemApi2 = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[itemIndx].toLowerCase()}`)
-      const pokemonsInApi2 = filterType === 'pokedex' ? itemApi2.pokemon_entries : itemApi2.pokemon
-
-      filterResults = filterResults.filter(pokemonA => {
-        return pokemonsInApi2.some(pokemonB => pokemonA[nameRoute].name === pokemonB[nameRoute].name)
-      })
-    }
-
-    const tempResults = arrayToFilter.filter(pokemon1 => {
-      return filterResults.some(pokemon2 => pokemon1.name === pokemon2[nameRoute].name)
-    })
-
-    return tempResults
   }
 
   useEffect(() => {
@@ -106,14 +59,14 @@ export function usePokemonsGenerator () {
         } else tempResults = tempMainResults.filter(element => regExpSearch.test(element.name))
       } else tempResults = tempMainResults
 
-      tempResults = filters.generation !== 'all' ? await getGenerationPokemons(tempResults) : tempResults
+      tempResults = filters.generation !== 'all' ? await getGenerationPokemons(tempResults, filters.generation) : tempResults
 
       const selectedPokedexes = filters.pokedex.filter(element => element && element)
       tempResults = selectedPokedexes.length !== checkboxNames.pokedexNames.length
         ? await getFilterEntries(tempResults, selectedPokedexes, 'pokedex')
         : tempResults
 
-      const selectedTypes = filters.elements.filter(element => element && element.toLowerCase())
+      const selectedTypes = filters.elements.filter(element => element && element)
       tempResults = selectedTypes.length !== checkboxNames.elementNames.length
         ? await getFilterEntries(tempResults, selectedTypes, 'type')
         : tempResults

@@ -5,7 +5,7 @@ A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
     Manejar errores de api y mostrar en la página que algo salio mal
     Optimizar los dataObj que se pasan a los elementos, por ejemplo sacar solo las propiedades que se vayan a usar 
-        despues desde que se obtienen los objetos de la api
+        despues desde que se obtienen los objetos de la api. Principalmente cuando aparece la info detallada de un pkmn
     Renderizar un "loading" mientras se cargan las cosas
     Enrutamiento
 
@@ -29,7 +29,7 @@ Info a mostrar para cada pokemon
         Metodo
         Nivel(/es) en el que aparece [min a max]
         Juego
-    Movimientos 📖
+    ❌Movimientos 📖
         Tipo de movimiento
         Tipo de daño(elemento)
         Prescición
@@ -41,10 +41,9 @@ Info a mostrar para cada pokemon
     Indice
     
 Filtros:
-    Generación
-    Pokedex
-    Regiones 
-    Elementos
+    ✅Generación
+    ✅Pokedex
+    ✅Elementos
     Método de evolución?
 
 Formas de ordenar resultados
