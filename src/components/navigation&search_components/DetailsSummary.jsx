@@ -16,9 +16,7 @@ export function DetailsSummary ({ title, children, classList = '' }) {
   return (
     <details className={classList}>
       <summary onClick={handleOpen}>{title}</summary>
-      <div>
-        {children}
-      </div>
+      {children}
     </details>
   )
 }

@@ -1,0 +1,31 @@
+#filters_sorts{
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: transparentize($color: $color-principal, $amount: 0.75);
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: default;
+
+    &>div{
+        align-self: flex-end;
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+.filter_details{
+    &>div{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(50px,150px));
+    }
+    &>.filter_buttons_container{
+        display: flex;
+        justify-content: flex-end;
+        gap: 1em;
+    }
+}
+
+

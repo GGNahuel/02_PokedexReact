@@ -22,11 +22,6 @@ export function TarjetaPkmn (props) {
           <h3>{id}</h3>
         </div>
         <div className='tarjeta_body'>
-          {
-                    // expanded ?
-                    //     <ExpandedCardBody dataObj={dataObj} />
-                    //     : <CardBody sprite={sprite} elements={elements} />
-                    }
           <CardBody sprite={sprite} elements={elements} />
         </div>
       </article>

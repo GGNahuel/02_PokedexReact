@@ -12,15 +12,17 @@ export function App () {
   // y en la funcion getInputValue usar el setPage, el sendPageSelected ya no se usaría.
   // Y agregar el debounce
 
+  // <div style={{ display: 'grid', gridTemplateColumns: '80% 20%' }}>
+
   return (
     <SearchContextProvider>
       <Nav />
       <main>
         <FilterSort />
         <PageSelector />
-        <div style={{ display: 'grid', gridTemplateColumns: '80% 20%' }}>
-          <SectionResultados />
-        </div>
+
+        <SectionResultados />
+
         <PageSelector />
       </main>
     </SearchContextProvider>

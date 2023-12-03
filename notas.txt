@@ -1,5 +1,6 @@
 📖 (Info que solo se mostrará al seleccionar un pokemon y mostrar los detalles)
-
+🔄 (Revisar)
+❌ (Cancelado)
 
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
@@ -38,12 +39,14 @@ Info a mostrar para cada pokemon
 
 ✅Tipos de búsqueda (que del array de pokemones saque el nombre aun si no esta escrito al 100%)
     Nombre
-    Indice
+    🔄Indice
     
 Filtros:
     ✅Generación
     ✅Pokedex
     ✅Elementos
+    Habitat
+    Mostrar cuando haya filtros sin aplicar
     Método de evolución?
 
 Formas de ordenar resultados

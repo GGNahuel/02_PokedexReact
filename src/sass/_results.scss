@@ -1,0 +1,68 @@
+#pokeResultados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.tarjetaPKMN {
+    border-radius: 10px;
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 200px;
+    flex-grow: 0.2;
+    cursor: pointer;
+
+    &.activa {
+        border-color: red;
+    }
+}
+
+.tarjeta_header {
+    margin: 0;
+    width: 100%;
+    padding: 1em 0.4em 0.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: $color-principal;
+    color: $color-secundario;
+    z-index: -1;
+    box-shadow: 0 2px 2px;
+    box-sizing: border-box;
+}
+
+.tarjeta_body{
+    padding: 0.5rem;
+}
+
+.tarjeta_img {
+    width: 192px;
+    height: 192px;
+    image-rendering: pixelated;
+}
+
+.tarjeta_tipos {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.evolPath_main {
+    border: 1px solid;
+}
+
+#selected_card {
+    background-color: black;
+    color: white;
+    padding: 0.5em;
+
+    .tarjeta_tipos {
+        flex-direction: column;
+    }
+}
+
+@import '_typesTagStyles.scss';

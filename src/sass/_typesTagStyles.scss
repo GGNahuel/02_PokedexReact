@@ -1,0 +1,82 @@
+.typeTag {
+    padding: 0.2rem 0.4rem;
+    border-radius: 5px;
+}
+.tipos_daños {
+    .typeTag+.typeTag {
+        margin-left: 0.5rem;
+    }
+}
+
+.normal {
+    background-color: rgb(170, 151, 114);
+    color: black;
+}
+.water {
+    background-color: rgb(80, 80, 255);
+    color: $color-secundario;
+}
+.fire {
+    background-color: red;
+    color: $color-secundario;
+}
+.grass {
+    background-color: green;
+    color: $color-secundario;
+}
+.ground {
+    background-color: rgb(167, 142, 1);
+}
+.rock {
+    background-color: rgb(128, 98, 53);
+    color: $color-secundario;
+}
+.electric {
+    background-color: yellow;
+    color: black;
+}
+
+.ice {
+    background-color: rgb(127, 229, 255);
+    color: black;
+}
+.fighting {
+    background-color: rgb(116, 8, 8);
+    color: $color-secundario;
+}
+.flying {
+    background-color: rgb(33, 30, 192);
+    color: $color-secundario;
+}
+.bug {
+    background-color: rgb(159, 243, 4);
+    color: black;
+}
+.poison {
+    background-color: rgb(138, 20, 138);
+    color: $color-secundario;
+}
+.dark {
+    background-color: rgb(37, 4, 37);
+    color: $color-secundario;
+}
+.ghost {
+    background-color: rgb(46, 9, 92);
+    color: $color-secundario;
+}
+.dragon {
+    background-color: rgb(37, 0, 139);
+    color: $color-secundario;
+}
+.psychic {
+    background-color: rgb(236, 98, 121);
+    color: black;
+}
+.fairy {
+    background-color: pink;
+    color: black;
+}
+.steel {
+    background-color: rgb(151, 151, 151);
+    color: black;
+}

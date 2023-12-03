@@ -9,9 +9,8 @@ export function FilterSort () {
   const { setResultsDetails } = useContext(SearchContext)
 
   const changeForm = (ev, checkedInputs = Boolean, checkboxesToChange) => {
-    const formNode = document.getElementById('filters_sorts') // ev.target.parentNode.parentNode.parentNode.parentNode.parentNode
-    console.log(formNode, ev.target)
-    formNode.generation_filter.value = checkedInputs && 'all' // si el checkedInputs es true significa que se reseteó el form
+    const formNode = document.getElementById('filters_sorts')
+    // ev.target.parentNode.parentNode.parentNode.parentNode.parentNode
     if (checkboxesToChange === 'pokedex') {
       checkboxNames.pokedexNames.forEach(pokedexName => {
         formNode[pokedexName].checked = checkedInputs
@@ -58,18 +57,20 @@ export function FilterSort () {
         <summary>Filtros:</summary>
         <ul>
           <DetailsSummary classList='filter_details' title='Generación'>
-            <label><input type='radio' name='generation_filter' defaultChecked value='all' /> Todas</label>
-            {filterNodes && filterNodes.generation}
+            <div>
+              <label><input type='radio' name='generation_filter' defaultChecked value='all' /> Todas</label>
+              {filterNodes && filterNodes.generation}
+            </div>
           </DetailsSummary>
           <DetailsSummary classList='filter_details' title='Pokedex'>
-            {filterNodes && filterNodes.pokedex}
+            <div>{filterNodes && filterNodes.pokedex}</div>
             <div className='filter_buttons_container'>
               <button type='button' onClick={ev => { changeForm(ev, true, 'pokedex') }}>Resetear</button>
               <button type='button' onClick={ev => { changeForm(ev, false, 'pokedex') }}>Vaciar</button>
             </div>
           </DetailsSummary>
           <DetailsSummary classList='filter_details' title='Elementos'>
-            {filterNodes && filterNodes.elements}
+            <div>{filterNodes && filterNodes.elements}</div>
             <div className='filter_buttons_container'>
               <button type='button' onClick={ev => { changeForm(ev, true, 'type') }}>Resetear</button>
               <button type='button' onClick={ev => { changeForm(ev, false, 'type') }}>Vaciar</button>
@@ -77,12 +78,13 @@ export function FilterSort () {
           </DetailsSummary>
         </ul>
       </details>
-      <details>
-        <summary>Ordenar por</summary>
-        <label><input type='radio' name='sortResults' /> Alfabeticamente</label>
-        <label><input type='radio' name='sortResults' /> Índice</label>
-        <label><input type='radio' name='sortResults' /> Hp</label>
-      </details>
+      <DetailsSummary classList='filter_details' title='Ordenar por'>
+        <div>
+          <label><input type='radio' name='sortResults' /> Alfabeticamente</label>
+          <label><input type='radio' name='sortResults' /> Índice</label>
+          <label><input type='radio' name='sortResults' /> Hp</label>
+        </div>
+      </DetailsSummary>
       <div>
         <button type='submit'>Aplicar Cambios</button>
       </div>
