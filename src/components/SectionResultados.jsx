@@ -18,7 +18,7 @@ export function SectionResultados () {
   }
 
   return (
-    <>
+    <section id='pokemonSection'>
       <section id='pokeResultados'>
         {usePokemonsGenerator().map(dataPkmn => (
           <TarjetaPkmn
@@ -30,6 +30,6 @@ export function SectionResultados () {
         )}
       </section>
       {dataObjSelected && <ExpandedCardBody dataObj={dataObjSelected} />}
-    </>
+    </section>
   )
 }

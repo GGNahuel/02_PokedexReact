@@ -35,6 +35,16 @@ button:hover {
 button:active {
   border-color: rgb(241, 241, 241);
 }
+button.btn_secondary {
+  background-color: rgb(241, 241, 241);
+  color: rgb(116, 0, 0);
+}
+button.btn_secondary:hover {
+  background-color: #d8d8d8;
+}
+button.btn_secondary:active {
+  background-color: #cbcbcb;
+}
 
 input[type=search], input[type=number] {
   padding: 3px;
@@ -104,6 +114,11 @@ main {
   gap: 1em;
 }
 
+#pokemonSection {
+  display: flex;
+  position: relative;
+}
+
 #pokeResultados {
   display: flex;
   flex-wrap: wrap;
@@ -162,8 +177,14 @@ main {
 
 #selected_card {
   background-color: black;
+  position: sticky;
+  top: 0;
   color: white;
   padding: 0.5em;
+  box-sizing: border-box;
+  min-width: 400px;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 #selected_card .tarjeta_tipos {
   flex-direction: column;

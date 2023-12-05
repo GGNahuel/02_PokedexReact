@@ -2,6 +2,9 @@
 🔄 (Revisar)
 ❌ (Cancelado)
 
+ver por qué no hagarra los resultados de busqueda si es lo primero que se hacer
+hacer los botones de las paginas segun cantidad de resultados
+
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
     Manejar errores de api y mostrar en la página que algo salio mal

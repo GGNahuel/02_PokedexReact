@@ -20,9 +20,7 @@ export function App () {
       <main>
         <FilterSort />
         <PageSelector />
-
         <SectionResultados />
-
         <PageSelector />
       </main>
     </SearchContextProvider>

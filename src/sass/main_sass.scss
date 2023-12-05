@@ -41,6 +41,19 @@ button{
     &:active{
         border-color: $color-secundario;
     }
+
+    &.btn_secondary {
+        background-color: $color-secundario;
+        color: $color-principal;
+
+        &:hover {
+            background-color: darken($color: $color-secundario, $amount: 10%);
+        }
+        
+        &:active {
+            background-color: darken($color: $color-secundario, $amount: 15%);
+        }
+    }
 }
 
 input[type="search"], input[type="number"]{

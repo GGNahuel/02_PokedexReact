@@ -1,3 +1,8 @@
+#pokemonSection {
+    display: flex;
+    position: relative;
+}
+
 #pokeResultados {
     display: flex;
     flex-wrap: wrap;
@@ -57,8 +62,14 @@
 
 #selected_card {
     background-color: black;
+    position: sticky;
+    top: 0;
     color: white;
     padding: 0.5em;
+    box-sizing: border-box;
+    min-width: 400px;
+    max-height: 100vh;
+    overflow-y: scroll;
 
     .tarjeta_tipos {
         flex-direction: column;
