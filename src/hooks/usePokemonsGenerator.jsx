@@ -19,6 +19,11 @@ export function usePokemonsGenerator () {
     const indexPkmn = page * 20
     pokeArray.sort(function (a, b) { return a.id - b.id })
 
+    setResultsDetails(prev => ({
+      ...prev,
+      totalPages: Math.floor(pokeArray.length / 20)
+    }))
+
     const pokeElements = []
     for (let pkmn = indexPkmn; pkmn < indexPkmn + 20; pkmn++) {
       if (pokeArray[pkmn]) {
@@ -77,8 +82,7 @@ export function usePokemonsGenerator () {
       }
       setResultsDetails(prevState => ({
         ...prevState,
-        page: 0,
-        pageInput: 0
+        page: 0
       }))
     }
     generateFilteredContent()

@@ -5,7 +5,7 @@ export const SearchContext = createContext()
 export function SearchContextProvider ({ children }) {
   const [resultsDetails, setResultsDetails] = useState({
     page: 0,
-    pageInput: 0,
+    totalPages: 0,
     filters: {
       search: '',
       generation: 'all',
