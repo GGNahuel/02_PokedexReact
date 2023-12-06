@@ -9,11 +9,11 @@ export function useTypeInfoGenerator (elements) {
   useEffect(() => {
     function generateElementsInfo () {
       const newDamageRelations = []
-      elements.forEach(async element => {
+      elements.forEach(async (element, indx) => {
         const elementData = await getTypeInfo(element.type.url)
 
         const { baseElement } = renameTypeProps(elementData)
-        newDamageRelations.push(<DamageRelationsType key={baseElement} dataObj={elementData} />)
+        newDamageRelations.push(<DamageRelationsType key={baseElement} dataObj={elementData} indx={indx} />)
       })
 
       setDamageRelations(newDamageRelations)

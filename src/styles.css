@@ -151,7 +151,7 @@ main {
   background-color: rgb(116, 0, 0);
   color: rgb(241, 241, 241);
   z-index: -1;
-  box-shadow: 0 2px 2px;
+  box-shadow: 0 2px 2px grey;
   box-sizing: border-box;
 }
 
@@ -186,8 +186,87 @@ main {
   max-height: 100vh;
   overflow-y: scroll;
 }
+#selected_card > div {
+  margin: 3rem 0;
+}
+#selected_card .tarjeta_header {
+  border-radius: 10px;
+  margin-top: 0;
+}
+#selected_card .tarjeta_img {
+  border: solid 2px rgb(241, 241, 241);
+  border-radius: 50px;
+}
 #selected_card .tarjeta_tipos {
   flex-direction: column;
+}
+
+.tarjeta_mainInfo {
+  display: flex;
+}
+
+.tipos_daños {
+  width: 100%;
+  display: grid;
+  grid-template: "type_title type_title1" "x2DmgFrom x2DmgFrom1" "x2DmgTo x2DmgTo1" "halfDmgFrom halfDmgFrom1" "halfDmgTo halfDmgTo1" "noDmgFrom noDmgFrom1" "noDmgTo noDmgTo1"/50% 50%;
+  row-gap: 10px;
+  justify-content: center;
+}
+
+.type_title0 {
+  grid-area: type_title;
+}
+
+.type_title1 {
+  grid-area: type_title1;
+}
+
+.type_x2DmgFrom0 {
+  grid-area: x2DmgFrom;
+}
+
+.type_x2DmgFrom1 {
+  grid-area: x2DmgFrom1;
+}
+
+.type_x2DmgTo0 {
+  grid-area: x2DmgTo;
+}
+
+.type_x2DmgTo1 {
+  grid-area: x2DmgTo1;
+}
+
+.type_halfDmgFrom0 {
+  grid-area: halfDmgFrom;
+}
+
+.type_halfDmgFrom1 {
+  grid-area: halfDmgFrom1;
+}
+
+.type_halfDmgTo0 {
+  grid-area: halfDmgTo;
+}
+
+.type_halfDmgTo1 {
+  grid-area: halfDmgTo1;
+}
+
+.type_noDmgFrom0 {
+  grid-area: noDmgFrom;
+}
+
+.type_noDmgFrom1 {
+  grid-area: noDmgFrom1;
+}
+
+.type_noDmgTo0 {
+  grid-area: noDmgTo;
+}
+
+.type_noDmgTo1 {
+  grid-area: noDmgTo1;
 }
 
 .typeTag {
@@ -195,8 +274,10 @@ main {
   border-radius: 5px;
 }
 
-.tipos_daños .typeTag + .typeTag {
-  margin-left: 0.5rem;
+.typeTags_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .normal {

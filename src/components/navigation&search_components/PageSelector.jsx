@@ -16,7 +16,7 @@ export function PageSelector () {
     }
 
     return (
-      <button className={selectedPage !== page && 'btn_secondary'} onClick={selectPage}>{page}</button>
+      <button className={selectedPage !== page ? 'btn_secondary' : undefined} onClick={selectPage}>{page}</button>
     )
   }
 

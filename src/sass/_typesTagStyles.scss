@@ -2,10 +2,10 @@
     padding: 0.2rem 0.4rem;
     border-radius: 5px;
 }
-.tipos_daños {
-    .typeTag+.typeTag {
-        margin-left: 0.5rem;
-    }
+.typeTags_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .normal {

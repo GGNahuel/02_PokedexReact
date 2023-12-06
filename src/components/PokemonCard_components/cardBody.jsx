@@ -20,7 +20,7 @@ export function CardBody ({ sprite, elements }) {
 }
 
 export function ExpandedCardBody ({ dataObj }) {
-  const { stats, weight, height, sprite, elements, locationsURL } = renameProps(dataObj)
+  const { name, id, stats, weight, height, sprite, elements, locationsURL } = renameProps(dataObj)
 
   const DetailsElements = () => (
     <>
@@ -46,6 +46,10 @@ export function ExpandedCardBody ({ dataObj }) {
 
   return (
     <aside id='selected_card'>
+      <div className='tarjeta_header'>
+        <h3>{name.toUpperCase()}</h3>
+        <h3>{id}</h3>
+      </div>
       <div className='tarjeta_mainInfo'>
         <img src={sprite} alt='' className='tarjeta_img' />
         <ul className='tarjeta_stats'>
