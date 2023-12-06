@@ -21,7 +21,7 @@ export function usePokemonsGenerator () {
 
     setResultsDetails(prev => ({
       ...prev,
-      totalPages: Math.floor(pokeArray.length / 20)
+      totalPages: Math.ceil(pokeArray.length / 20)
     }))
 
     const pokeElements = []

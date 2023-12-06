@@ -22,7 +22,7 @@ export function PageSelector () {
 
   useEffect(() => {
     const newPageButtons = []
-    for (let i = 0; i <= totalPages; i++) {
+    for (let i = 0; i < totalPages; i++) {
       newPageButtons.push({ page: i + 1 })
     }
     setPageButtons(newPageButtons)
