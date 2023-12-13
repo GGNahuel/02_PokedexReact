@@ -2,6 +2,10 @@
 🔄 (Revisar)
 ❌ (Cancelado)
 
+Agregar un checkbox a los filtros de pokedex y types para indicar que se incluiran los resultados de todos las 
+    pokedex/tipos. Incluir el valor del checked de este input en el searchContext y basarse en ese booleano en el
+    filtrado del pokemonGenerator
+
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
     Manejar errores de api y mostrar en la página que algo salio mal
@@ -46,7 +50,6 @@ Filtros:
     ✅Pokedex
     ✅Elementos
     Habitat
-    Mostrar cuando haya filtros sin aplicar
     Método de evolución?
 
 Formas de ordenar resultados

@@ -12,6 +12,8 @@ export function SearchContextProvider ({ children }) {
       pokedex: [],
       elements: []
     },
+    allPokedexes: true,
+    allTypes: true,
     sort: ''
   })
 

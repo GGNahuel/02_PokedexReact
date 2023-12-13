@@ -9,7 +9,7 @@ export function usePokemonsGenerator () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
   const { page, filters } = resultsDetails
 
-  const { checkboxNames } = useFilterNodes()
+  const { checkboxNames } = useFilterNodes({})
 
   const [pkmns, setPkmns] = useState([])
   const [mainResults, setMainResults] = useState([])
@@ -72,6 +72,7 @@ export function usePokemonsGenerator () {
         : tempResults
 
       const selectedTypes = filters.elements.filter(element => element && element)
+      console.log(selectedTypes.length, checkboxNames.elementNames.length)
       tempResults = selectedTypes.length !== checkboxNames.elementNames.length
         ? await getFilterEntries(tempResults, selectedTypes, 'type')
         : tempResults
@@ -85,7 +86,7 @@ export function usePokemonsGenerator () {
         page: 0
       }))
     }
-    generateFilteredContent()
+    if (mainResults.length > 0) generateFilteredContent()
   }, [filters])
 
   return pkmns
