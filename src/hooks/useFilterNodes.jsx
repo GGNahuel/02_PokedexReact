@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
-import { SearchContext } from '../context/searchContext'
+import { useEffect, useState } from 'react'
 
 export function useFilterNodes () {
   const [checkboxNames, setCheckboxNames] = useState({
@@ -7,7 +6,6 @@ export function useFilterNodes () {
     pokedexNames: [],
     elementNames: []
   })
-  const { setResultsDetails } = useContext(SearchContext)
 
   useEffect(() => {
     async function getFilterList () {
@@ -27,18 +25,6 @@ export function useFilterNodes () {
 
         setCheckboxNames({
           generationNames: generations, pokedexNames: pokedexes, elementNames: types
-        })
-
-        setResultsDetails(prev => {
-          const prevFilters = prev.filters
-          return ({
-            ...prev,
-            filters: {
-              ...prevFilters,
-              pokedex: pokedexes,
-              elements: types
-            }
-          })
         })
       } catch (error) {
         console.log('error con los filtros de generacion' + error)

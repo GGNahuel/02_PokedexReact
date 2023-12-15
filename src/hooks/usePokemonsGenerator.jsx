@@ -2,14 +2,11 @@ import { useContext, useEffect, useState } from 'react'
 import { SearchContext } from '../context/searchContext'
 import { POKEMON_PREFIX_API, regExpIDPKMN } from '../services/constantes'
 import { getNationalPokedex, getPokemonInfo } from '../services/getPokeApis'
-import { useFilterNodes } from './useFilterNodes'
 import { getGenerationPokemons, getFilterEntries } from '../services/getFilterEntries'
 
 export function usePokemonsGenerator () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
   const { page, filters } = resultsDetails
-
-  const { checkboxNames } = useFilterNodes({})
 
   const [pkmns, setPkmns] = useState([])
   const [mainResults, setMainResults] = useState([])
@@ -66,16 +63,9 @@ export function usePokemonsGenerator () {
 
       tempResults = filters.generation !== 'all' ? await getGenerationPokemons(tempResults, filters.generation) : tempResults
 
-      const selectedPokedexes = filters.pokedex.filter(element => element && element)
-      tempResults = selectedPokedexes.length !== checkboxNames.pokedexNames.length
-        ? await getFilterEntries(tempResults, selectedPokedexes, 'pokedex')
-        : tempResults
+      tempResults = filters.pokedex.length !== 0 ? await getFilterEntries(tempResults, filters.pokedex, 'pokedex') : tempResults
 
-      const selectedTypes = filters.elements.filter(element => element && element)
-      console.log(selectedTypes.length, checkboxNames.elementNames.length)
-      tempResults = selectedTypes.length !== checkboxNames.elementNames.length
-        ? await getFilterEntries(tempResults, selectedTypes, 'type')
-        : tempResults
+      tempResults = filters.elements.length !== 0 ? await getFilterEntries(tempResults, filters.elements, 'type') : tempResults
 
       setCurrentResults(tempResults)
       if (page === 0) {

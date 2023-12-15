@@ -7,12 +7,29 @@ export function FilterSort () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
   const { filters } = resultsDetails
   const [equalsSelectedTempFilters, setEqualsFilters] = useState(true)
-  /* const [tempSelectedItems, setTempSelectedItems] = useState({
-    tempGeneration: 'all',
-    tempPokedexes: 0,
-    tempTypes: 0
-  }) */
+
   const { checkboxNames } = useFilterNodes()
+
+  const getSelectedItems = () => {
+    const formNode = document.getElementById('filters_sorts')
+
+    const selectedGeneration = formNode.generation_filter.value
+    const selectedPokedexes = checkboxNames.pokedexNames.filter(pokedexName => formNode[pokedexName].checked && pokedexName)
+    const selectedTypes = checkboxNames.elementNames.filter(typeName => formNode[typeName].checked && typeName)
+
+    return { selectedGeneration, selectedPokedexes, selectedTypes }
+  }
+
+  const checkSelectedItems = () => {
+    const { selectedGeneration, selectedPokedexes, selectedTypes } = getSelectedItems()
+
+    const lengthcondition = selectedPokedexes.length === filters.pokedex.length && selectedTypes.length === filters.elements.length
+    const samePokedexes = selectedPokedexes.every((item, index) => item === filters.pokedex[index])
+    const sameTypes = selectedTypes.every((item, index) => item === filters.elements[index])
+
+    const condition = lengthcondition && selectedGeneration === filters.generation && sameTypes && samePokedexes
+    setEqualsFilters(condition)
+  }
 
   const changeForm = (checkedInputs = Boolean, checkboxesToChange) => {
     const formNode = document.getElementById('filters_sorts')
@@ -26,39 +43,12 @@ export function FilterSort () {
         formNode[typeName].checked = checkedInputs
       })
     }
-  }
 
-  const getSelectedItems = () => {
-    const formNode = document.getElementById('filters_sorts')
-
-    const selectedGeneration = formNode.generation_filter.value
-    const selectedPokedexes = checkboxNames.pokedexNames.map(pokedexName => {
-      if (formNode[pokedexName].checked) return pokedexName
-      else return null
-    })
-    const selectedTypes = checkboxNames.elementNames.map(typeName => {
-      if (formNode[typeName].checked) return typeName
-      else return null
-    })
-
-    return { selectedGeneration, selectedPokedexes, selectedTypes }
-  }
-
-  const changeTempSelectedItems = () => {
-    const { selectedGeneration, selectedPokedexes, selectedTypes } = getSelectedItems()
-
-    const samePokedexes = selectedPokedexes.every((item, index) => item === filters.pokedex[index])
-    const sameTypes = selectedTypes.every((item, index) => item === filters.elements[index])
-    const condition = selectedGeneration === filters.generation && sameTypes && samePokedexes
-
-    setEqualsFilters(condition)
+    checkSelectedItems()
   }
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
-
-    const allIncludedPokedexes = ev.target.includedPokedexes.checked
-    const allIncludedTypes = ev.target.includedTypes.checked
 
     const { selectedGeneration, selectedPokedexes, selectedTypes } = getSelectedItems()
 
@@ -71,9 +61,7 @@ export function FilterSort () {
           generation: selectedGeneration,
           pokedex: selectedPokedexes,
           elements: selectedTypes
-        },
-        allPokedexes: allIncludedPokedexes,
-        allTypes: allIncludedTypes
+        }
       })
     })
 
@@ -87,34 +75,32 @@ export function FilterSort () {
         <ul>
           <DetailsSummary classList='filter_details' title='Generación'>
             <div>
-              <label><input type='radio' name='generation_filter' defaultChecked value='all' onChange={changeTempSelectedItems} /> Todas</label>
+              <label><input type='radio' name='generation_filter' defaultChecked value='all' onChange={checkSelectedItems} /> Todas</label>
               {checkboxNames.generationNames.map(generation => (
-                <label key={generation}><input type='radio' name='generation_filter' value={generation} onChange={changeTempSelectedItems} /> {generation}</label>
+                <label key={generation}><input type='radio' name='generation_filter' value={generation} onChange={checkSelectedItems} /> {generation}</label>
               ))}
             </div>
           </DetailsSummary>
+
           <DetailsSummary classList='filter_details' title='Pokedex'>
-            <label><input type='checkbox' name='includedPokedexes' defaultChecked /> Incluir todas</label>
             <div id='pokedexFilterNodes'>
               {checkboxNames.pokedexNames.map(pokedexName => (
-                <label key={pokedexName}><input type='checkbox' name={pokedexName} defaultChecked onChange={changeTempSelectedItems} /> {pokedexName}</label>
+                <label key={pokedexName}><input type='checkbox' name={pokedexName} onChange={checkSelectedItems} /> {pokedexName}</label>
               ))}
             </div>
             <div className='filter_buttons_container'>
-              <button type='button' onClick={ev => { changeForm(true, 'pokedex') }}>Resetear</button>
-              <button type='button' onClick={ev => { changeForm(false, 'pokedex') }}>Vaciar</button>
+              <button type='button' onClick={ev => { changeForm(false, 'pokedex') }}>Resetear</button>
             </div>
           </DetailsSummary>
+
           <DetailsSummary classList='filter_details' title='Elementos'>
-            <label><input type='checkbox' name='includedTypes' defaultChecked /> Incluir todos</label>
             <div id='typeFilterNodes'>
               {checkboxNames.elementNames.map(type => (
-                <label key={type}><input type='checkbox' name={type} defaultChecked onChange={changeTempSelectedItems} /> {type}</label>
+                <label key={type}><input type='checkbox' name={type} onChange={checkSelectedItems} /> {type}</label>
               ))}
             </div>
             <div className='filter_buttons_container'>
-              <button type='button' onClick={ev => { changeForm(true, 'type') }}>Resetear</button>
-              <button type='button' onClick={ev => { changeForm(false, 'type') }}>Vaciar</button>
+              <button type='button' onClick={ev => { changeForm(false, 'type') }}>Resetear</button>
             </div>
           </DetailsSummary>
         </ul>
