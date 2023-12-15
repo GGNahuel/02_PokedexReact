@@ -6,10 +6,10 @@ import { useLocationEncounterAreasGenerator } from '../../hooks/useLocationEncou
 
 import { TypeTag } from './TypeTag'
 
-export function CardBody ({ sprite, elements }) {
+export function CardBody ({ sprite, alternativeSprite, elements }) {
   return (
     <>
-      <img src={sprite} alt='' className='tarjeta_img' />
+      <img src={sprite || alternativeSprite} alt='No hay imagen disponible del pokemon :c' className='tarjeta_img' />
       <div className='tarjeta_tipos'>
         {elements.map(typeobj => (
           <TypeTag key={typeobj.slot} type={typeobj.type.name} />
@@ -20,7 +20,7 @@ export function CardBody ({ sprite, elements }) {
 }
 
 export function ExpandedCardBody ({ dataObj }) {
-  const { name, id, stats, weight, height, sprite, elements, locationsURL } = renameProps(dataObj)
+  const { name, id, stats, weight, height, sprite, alternativeSprite, elements, locationsURL } = renameProps(dataObj)
 
   const DetailsElements = () => (
     <>
@@ -51,7 +51,7 @@ export function ExpandedCardBody ({ dataObj }) {
         <h3>{id}</h3>
       </div>
       <div className='tarjeta_mainInfo'>
-        <img src={sprite} alt='' className='tarjeta_img' />
+        <img src={sprite || alternativeSprite} alt='' className='tarjeta_img' />
         <ul className='tarjeta_stats'>
           {stats.map(statObj => (
             <li key={statObj.stat.name}>{statObj.stat.name}: {statObj.base_stat}</li>

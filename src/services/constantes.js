@@ -5,6 +5,7 @@ export function renameProps (dataObj) {
     name: dataObj.name,
     id: dataObj.id,
     sprite: dataObj.sprites.front_default,
+    alternativeSprite: dataObj.sprites.other['official-artwork'].front_default,
     elements: dataObj.types,
     stats: dataObj.stats,
     weight: dataObj.weight / 10,

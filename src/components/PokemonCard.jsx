@@ -4,7 +4,7 @@ import { CardBody } from './PokemonCard_components/cardBody'
 
 export function TarjetaPkmn (props) {
   const { dataObj, idSelected, toggleSelected } = props
-  const { name, id, sprite, elements } = renameProps(dataObj)
+  const { name, id, sprite, alternativeSprite, elements } = renameProps(dataObj)
 
   const expanded = idSelected === id
 
@@ -22,7 +22,7 @@ export function TarjetaPkmn (props) {
           <h3>{id}</h3>
         </div>
         <div className='tarjeta_body'>
-          <CardBody sprite={sprite} elements={elements} />
+          <CardBody sprite={sprite} elements={elements} alternativeSprite={alternativeSprite} />
         </div>
       </article>
     </>
