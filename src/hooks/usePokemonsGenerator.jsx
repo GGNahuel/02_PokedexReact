@@ -6,7 +6,7 @@ import { getGenerationPokemons, getFilterEntries } from '../services/getFilterEn
 
 export function usePokemonsGenerator () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
-  const { page, filters } = resultsDetails
+  const { page, filters, sort } = resultsDetails
 
   const [pkmns, setPkmns] = useState([])
   const [mainResults, setMainResults] = useState([])
@@ -14,12 +14,6 @@ export function usePokemonsGenerator () {
 
   async function generatePokeElements (pokeArray) {
     const indexPkmn = page * 20
-    pokeArray.sort(function (a, b) { return a.id - b.id })
-
-    setResultsDetails(prev => ({
-      ...prev,
-      totalPages: Math.ceil(pokeArray.length / 20)
-    }))
 
     const pokeElements = []
     for (let pkmn = indexPkmn; pkmn < indexPkmn + 20; pkmn++) {
@@ -29,6 +23,18 @@ export function usePokemonsGenerator () {
         pokeElements.push(dataPkmn)
       }
     }
+
+    if (sort !== 'default') {
+      pokeElements.sort((a, b) => {
+        if (sort === 'name') return a.name.localeCompare(b.name)
+        if (a[sort]) return a[sort] - b[sort]
+
+        const indxSortStatA = a.stats.findIndex(statObj => statObj.stat.name === sort)
+        const indxSortStatB = b.stats.findIndex(statObj => statObj.stat.name === sort)
+        return a.stats[indxSortStatA].base_stat - b.stats[indxSortStatB].base_stat
+      })
+    }
+
     setPkmns(pokeElements)
   }
 
@@ -73,7 +79,8 @@ export function usePokemonsGenerator () {
       }
       setResultsDetails(prevState => ({
         ...prevState,
-        page: 0
+        page: 0,
+        totalPages: Math.ceil(tempResults.length / 20)
       }))
     }
     if (mainResults.length > 0) generateFilteredContent()

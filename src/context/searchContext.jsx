@@ -12,7 +12,7 @@ export function SearchContextProvider ({ children }) {
       pokedex: [],
       elements: []
     },
-    sort: ''
+    sort: 'default'
   })
 
   return (

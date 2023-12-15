@@ -10,7 +10,7 @@ A hacer:
         despues desde que se obtienen los objetos de la api. Principalmente cuando aparece la info detallada de un pkmn
     Renderizar un "loading" mientras se cargan las cosas
     Enrutamiento
-    
+    Diseño responsivo, y modo nocturno (en otro estado global?)
 
 Info a mostrar para cada pokemon
     ✅Nombre 
@@ -25,6 +25,8 @@ Info a mostrar para cada pokemon
         nombre de los pkmns
         Condiciones de evolución
              Nombre de condición y detalles
+    Generación de origen
+    Pokedexes en las que aparece
     ✅Lugares de encuentro/obtención 📖
         Lugar
         Porcentaje de aparición
@@ -50,17 +52,18 @@ Filtros:
     Habitat
     ❌Método de evolución?
 
-Formas de ordenar resultados
+✅Formas de ordenar resultados
     Nombre
-    Indice
-    Generación
-    Estadísticas:
+    🔄Estadísticas: (por el momento funciona solo por página, porque sino habria que cargar los datos de todo el array
+    de resultados)
         Hp
         Ataque
         Defensa
         Ataque especial
         Defensa especial
         Velocidad
+        Peso
+        Altura
 
 Funciones adicionales:
     Agregar modo nocturno

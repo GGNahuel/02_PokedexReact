@@ -108,6 +108,11 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
 }
+.filter_details > div > fieldset {
+  grid-column: 3/none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
+}
 .filter_details > .filter_buttons_container {
   display: flex;
   justify-content: flex-end;

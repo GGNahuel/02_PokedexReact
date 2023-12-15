@@ -16,18 +16,21 @@ export function FilterSort () {
     const selectedGeneration = formNode.generation_filter.value
     const selectedPokedexes = checkboxNames.pokedexNames.filter(pokedexName => formNode[pokedexName].checked && pokedexName)
     const selectedTypes = checkboxNames.elementNames.filter(typeName => formNode[typeName].checked && typeName)
+    const selectedSort = formNode.sortResults.value
 
-    return { selectedGeneration, selectedPokedexes, selectedTypes }
+    return { selectedGeneration, selectedPokedexes, selectedTypes, selectedSort }
   }
 
   const checkSelectedItems = () => {
-    const { selectedGeneration, selectedPokedexes, selectedTypes } = getSelectedItems()
+    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedSort } = getSelectedItems()
 
     const lengthcondition = selectedPokedexes.length === filters.pokedex.length && selectedTypes.length === filters.elements.length
     const samePokedexes = selectedPokedexes.every((item, index) => item === filters.pokedex[index])
     const sameTypes = selectedTypes.every((item, index) => item === filters.elements[index])
+    const sameGeneration = selectedGeneration === filters.generation
+    const sameSort = selectedSort === resultsDetails.sort
 
-    const condition = lengthcondition && selectedGeneration === filters.generation && sameTypes && samePokedexes
+    const condition = lengthcondition && sameGeneration && sameTypes && samePokedexes && sameSort
     setEqualsFilters(condition)
   }
 
@@ -50,7 +53,7 @@ export function FilterSort () {
   const handleSubmit = (ev) => {
     ev.preventDefault()
 
-    const { selectedGeneration, selectedPokedexes, selectedTypes } = getSelectedItems()
+    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedSort } = getSelectedItems()
 
     setResultsDetails(prevState => {
       const searchValue = prevState.filters.search
@@ -61,7 +64,8 @@ export function FilterSort () {
           generation: selectedGeneration,
           pokedex: selectedPokedexes,
           elements: selectedTypes
-        }
+        },
+        sort: selectedSort
       })
     })
 
@@ -107,13 +111,23 @@ export function FilterSort () {
       </details>
       <DetailsSummary classList='filter_details' title='Ordenar por'>
         <div>
-          <label><input type='radio' name='sortResults' /> Alfabeticamente</label>
-          <label><input type='radio' name='sortResults' /> Índice</label>
-          <label><input type='radio' name='sortResults' /> Hp</label>
+          <label><input type='radio' name='sortResults' value='default' defaultChecked onChange={checkSelectedItems} /> Por defecto</label>
+          <label><input type='radio' name='sortResults' value='name' onChange={checkSelectedItems} /> Alfabeticamente</label>
+          <fieldset>
+            <legend>Estadística <span className='normal' title='Por cuestiones de rendimiento esto solo ordenará la página actual'>❔</span></legend>
+            <label><input type='radio' name='sortResults' value='hp' onChange={checkSelectedItems} /> Hp</label>
+            <label><input type='radio' name='sortResults' value='attack' onChange={checkSelectedItems} /> Ataque</label>
+            <label><input type='radio' name='sortResults' value='defense' onChange={checkSelectedItems} /> Defensa</label>
+            <label><input type='radio' name='sortResults' value='special-attack' onChange={checkSelectedItems} /> Ataque especial</label>
+            <label><input type='radio' name='sortResults' value='special-defense' onChange={checkSelectedItems} /> Defensa especial</label>
+            <label><input type='radio' name='sortResults' value='speed' onChange={checkSelectedItems} /> Velocidad</label>
+            <label><input type='radio' name='sortResults' value='weight' onChange={checkSelectedItems} /> Peso</label>
+            <label><input type='radio' name='sortResults' value='height' onChange={checkSelectedItems} /> Altura</label>
+          </fieldset>
         </div>
       </DetailsSummary>
       <div>
-        {!equalsSelectedTempFilters && <p>Hay filtros sin aplicar</p>}
+        {!equalsSelectedTempFilters && <p>Hay cambios sin aplicar</p>}
         <button type='submit'>Aplicar Cambios</button>
       </div>
     </form>

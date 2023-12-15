@@ -20,6 +20,12 @@
     &>div{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(50px,150px));
+        
+        &>fieldset{
+            grid-column: 3 / none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px,150px));
+        }
     }
     &>.filter_buttons_container{
         display: flex;
