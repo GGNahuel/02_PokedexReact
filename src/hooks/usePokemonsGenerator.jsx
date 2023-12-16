@@ -9,11 +9,17 @@ export function usePokemonsGenerator () {
   const { page, filters, sort } = resultsDetails
 
   const [pkmns, setPkmns] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [mainResults, setMainResults] = useState([])
   const [currentResults, setCurrentResults] = useState([])
 
   async function generatePokeElements (pokeArray) {
     const indexPkmn = page * 20
+    setIsLoading(true)
+    setResultsDetails(prevState => ({
+      ...prevState,
+      totalPages: Math.ceil(pokeArray.length / 20)
+    }))
 
     const pokeElements = []
     for (let pkmn = indexPkmn; pkmn < indexPkmn + 20; pkmn++) {
@@ -36,6 +42,7 @@ export function usePokemonsGenerator () {
     }
 
     setPkmns(pokeElements)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -79,12 +86,11 @@ export function usePokemonsGenerator () {
       }
       setResultsDetails(prevState => ({
         ...prevState,
-        page: 0,
-        totalPages: Math.ceil(tempResults.length / 20)
+        page: 0
       }))
     }
     if (mainResults.length > 0) generateFilteredContent()
   }, [filters])
 
-  return pkmns
+  return { pkmns, isLoading }
 }

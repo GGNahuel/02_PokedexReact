@@ -8,7 +8,7 @@ A hacer:
     Manejar errores de api y mostrar en la página que algo salio mal
     Optimizar los dataObj que se pasan a los elementos, por ejemplo sacar solo las propiedades que se vayan a usar 
         despues desde que se obtienen los objetos de la api. Principalmente cuando aparece la info detallada de un pkmn
-    Renderizar un "loading" mientras se cargan las cosas
+    ✅Renderizar un "loading" mientras se cargan las cosas
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
 
@@ -27,6 +27,7 @@ Info a mostrar para cada pokemon
              Nombre de condición y detalles
     Generación de origen
     Pokedexes en las que aparece
+    Hábitat
     ✅Lugares de encuentro/obtención 📖
         Lugar
         Porcentaje de aparición
