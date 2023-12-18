@@ -1,18 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 $color-principal: rgb(116, 0, 0);
+$color-principal-claro: lighten($color-principal, 10%);
 $color-secundario: rgb(241, 241, 241);
 
 $main-font: 'Noto sans', sans-serif;
+$ancho-scroll: 0.8rem;
 
 * {
     padding: 0;
     margin: 0;
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $color-principal-claro;
+        border: 2px solid $color-secundario;
+        border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar {
+        width: $ancho-scroll;
+    }
 }
 
 body{
     font-family: $main-font;
     font-size: 1rem;
+    overflow-y: scroll;
+    margin-right: $ancho-scroll;
 }
 
 h3{
@@ -35,7 +49,7 @@ button{
     cursor: pointer;
 
     &:hover{
-        background-color: lighten($color-principal, 10%);
+        background-color: $color-principal-claro;
     }
 
     &:active{
@@ -47,12 +61,22 @@ button{
         color: $color-principal;
 
         &:hover {
-            background-color: darken($color: $color-secundario, $amount: 10%);
+            background-color: darken($color: $color-secundario, $amount: 15%);
         }
         
         &:active {
-            background-color: darken($color: $color-secundario, $amount: 15%);
+            background-color: darken($color: $color-secundario, $amount: 20%);
         }
+    }
+
+    &:disabled{
+        background-color: $color-secundario;
+        color: darken($color: $color-secundario, $amount: 15%);
+        cursor: default;
+    }
+
+    &+button{
+        margin-left: 5px;
     }
 }
 

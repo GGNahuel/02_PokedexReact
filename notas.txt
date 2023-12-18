@@ -6,6 +6,7 @@
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
     Manejar errores de api y mostrar en la página que algo salio mal
+    Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
     Optimizar los dataObj que se pasan a los elementos, por ejemplo sacar solo las propiedades que se vayan a usar 
         despues desde que se obtienen los objetos de la api. Principalmente cuando aparece la info detallada de un pkmn
     ✅Renderizar un "loading" mientras se cargan las cosas

@@ -9,7 +9,7 @@ import { TypeTag } from './TypeTag'
 export function CardBody ({ sprite, alternativeSprite, elements }) {
   return (
     <>
-      <img src={sprite || alternativeSprite} alt='No hay imagen disponible del pokemon :c' className='tarjeta_img' />
+      <img src={sprite || alternativeSprite} alt='No hay imagen disponible del pokemon :c' className='tarjeta_img' loading='lazy' />
       <div className='tarjeta_tipos'>
         {elements.map(typeobj => (
           <TypeTag key={typeobj.slot} type={typeobj.type.name} />
