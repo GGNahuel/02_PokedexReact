@@ -73,6 +73,9 @@ button{
         background-color: $color-secundario;
         color: darken($color: $color-secundario, $amount: 15%);
         cursor: default;
+        &:active {
+            border-color: black;
+        }
     }
 
     &+button{

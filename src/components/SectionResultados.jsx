@@ -23,6 +23,7 @@ export function SectionResultados () {
   return (
     <section id='pokemonSection'>
       <section id='pokeResultados'>
+        {pkmns.length === 0 && !isLoading && <div>No se han encontrado resultados, prueba cambiando su búsqueda o los filtros</div>}
         {!isLoading
           ? pkmns.map(dataPkmn => (
             <TarjetaPkmn

@@ -5,11 +5,11 @@
 
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
+    ✅Renderizar un "loading" mientras se cargan las cosas
     Manejar errores de api y mostrar en la página que algo salio mal
     Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
     Optimizar los dataObj que se pasan a los elementos, por ejemplo sacar solo las propiedades que se vayan a usar 
         despues desde que se obtienen los objetos de la api. Principalmente cuando aparece la info detallada de un pkmn
-    ✅Renderizar un "loading" mientras se cargan las cosas
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
 
@@ -69,6 +69,11 @@ Filtros:
 
 Funciones adicionales:
     Agregar modo nocturno
-    Guardado de equipos
+    Registro e inicio de sesión de usuarios
+        Como avatar la imagen de un pkmn?
+    Guardado de equipos en la cuenta del usuario
+        Se pueden nombrar los equipos y guardar pokemones
+        Equipos de 6 pokemones (que cuente con la opción de agregar auxiliares/reemplazos)
+        Que muestre fortalezas y debilidades de los elementos del equipo
+        Que aparezcan las pokedexes (o juegos) en los que se puede armar?
         Con sus movimientos?
-        Que muestre fortalezas y debilidades de los elementos del equipo?
