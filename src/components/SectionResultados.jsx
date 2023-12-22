@@ -6,17 +6,17 @@ import { LoadingComponent } from './LoadingComponent'
 
 export function SectionResultados () {
   const [tarjetaExpandida, setTarjetaExpandida] = useState(null)
-  const [dataObjSelected, setDataObjSelected] = useState(null)
+  const [objSelected, setObjSelected] = useState(null)
 
   const { pkmns, isLoading } = usePokemonsGenerator()
 
   function toggleSelected (id, dataObj) {
     if (tarjetaExpandida === id) {
       setTarjetaExpandida(null)
-      setDataObjSelected(null)
+      setObjSelected(null)
     } else {
       setTarjetaExpandida(id)
-      setDataObjSelected(dataObj)
+      setObjSelected(<ExpandedCardBody dataObj={dataObj} />)
     }
   }
 
@@ -35,7 +35,7 @@ export function SectionResultados () {
           )
           : <LoadingComponent />}
       </section>
-      {dataObjSelected && <ExpandedCardBody dataObj={dataObjSelected} />}
+      {objSelected}
     </section>
   )
 }

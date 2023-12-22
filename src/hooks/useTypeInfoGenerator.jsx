@@ -1,25 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getTypeInfo } from '../services/getPokeApis'
-import { renameTypeProps } from '../services/constantes'
-import { DamageRelationsType } from '../components/PokemonCard_components/DamageRelationsType'
 
-export function useTypeInfoGenerator (elements) {
+export function useTypeInfoGenerator ({ elements }) {
   const [damageRelations, setDamageRelations] = useState([])
 
   useEffect(() => {
     function generateElementsInfo () {
       const newDamageRelations = []
-      elements.forEach(async (element, indx) => {
+      elements.forEach(async element => {
         const elementData = await getTypeInfo(element.type.url)
-
-        const { baseElement } = renameTypeProps(elementData)
-        newDamageRelations.push(<DamageRelationsType key={baseElement} dataObj={elementData} indx={indx} />)
+        newDamageRelations.push(elementData)
       })
-
       setDamageRelations(newDamageRelations)
     }
     generateElementsInfo()
-  }, [])
+  }, [elements])
 
-  return damageRelations
+  return { damageRelations }
 }

@@ -14,7 +14,6 @@ export function EvolutionElements ({ obj, targetName, targetSprite }) {
       for (const key in evolutionDetails[0]) {
         if (evolutionDetails[0][key]) {
           newConditions.push([key, evolutionDetails[0][key]])
-          // evolutionConditions.push([key, evolutionDetails[0][key]])
         }
       }
       setEvolutionCondition(newConditions)
@@ -36,27 +35,16 @@ export function EvolutionElements ({ obj, targetName, targetSprite }) {
     <>
       <p>{nameLink} {idLink}</p>
       <img src={spriteSource} alt='' />
-      {evolutionConditions.map(arrayCondition => {
-        if (!arrayCondition[1].name) {
-          return (
-            <p key={arrayCondition[0]}>Condición: {arrayCondition[0]}= {arrayCondition[1]}</p>
-          )
-        } else {
-          return (
-            <p key={arrayCondition[0]}>Condición: {arrayCondition[0]}= {arrayCondition[1].name}</p>
-          )
-        }
-      }
+      {evolutionConditions.map(arrayCondition => !arrayCondition[1].name
+        ? <p key={arrayCondition[0]}>Condición: {arrayCondition[0]}= {arrayCondition[1]}</p>
+        : <p key={arrayCondition[0]}>Condición: {arrayCondition[0]}= {arrayCondition[1].name}</p>
       )}
-      {evolvesTo.length > 0
-        ? (
-          <div className='evolPath_main'>
-            {evolvesTo.map(element => (
-              <EvolutionElements key={renameEvolutionProps(element).nameLink} obj={element} />
-            ))}
-          </div>
-          )
-        : ''}
+      {evolvesTo.length > 0 &&
+        <div className='evolPath_main'>
+          {evolvesTo.map(element => (
+            <EvolutionElements key={renameEvolutionProps(element).nameLink} obj={element} />
+          ))}
+        </div>}
     </>
   )
 }

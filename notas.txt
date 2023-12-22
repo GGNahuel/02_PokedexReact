@@ -6,10 +6,9 @@
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
     ✅Renderizar un "loading" mientras se cargan las cosas
+    ✅Optimizar los dataObj que se pasan a los elementos y customHooks
     Manejar errores de api y mostrar en la página que algo salio mal
     Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
-    Optimizar los dataObj que se pasan a los elementos, por ejemplo sacar solo las propiedades que se vayan a usar 
-        despues desde que se obtienen los objetos de la api. Principalmente cuando aparece la info detallada de un pkmn
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
 
@@ -26,9 +25,9 @@ Info a mostrar para cada pokemon
         nombre de los pkmns
         Condiciones de evolución
              Nombre de condición y detalles
-    Generación de origen
-    Pokedexes en las que aparece
-    Hábitat
+    ✅Generación de origen
+    ✅Pokedexes en las que aparece
+    ✅Hábitat
     ✅Lugares de encuentro/obtención 📖
         Lugar
         Porcentaje de aparición
@@ -43,7 +42,7 @@ Info a mostrar para cada pokemon
         Objetivo/objetivos
         Descripción
 
-✅Tipos de búsqueda (que del array de pokemones saque el nombre aun si no esta escrito al 100%)
+✅Tipos de búsqueda
     Nombre
     🔄Indice
     
@@ -54,10 +53,10 @@ Filtros:
     Habitat
     ❌Método de evolución?
 
-✅Formas de ordenar resultados
+🔄Formas de ordenar resultados (por el momento funciona solo por página, porque sino habria que cargar los datos de todo el array
+de resultados)
     Nombre
-    🔄Estadísticas: (por el momento funciona solo por página, porque sino habria que cargar los datos de todo el array
-    de resultados)
+    Estadísticas:
         Hp
         Ataque
         Defensa

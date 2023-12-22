@@ -1,3 +1,5 @@
+export const PREFIX_API = 'https://pokeapi.co/api/v2/'
+export const POKEMON_PREFIX_API = 'https://pokeapi.co/api/v2/pokemon/'
 export const regExpIDPKMN = /(?<=\/)[0-9]+/
 
 export function renameProps (dataObj) {
@@ -15,6 +17,24 @@ export function renameProps (dataObj) {
   }
 
   return newProperites
+}
+
+export function renameSpecieProps (dataObj) {
+  const pokedexNumbers = dataObj.pokedex_numbers.map(element => ({
+    entry: element.entry_number,
+    pokedex: element.pokedex.name
+  }))
+  const description = dataObj.flavor_text_entries.find(element => element.language.name === 'en').flavor_text
+
+  const newProps = {
+    generation: dataObj.generation.name,
+    isLegendary: dataObj.is_legendary,
+    isMithic: dataObj.is_mythical,
+    habitat: dataObj.habitat.name,
+    pokedexNumbers,
+    description
+  }
+  return newProps
 }
 
 // "https://pokeapi.co/api/v2/pokemon-species/259/", ex
@@ -58,12 +78,8 @@ export function renameLocationEncounterAreas (dataObj) {
     versionNames,
     maxChances,
     encounterDetails
-    // methods: methods,
-    // conditions: conditions
+    // methods, conditions
   }
 
   return newProperites
 }
-
-export const PREFIX_API = 'https://pokeapi.co/api/v2/'
-export const POKEMON_PREFIX_API = 'https://pokeapi.co/api/v2/pokemon/'
