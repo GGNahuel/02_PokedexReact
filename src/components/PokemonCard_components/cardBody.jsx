@@ -1,8 +1,6 @@
 import { renameLocationEncounterAreas, renameProps } from '../../services/constantes'
 
-import { useSpecieInfo } from '../../hooks/useSpecieInfo'
-import { useTypeInfoGenerator } from '../../hooks/useTypeInfoGenerator'
-import { useLocationEncounterAreasGenerator } from '../../hooks/useLocationEncounterAreasGenerator'
+import { useDetailedPokemonInfo } from '../../hooks/useDetailedPokemonInfo'
 
 import { TypeTag } from './TypeTag'
 import { EvolutionElements } from './evolutionChain'
@@ -25,9 +23,7 @@ export function CardBody ({ sprite, alternativeSprite, elements }) {
 export function ExpandedCardBody ({ dataObj }) {
   const { name, id, stats, weight, height, sprite, alternativeSprite, elements, locationsURL, speciesURL } = renameProps(dataObj)
 
-  const { damageRelations } = useTypeInfoGenerator({ elements })
-  const { specieData, evolutionElement } = useSpecieInfo({ speciesURL })
-  const { locationAreas } = useLocationEncounterAreasGenerator({ locationsURL })
+  const { damageRelations, specieData, evolutionData, locationAreas } = useDetailedPokemonInfo({ locationsURL, speciesURL, elements })
 
   const DetailsElements = () => (
     <>
@@ -43,7 +39,7 @@ export function ExpandedCardBody ({ dataObj }) {
       </div>
       <div className='tarjeta_evolutionPath'>
         <div className='evolPath_main'>
-          {evolutionElement && <EvolutionElements obj={evolutionElement} targetName={name} targetSprite={sprite} />}
+          {evolutionData && <EvolutionElements obj={evolutionData} targetName={name} targetSprite={sprite} />}
         </div>
       </div>
       <div className='tarjeta_datosRegion'>
