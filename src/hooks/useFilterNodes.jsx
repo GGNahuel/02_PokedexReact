@@ -4,7 +4,8 @@ export function useFilterNodes () {
   const [checkboxNames, setCheckboxNames] = useState({
     generationNames: [],
     pokedexNames: [],
-    elementNames: []
+    elementNames: [],
+    habitatNames: []
   })
 
   useEffect(() => {
@@ -23,8 +24,12 @@ export function useFilterNodes () {
         const dataPokedex = await apiPokedex.json()
         const pokedexes = dataPokedex.results.map(pokedex => pokedex.name)
 
+        const apiHabitat = await fetch('https://pokeapi.co/api/v2/pokemon-habitat/' + SUFIX_LIMIT_API)
+        const dataHabitat = await apiHabitat.json()
+        const habitats = dataHabitat.results.map(element => element.name)
+
         setCheckboxNames({
-          generationNames: generations, pokedexNames: pokedexes, elementNames: types
+          generationNames: generations, pokedexNames: pokedexes, elementNames: types, habitatNames: habitats
         })
       } catch (error) {
         console.log('error con los filtros de generacion' + error)

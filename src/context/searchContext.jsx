@@ -10,7 +10,8 @@ export function SearchContextProvider ({ children }) {
       search: '',
       generation: 'all',
       pokedex: [],
-      elements: []
+      elements: [],
+      habitat: ''
     },
     sort: 'default'
   })

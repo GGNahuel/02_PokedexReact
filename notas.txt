@@ -11,6 +11,7 @@ A hacer:
     Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
+    optimizar codigo del filterComponent
 
 Info a mostrar para cada pokemon
     ✅Nombre 
@@ -50,8 +51,7 @@ Filtros:
     ✅Generación
     ✅Pokedex
     ✅Elementos
-    Habitat
-    ❌Método de evolución?
+    ✅Habitat
 
 🔄Formas de ordenar resultados (por el momento funciona solo por página, porque sino habria que cargar los datos de todo el array
 de resultados)

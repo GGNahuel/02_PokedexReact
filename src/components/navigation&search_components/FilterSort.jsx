@@ -16,21 +16,25 @@ export function FilterSort () {
     const selectedGeneration = formNode.generation_filter.value
     const selectedPokedexes = checkboxNames.pokedexNames.filter(pokedexName => formNode[pokedexName].checked && pokedexName)
     const selectedTypes = checkboxNames.elementNames.filter(typeName => formNode[typeName].checked && typeName)
+    const selectedHabitat = checkboxNames.habitatNames.filter(a => formNode[a].checked && a)
     const selectedSort = formNode.sortResults.value
 
-    return { selectedGeneration, selectedPokedexes, selectedTypes, selectedSort }
+    return { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort }
   }
 
   const checkSelectedItems = () => {
-    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedSort } = getSelectedItems()
+    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort } = getSelectedItems()
 
-    const lengthcondition = selectedPokedexes.length === filters.pokedex.length && selectedTypes.length === filters.elements.length
+    const lengthcondition = selectedPokedexes.length === filters.pokedex.length &&
+      selectedTypes.length === filters.elements.length &&
+      selectedHabitat.length === filters.habitats.length
     const samePokedexes = selectedPokedexes.every((item, index) => item === filters.pokedex[index])
     const sameTypes = selectedTypes.every((item, index) => item === filters.elements[index])
+    const sameHabitats = selectedHabitat.every((item, index) => item === filters.habitat[index])
     const sameGeneration = selectedGeneration === filters.generation
     const sameSort = selectedSort === resultsDetails.sort
 
-    const condition = lengthcondition && sameGeneration && sameTypes && samePokedexes && sameSort
+    const condition = lengthcondition && sameGeneration && sameTypes && samePokedexes && sameHabitats && sameSort
     setEqualsFilters(condition)
   }
 
@@ -45,6 +49,10 @@ export function FilterSort () {
       checkboxNames.elementNames.forEach(typeName => {
         formNode[typeName].checked = checkedInputs
       })
+    } else if (checkboxesToChange === 'habitat') {
+      checkboxNames.habitatNames.forEach(habitatName => {
+        formNode[habitatName].checked = checkedInputs
+      })
     }
 
     checkSelectedItems()
@@ -53,7 +61,7 @@ export function FilterSort () {
   const handleSubmit = (ev) => {
     ev.preventDefault()
 
-    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedSort } = getSelectedItems()
+    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort } = getSelectedItems()
 
     setResultsDetails(prevState => {
       const searchValue = prevState.filters.search
@@ -63,7 +71,8 @@ export function FilterSort () {
           search: searchValue,
           generation: selectedGeneration,
           pokedex: selectedPokedexes,
-          elements: selectedTypes
+          elements: selectedTypes,
+          habitat: selectedHabitat
         },
         sort: selectedSort
       })
@@ -105,6 +114,17 @@ export function FilterSort () {
             </div>
             <div className='filter_buttons_container'>
               <button type='button' onClick={ev => { changeForm(false, 'type') }}>Resetear</button>
+            </div>
+          </DetailsSummary>
+
+          <DetailsSummary classList='filter_details' title='Habitats'>
+            <div id='habitatFilterNodes'>
+              {checkboxNames.habitatNames.map(habitat => (
+                <label key={habitat}><input type='checkbox' name={habitat} onChange={checkSelectedItems} /> {habitat}</label>
+              ))}
+            </div>
+            <div className='filter_buttons_container'>
+              <button type='button' onClick={ev => { changeForm(false, 'habitat') }}>Resetear</button>
             </div>
           </DetailsSummary>
         </ul>

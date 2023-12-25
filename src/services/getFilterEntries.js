@@ -3,18 +3,47 @@
 import { getPokemonInfo } from './getPokeApis'
 import { PREFIX_API, regExpIDPKMN } from './constantes'
 
-export async function getGenerationPokemons (arrayToFilter, generationName) {
-  const generationApi = await getPokemonInfo(`${PREFIX_API}generation/${generationName}`)
+const FILTER_TYPES = {
+  generation: {
+    entriesArrayName: 'pokemon_species',
+    routeToEntrieName: null
+  },
+  pokedex: {
+    entriesArrayName: 'pokemon_entries',
+    routeToEntrieName: 'pokemon_species'
+  },
+  type: {
+    entriesArrayName: 'pokemon',
+    routeToEntrieName: 'pokemon'
+  },
+  habitat: {
+    entriesArrayName: 'pokemon_species',
+    routeToEntrieName: null
+  }
+}
 
-  if (generationApi) {
-    const { pokemon_species } = generationApi
-    pokemon_species.sort(function (a, b) {
+function checkValidFilterType (filterType = String) {
+  return Object.keys(FILTER_TYPES).includes(filterType)
+}
+
+export async function getEntriesFromOptionFilter (arrayToFilter, itemName, filterType) {
+  if (!checkValidFilterType(filterType)) {
+    console.warn('El filtro elegido no corresponde con los definidos')
+    return
+  }
+
+  const LINK = PREFIX_API + filterType + '/' + itemName
+  const dataApi = await getPokemonInfo(LINK)
+
+  if (dataApi) {
+    const entries = dataApi[FILTER_TYPES[filterType].entriesArrayName]
+    entries.sort(function (a, b) {
       const idA = regExpIDPKMN.exec(a.url)
       const idB = regExpIDPKMN.exec(b.url)
       return idA - idB
     })
 
-    const tempResults = generationApi.pokemon_species.filter(pokemon1 => {
+    const tempResults = entries.filter(pokemon1 => {
       return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
     })
 
@@ -22,21 +51,22 @@ export async function getGenerationPokemons (arrayToFilter, generationName) {
   }
 }
 
-export async function getFilterEntries (arrayToFilter, selectedItems, filterType = String) {
-  if (selectedItems.length === 0) return []
-  if (filterType !== 'pokedex' && filterType !== 'type') {
-    console.log('Error al ingresar el parametro filterType en la función getFilterEntries')
-    return []
+export async function getEntriesFromCheckboxsFilter (arrayToFilter, selectedItems, filterType = String) {
+  if (!checkValidFilterType(filterType)) {
+    console.warn('El filtro elegido no corresponde con los definidos')
+    return
   }
 
-  const nameRoute = filterType === 'pokedex' ? 'pokemon_species' : 'pokemon'
+  const setLinkFromIndex = indx => PREFIX_API + filterType + '/' + selectedItems[indx].toLowerCase()
+  const entriesArrayName = FILTER_TYPES[filterType].entriesArrayName
+  const nameRoute = FILTER_TYPES[filterType].routeToEntrieName
 
-  const itemApi1 = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[0].toLowerCase()}`)
-  let filterResults = filterType === 'pokedex' ? itemApi1.pokemon_entries : itemApi1.pokemon
+  const itemApi1 = await getPokemonInfo(setLinkFromIndex(0))
+  let filterResults = itemApi1[entriesArrayName]
 
   for (let itemIndx = 1; itemIndx < selectedItems.length; itemIndx++) {
-    const itemApi2 = await getPokemonInfo(`${PREFIX_API}${filterType}/${selectedItems[itemIndx].toLowerCase()}`)
-    const pokemonsInApi2 = filterType === 'pokedex' ? itemApi2.pokemon_entries : itemApi2.pokemon
+    const itemApi2 = await getPokemonInfo(setLinkFromIndex(itemIndx))
+    const pokemonsInApi2 = itemApi2[entriesArrayName]
 
     filterResults = filterResults.filter(pokemonA => {
       return pokemonsInApi2.some(pokemonB => pokemonA[nameRoute].name === pokemonB[nameRoute].name)
