@@ -5,18 +5,22 @@ import { PREFIX_API, regExpIDPKMN } from './constantes'
 
 const FILTER_TYPES = {
   generation: {
+    linkRoute: 'generation',
     entriesArrayName: 'pokemon_species',
     routeToEntrieName: null
   },
   pokedex: {
+    linkRoute: 'pokedex',
     entriesArrayName: 'pokemon_entries',
     routeToEntrieName: 'pokemon_species'
   },
   type: {
+    linkRoute: 'type',
     entriesArrayName: 'pokemon',
     routeToEntrieName: 'pokemon'
   },
   habitat: {
+    linkRoute: 'pokemon-habitat',
     entriesArrayName: 'pokemon_species',
     routeToEntrieName: null
   }
@@ -32,7 +36,7 @@ export async function getEntriesFromOptionFilter (arrayToFilter, itemName, filte
     return
   }
 
-  const LINK = PREFIX_API + filterType + '/' + itemName
+  const LINK = PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + itemName
   const dataApi = await getPokemonInfo(LINK)
 
   if (dataApi) {
@@ -57,7 +61,7 @@ export async function getEntriesFromCheckboxsFilter (arrayToFilter, selectedItem
     return
   }
 
-  const setLinkFromIndex = indx => PREFIX_API + filterType + '/' + selectedItems[indx].toLowerCase()
+  const setLinkFromIndex = indx => PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + selectedItems[indx].toLowerCase()
   const entriesArrayName = FILTER_TYPES[filterType].entriesArrayName
   const nameRoute = FILTER_TYPES[filterType].routeToEntrieName
 

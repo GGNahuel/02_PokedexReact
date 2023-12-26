@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import { renameTypeProps } from '../../services/constantes'
-import { TypeTag } from './TypeTag'
+import { TypeTag } from '../others/TypeTag'
 
 export function DamageRelationsType ({ dataObj, indx }) {
   const { baseElement, x2DmgFrom, x2DmgTo, halfDmgFrom, halfDmgTo, noDmgFrom, noDmgTo } = renameTypeProps(dataObj)

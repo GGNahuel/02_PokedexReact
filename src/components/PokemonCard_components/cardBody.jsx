@@ -2,7 +2,7 @@ import { renameLocationEncounterAreas, renameProps } from '../../services/consta
 
 import { useDetailedPokemonInfo } from '../../hooks/useDetailedPokemonInfo'
 
-import { TypeTag } from './TypeTag'
+import { TypeTag } from '../others/TypeTag'
 import { EvolutionElements } from './evolutionChain'
 import { DamageRelationsType } from './DamageRelationsType'
 import { LocationEncounterAreas } from './LocationEncounterAreas'

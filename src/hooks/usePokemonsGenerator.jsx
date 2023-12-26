@@ -78,7 +78,7 @@ export function usePokemonsGenerator () {
 
       tempResults = filters.pokedex.length !== 0 ? await getEntriesFromCheckboxsFilter(tempResults, filters.pokedex, 'pokedex') : tempResults
 
-      tempResults = filters.elements.length !== 0 ? await getEntriesFromCheckboxsFilter(tempResults, filters.elements, 'type') : tempResults
+      tempResults = filters.types.length !== 0 ? await getEntriesFromCheckboxsFilter(tempResults, filters.types, 'type') : tempResults
 
       tempResults = filters.habitat !== 'all' ? await getEntriesFromOptionFilter(tempResults, filters.habitat, 'habitat') : tempResults
 

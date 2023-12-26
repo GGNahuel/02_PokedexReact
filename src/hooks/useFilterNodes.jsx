@@ -4,7 +4,7 @@ export function useFilterNodes () {
   const [checkboxNames, setCheckboxNames] = useState({
     generationNames: [],
     pokedexNames: [],
-    elementNames: [],
+    typeNames: [],
     habitatNames: []
   })
 
@@ -29,7 +29,7 @@ export function useFilterNodes () {
         const habitats = dataHabitat.results.map(element => element.name)
 
         setCheckboxNames({
-          generationNames: generations, pokedexNames: pokedexes, elementNames: types, habitatNames: habitats
+          generationNames: generations, pokedexNames: pokedexes, typeNames: types, habitatNames: habitats
         })
       } catch (error) {
         console.log('error con los filtros de generacion' + error)

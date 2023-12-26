@@ -29,7 +29,7 @@ export function useDetailedPokemonInfo ({ locationsURL, speciesURL, elements }) 
   useEffect(() => {
     async function generateEvolutionInfo () {
       const specieInfo = await getPokemonSpecie(speciesURL)
-      const newSpecieData = renameSpecieProps(specieInfo)
+      const newSpecieData = await renameSpecieProps(specieInfo)
 
       const evoChainInfo = await getPokemonEvolutionChain(specieInfo.evolution_chain.url)
 

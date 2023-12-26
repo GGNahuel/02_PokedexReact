@@ -25,12 +25,13 @@ export function renameSpecieProps (dataObj) {
     pokedex: element.pokedex.name
   }))
   const description = dataObj.flavor_text_entries.find(element => element.language.name === 'en').flavor_text
+  const habitat = dataObj.habitat ? dataObj.habitat.name : 'desconocida'
 
   const newProps = {
     generation: dataObj.generation.name,
     isLegendary: dataObj.is_legendary,
     isMithic: dataObj.is_mythical,
-    habitat: dataObj.habitat.name,
+    habitat,
     pokedexNumbers,
     description
   }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export function DetailsSummary ({ title, children, classList = '' }) {
+export function DetailsFilterElement ({ title, children, hasResetButtonType, hasResetButtonFunc }) {
   const [state, setState] = useState('closed')
 
   const handleOpen = (ev) => {
@@ -14,9 +14,15 @@ export function DetailsSummary ({ title, children, classList = '' }) {
   }
 
   return (
-    <details className={classList}>
+    <details className='filter_details'>
       <summary onClick={handleOpen}>{title}</summary>
-      {children}
+      <div>
+        {children}
+      </div>
+      {hasResetButtonType &&
+        <div className='filter_buttons_container'>
+          <button type='button' onClick={() => { hasResetButtonFunc(hasResetButtonType) }}>Resetear</button>
+        </div>}
     </details>
   )
 }

@@ -2,6 +2,7 @@
 🔄 (Revisar)
 ❌ (Cancelado)
 
+ver por qué los datos de despues de la 3era generación no saen (specie data)
 
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
@@ -11,7 +12,6 @@ A hacer:
     Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
-    optimizar codigo del filterComponent
 
 Info a mostrar para cada pokemon
     ✅Nombre 

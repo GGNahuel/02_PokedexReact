@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { usePokemonsGenerator } from '../hooks/usePokemonsGenerator'
 import { TarjetaPkmn } from './PokemonCard'
 import { ExpandedCardBody } from './PokemonCard_components/cardBody'
-import { LoadingComponent } from './LoadingComponent'
+import { LoadingComponent } from './others/LoadingComponent'
 
 export function SectionResultados () {
   const [tarjetaExpandida, setTarjetaExpandida] = useState(null)
