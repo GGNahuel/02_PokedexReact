@@ -1,4 +1,4 @@
-import { renameLocationEncounterAreas, renameProps } from '../../services/constantes'
+import { renameLocationEncounterAreas, renameProps } from '../../services/renameObjectProps'
 
 import { useDetailedPokemonInfo } from '../../hooks/useDetailedPokemonInfo'
 

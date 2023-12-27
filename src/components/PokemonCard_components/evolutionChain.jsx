@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { renameEvolutionProps, POKEMON_PREFIX_API, renameProps } from '../../services/constantes'
+import { renameEvolutionProps, renameProps } from '../../services/renameObjectProps'
+import { POKEMON_PREFIX_API } from '../../services/constantes'
 import { getPokemonInfo } from '../../services/getPokeApis'
 
 export function EvolutionElements ({ obj, targetName, targetSprite }) {

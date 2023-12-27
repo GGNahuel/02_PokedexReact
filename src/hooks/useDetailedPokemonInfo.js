@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { getPokemonSpecie, getPokemonEvolutionChain, getLocationEncounterAreas, getTypeInfo } from '../services/getPokeApis'
-import { renameSpecieProps } from '../services/constantes'
+import { renameSpecieProps } from '../services/renameObjectProps'
 
 export function useDetailedPokemonInfo ({ locationsURL, speciesURL, elements }) {
   const [detailsObjects, setDetailsObject] = useState({

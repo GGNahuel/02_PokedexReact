@@ -1,4 +1,4 @@
-import { renameProps } from '../services/constantes'
+import { renameProps } from '../services/renameObjectProps'
 
 import { CardBody } from './PokemonCard_components/cardBody'
 

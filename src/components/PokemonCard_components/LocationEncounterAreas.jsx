@@ -1,4 +1,4 @@
-import { renameLocationEncounterAreas } from '../../services/constantes'
+import { renameLocationEncounterAreas } from '../../services/renameObjectProps'
 
 export function LocationEncounterAreas ({ dataObjt }) {
   const { location, versionDetails, versionNames, maxChances, encounterDetails } = renameLocationEncounterAreas(dataObjt)
