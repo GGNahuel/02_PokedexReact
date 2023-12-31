@@ -1,13 +1,23 @@
 import { regExpIDPKMN } from './constantes'
+import { fixedText } from './fixText'
 
 export function renameProps (dataObj) {
+  const stats = dataObj.stats.map(element => ({
+    ...element,
+    stat: { name: fixedText(element.stat.name) }
+  }))
+  const elements = dataObj.types.map(element => ({
+    name: fixedText(element.type.name, false),
+    url: element.type.url
+  }))
+
   const newProperites = {
-    name: dataObj.name,
+    name: fixedText(dataObj.name),
     id: dataObj.id,
     sprite: dataObj.sprites.front_default,
     alternativeSprite: dataObj.sprites.other['official-artwork'].front_default,
-    elements: dataObj.types,
-    stats: dataObj.stats,
+    elements,
+    stats,
     weight: dataObj.weight / 10,
     height: dataObj.height * 10,
     speciesURL: dataObj.species.url,
@@ -20,36 +30,49 @@ export function renameProps (dataObj) {
 export function renameSpecieProps (dataObj) {
   const pokedexNumbers = dataObj.pokedex_numbers.map(element => ({
     entry: element.entry_number,
-    pokedex: element.pokedex.name
+    pokedex: fixedText(element.pokedex.name)
   }))
   const description = dataObj.flavor_text_entries.find(element => element.language.name === 'en').flavor_text
-  const habitat = dataObj.habitat ? dataObj.habitat.name : 'desconocida'
+  const habitat = dataObj.habitat ? fixedText(dataObj.habitat.name) : 'desconocida'
 
   const newProps = {
-    generation: dataObj.generation.name,
+    generation: fixedText(dataObj.generation.name),
     isLegendary: dataObj.is_legendary,
     isMithic: dataObj.is_mythical,
     habitat,
     pokedexNumbers,
-    description
+    description: fixedText(description)
   }
   return newProps
 }
 
 export function renameEvolutionProps (dataObj) {
-  const IDExtracted = dataObj.species.url.match(regExpIDPKMN)
+  const IDExtracted = dataObj.species.url.match(regExpIDPKMN)[0]
+
+  const evolutionDetails = dataObj.evolution_details[0]
+  const filteredEvolutionDetails = []
+  for (const key in evolutionDetails) {
+    if (evolutionDetails[key]) {
+      filteredEvolutionDetails.push({
+        condition: fixedText(key),
+        value: fixedText(evolutionDetails[key].name ? evolutionDetails[key].name : evolutionDetails[key], false)
+      })
+    }
+  }
+
   const newProperites = {
-    nameLink: dataObj.species.name,
-    evolutionDetails: dataObj.evolution_details,
+    nameLink: fixedText(dataObj.species.name),
+    evolutionDetails: filteredEvolutionDetails,
     evolvesTo: dataObj.evolves_to,
-    idLink: IDExtracted[0]
+    idLink: IDExtracted,
+    spriteSource: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${IDExtracted}.png`
   }
   return newProperites
 }
 
 export function renameTypeProps (dataObj) {
   const newProperites = {
-    baseElement: dataObj.name,
+    baseElement: fixedText(dataObj.name),
     x2DmgFrom: dataObj.damage_relations.double_damage_from,
     x2DmgTo: dataObj.damage_relations.double_damage_to,
     halfDmgFrom: dataObj.damage_relations.half_damage_from,

@@ -2,8 +2,6 @@
 🔄 (Revisar)
 ❌ (Cancelado)
 
-ver por qué los datos de despues de la 3era generación no saen (specie data)
-
 A hacer:
     ✅Usar useContext para el valor de la pagina, busqueda, filtros 
     ✅Renderizar un "loading" mientras se cargan las cosas
@@ -12,6 +10,7 @@ A hacer:
     Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
+    Idioma y forma en la que aparecen los textos según lo que se obtiene de la api
 
 Info a mostrar para cada pokemon
     ✅Nombre 
@@ -76,3 +75,4 @@ Funciones adicionales:
         Que muestre fortalezas y debilidades de los elementos del equipo
         Que aparezcan las pokedexes (o juegos) en los que se puede armar?
         Con sus movimientos?
+    Lista de "posteos" de equipos de otros usuarios, que se podran dar likes y guardar copias en la cuenta

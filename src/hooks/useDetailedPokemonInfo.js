@@ -12,12 +12,13 @@ export function useDetailedPokemonInfo ({ locationsURL, speciesURL, elements }) 
   })
 
   useEffect(() => {
-    function generateElementsInfo () {
+    async function generateElementsInfo () {
       const newDamageRelations = []
-      elements.forEach(async element => {
-        const elementData = await getTypeInfo(element.type.url)
+      for (let index = 0; index < elements.length; index++) {
+        const element = elements[index]
+        const elementData = await getTypeInfo(element.url)
         newDamageRelations.push(elementData)
-      })
+      }
       setDetailsObject(prev => ({
         ...prev,
         damageRelations: newDamageRelations
@@ -29,7 +30,7 @@ export function useDetailedPokemonInfo ({ locationsURL, speciesURL, elements }) 
   useEffect(() => {
     async function generateEvolutionInfo () {
       const specieInfo = await getPokemonSpecie(speciesURL)
-      const newSpecieData = await renameSpecieProps(specieInfo)
+      const newSpecieData = renameSpecieProps(specieInfo)
 
       const evoChainInfo = await getPokemonEvolutionChain(specieInfo.evolution_chain.url)
 

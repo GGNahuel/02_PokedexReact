@@ -12,8 +12,8 @@ export function CardBody ({ sprite, alternativeSprite, elements }) {
     <>
       <img src={sprite || alternativeSprite} alt='No hay imagen disponible del pokemon :c' className='tarjeta_img' loading='lazy' />
       <div className='tarjeta_tipos'>
-        {elements.map(typeobj => (
-          <TypeTag key={typeobj.slot} type={typeobj.type.name} />
+        {elements.map(type => (
+          <TypeTag key={type.name} type={type.name} />
         ))}
       </div>
     </>
@@ -28,8 +28,8 @@ export function ExpandedCardBody ({ dataObj }) {
   const DetailsElements = () => (
     <>
       <div className='tarjeta_tipos'>
-        {elements.map(typeobj => (
-          <TypeTag key={typeobj.slot} type={typeobj.type.name} />
+        {elements.map(type => (
+          <TypeTag key={type.name} type={type.name} />
         ))}
         <div className='tipos_daños'>
           {damageRelations?.map((type, index) =>
@@ -39,7 +39,7 @@ export function ExpandedCardBody ({ dataObj }) {
       </div>
       <div className='tarjeta_evolutionPath'>
         <div className='evolPath_main'>
-          {evolutionData && <EvolutionElements obj={evolutionData} targetName={name} targetSprite={sprite} />}
+          {evolutionData && <EvolutionElements obj={evolutionData} />}
         </div>
       </div>
       <div className='tarjeta_datosRegion'>
@@ -50,7 +50,7 @@ export function ExpandedCardBody ({ dataObj }) {
         </ul>
       </div>
       <ul className='tarjeta_lugaresDeObtencion'>
-        <p>Lugares de obtención:</p>
+        {locationAreas.length > 0 && <p>Lugares de obtención:</p>}
         {locationAreas?.map(element => {
           const { location } = renameLocationEncounterAreas(element)
           return <LocationEncounterAreas key={location} dataObjt={element} />
@@ -67,11 +67,11 @@ export function ExpandedCardBody ({ dataObj }) {
       </header>
       <div className='tarjeta_mainInfo'>
         <img src={sprite || alternativeSprite} alt='' className='tarjeta_img' />
-        <ul className='tarjeta_stats'>
-          {stats.map(statObj => <li key={statObj.stat.name}>{statObj.stat.name}: {statObj.base_stat}</li>)}
-          <li>{weight} kg</li>
-          <li>{height} cm</li>
-        </ul>
+        <div className='tarjeta_stats'>
+          {stats.map(statObj => <p key={statObj.stat.name}>{statObj.stat.name}: {statObj.base_stat}</p>)}
+          <p>{weight} kg</p>
+          <p>{height} cm</p>
+        </div>
         <p>{specieData.description}</p>
         {specieData.isLegendary && <span>Legendario</span>}
         {specieData.isMythic && <span>Mitico</span>}

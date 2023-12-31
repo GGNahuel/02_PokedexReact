@@ -1,3 +1,3 @@
 export function TypeTag ({ type }) {
-  return (<span className={`typeTag ${type}`}>{type}</span>)
+  return (<span className={`typeTag ${type.toLowerCase()}`}>{type}</span>)
 }
