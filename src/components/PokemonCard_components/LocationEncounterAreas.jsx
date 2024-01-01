@@ -1,15 +1,14 @@
 import { renameLocationEncounterAreas } from '../../services/renameObjectProps'
-import { fixedText } from '../../services/fixText'
 
 export function LocationEncounterAreas ({ dataObjt }) {
   const { location, versionDetails, versionNames, maxChances, encounterDetails } = renameLocationEncounterAreas(dataObjt)
   return (
     <div className='lugarDeObtencion'>
-      <li>Lugar de encuentro: {fixedText(location)}</li>
+      <li>Lugar de encuentro: {location}</li>
 
       {versionDetails.map((_, indicePadre) => (
         <ul key={versionNames[indicePadre]}>
-          <li>Juego: Pokemon {fixedText(versionNames[indicePadre])}</li>
+          <li>Juego: Pokemon {versionNames[indicePadre]}</li>
           <li>Chance de aparición: {maxChances[indicePadre]}%</li>
 
           {encounterDetails[indicePadre].map((element, index, array) => {

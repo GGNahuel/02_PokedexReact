@@ -85,7 +85,7 @@ export function renameTypeProps (dataObj) {
 
 export function renameLocationEncounterAreas (dataObj) {
   const versionDetails = dataObj.version_details
-  const versionNames = versionDetails.map(element => element.version.name)
+  const versionNames = versionDetails.map(element => fixedText(element.version.name))
   const maxChances = versionDetails.map(element => element.max_chance)
   const encounterDetails = versionDetails.map(element => element.encounter_details)
   // ⚠️ encounterDetails devuelve un array de arrays
@@ -94,7 +94,7 @@ export function renameLocationEncounterAreas (dataObj) {
   // const conditions = encounterDetails.map(element => element.map(object => object.condition_values))
 
   const newProperites = {
-    location: dataObj.location_area.name,
+    location: fixedText(dataObj.location_area.name),
     versionDetails,
     versionNames,
     maxChances,

@@ -45,12 +45,13 @@ export function ExpandedCardBody ({ dataObj }) {
       <div className='tarjeta_datosRegion'>
         <p>Originario de la {specieData.generation}</p>
         <p>Su habitat es {specieData.habitat}</p>
-        <ul> Se encuentra en las pokedexes de:
+        <p>Se encuentra en las pokedexes de:</p>
+        <ul>
           {specieData.pokedexNumbers?.map(element => <li key={element.pokedex}>{element.pokedex} en la posicion {element.entry}</li>)}
         </ul>
       </div>
+      {locationAreas.length > 0 && <p>Lugares de obtención:</p>}
       <ul className='tarjeta_lugaresDeObtencion'>
-        {locationAreas.length > 0 && <p>Lugares de obtención:</p>}
         {locationAreas?.map(element => {
           const { location } = renameLocationEncounterAreas(element)
           return <LocationEncounterAreas key={location} dataObjt={element} />

@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { DetailsFilterElement } from '../others/DetailsFilterElement'
 import { SearchContext } from '../../context/searchContext'
 import { useFilterNodes } from '../../hooks/useFilterNodes'
+import { fixedText } from '../../services/fixText'
 
 export function FilterSort () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
@@ -77,26 +78,34 @@ export function FilterSort () {
           <DetailsFilterElement title='Generación'>
             <label><input type='radio' name='generation_filter' defaultChecked value='all' onChange={checkSelectedItems} /> Todas</label>
             {checkboxNames.generationNames.map(generation => (
-              <label key={generation}><input type='radio' name='generation_filter' value={generation} onChange={checkSelectedItems} /> {generation}</label>
+              <label key={generation}><input type='radio' name='generation_filter' value={generation} onChange={checkSelectedItems} />
+                {fixedText(generation)}
+              </label>
             ))}
           </DetailsFilterElement>
 
           <DetailsFilterElement title='Pokedexes' hasResetButtonType='pokedex' hasResetButtonFunc={changeForm}>
             {checkboxNames.pokedexNames.map(pokedexName => (
-              <label key={pokedexName}><input type='checkbox' name={pokedexName} onChange={checkSelectedItems} /> {pokedexName}</label>
+              <label key={pokedexName}><input type='checkbox' name={pokedexName} onChange={checkSelectedItems} />
+                {fixedText(pokedexName)}
+              </label>
             ))}
           </DetailsFilterElement>
 
           <DetailsFilterElement title='Elementos' hasResetButtonType='type' hasResetButtonFunc={changeForm}>
             {checkboxNames.typeNames.map(type => (
-              <label key={type}><input type='checkbox' name={type} onChange={checkSelectedItems} /> {type}</label>
+              <label key={type}><input type='checkbox' name={type} onChange={checkSelectedItems} />
+                {type}
+              </label>
             ))}
           </DetailsFilterElement>
 
           <DetailsFilterElement title='Hábitat'>
             <label><input type='radio' name='habitat_filter' defaultChecked value='all' onChange={checkSelectedItems} />Todas</label>
             {checkboxNames.habitatNames.map(habitat => (
-              <label key={habitat}><input type='radio' name='habitat_filter' value={habitat} onChange={checkSelectedItems} /> {habitat}</label>
+              <label key={habitat}><input type='radio' name='habitat_filter' value={habitat} onChange={checkSelectedItems} />
+                {fixedText(habitat)}
+              </label>
             ))}
           </DetailsFilterElement>
         </ul>
