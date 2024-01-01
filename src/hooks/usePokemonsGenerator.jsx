@@ -6,7 +6,7 @@ import { getEntriesFromOptionFilter, getEntriesFromCheckboxsFilter } from '../se
 
 export function usePokemonsGenerator () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
-  const { page, filters, sort } = resultsDetails
+  const { page, filters, sort, filterInputTypes } = resultsDetails
 
   const [pkmns, setPkmns] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +22,7 @@ export function usePokemonsGenerator () {
       if (pokeArray[pkmn]) {
         const idExtracted = regExpIDPKMN.exec(pokeArray[pkmn].url)
         const dataPkmn = await getPokemonInfo(POKEMON_PREFIX_API + idExtracted)
-        pokeElements.push(dataPkmn)
+        if (dataPkmn) pokeElements.push(dataPkmn)
       }
     }
 
@@ -63,24 +63,30 @@ export function usePokemonsGenerator () {
 
   useEffect(() => {
     async function generateFilteredContent () {
-      const tempMainResults = mainResults
-      let tempResults = []
+      let tempResults = mainResults
 
       const { search } = filters
       if (search !== '' && search) {
         const regExpSearch = new RegExp(search)
         if (Number(search)) {
-          tempResults.push(mainResults[search - 1])
-        } else tempResults = tempMainResults.filter(element => regExpSearch.test(element.name))
-      } else tempResults = tempMainResults
+          generatePokeElements([{
+            url: POKEMON_PREFIX_API + search
+          }])
+          return
+        } else {
+          tempResults = tempResults.filter(element => regExpSearch.test(element.name))
+        }
+      }
 
-      tempResults = filters.generation !== 'all' ? await getEntriesFromOptionFilter(tempResults, filters.generation, 'generation') : tempResults
-
-      tempResults = filters.pokedex.length !== 0 ? await getEntriesFromCheckboxsFilter(tempResults, filters.pokedex, 'pokedex') : tempResults
-
-      tempResults = filters.types.length !== 0 ? await getEntriesFromCheckboxsFilter(tempResults, filters.types, 'type') : tempResults
-
-      tempResults = filters.habitat !== 'all' ? await getEntriesFromOptionFilter(tempResults, filters.habitat, 'habitat') : tempResults
+      const { optionInput, checkboxInput } = filterInputTypes
+      for (const key in filters) {
+        if (optionInput.filterTypes.includes(key) && filters[key] !== optionInput.defaultValue) {
+          tempResults = await getEntriesFromOptionFilter(tempResults, filters[key], key)
+        }
+        if (checkboxInput.filterTypes.includes(key) && filters[key].length !== checkboxInput.defaultValue) {
+          tempResults = await getEntriesFromCheckboxsFilter(tempResults, filters[key], key)
+        }
+      }
 
       setCurrentResults(tempResults)
       if (page === 1) {

@@ -26,7 +26,7 @@ export function FilterSort () {
   const checkSelectedItems = () => {
     const { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort } = getSelectedItems()
 
-    const lengthcondition = selectedPokedexes.length === filters.pokedex.length && selectedTypes.length === filters.types.length
+    const lengthcondition = selectedPokedexes.length === filters.pokedex.length && selectedTypes.length === filters.type.length
     const samePokedexes = selectedPokedexes.every((item, index) => item === filters.pokedex[index])
     const sameTypes = selectedTypes.every((item, index) => item === filters.types[index])
     const sameHabitats = selectedHabitat === filters.habitat
@@ -60,7 +60,7 @@ export function FilterSort () {
           search: searchValue,
           generation: selectedGeneration,
           pokedex: selectedPokedexes,
-          types: selectedTypes,
+          type: selectedTypes,
           habitat: selectedHabitat
         },
         sort: selectedSort

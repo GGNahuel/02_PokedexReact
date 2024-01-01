@@ -10,10 +10,10 @@ A hacer:
     Ver cómo cancelar la funcion de generate pkmns cuando se selecciona otra pagina antes de que se cargue una
     Enrutamiento
     Diseño responsivo, y modo nocturno (en otro estado global?)
-    Idioma y forma en la que aparecen los textos según lo que se obtiene de la api
+    Idioma y ✅forma en la que aparecen los textos según lo que se obtiene de la api
 
 Info a mostrar para cada pokemon
-    ✅Nombre 
+    ✅Nombre
     ✅Index pokedex
     ✅Imagenes
     ✅Elementos
@@ -44,13 +44,13 @@ Info a mostrar para cada pokemon
 
 ✅Tipos de búsqueda
     Nombre
-    🔄Indice
+    Indice
     
-Filtros:
-    ✅Generación
-    ✅Pokedex
-    ✅Elementos
-    ✅Habitat
+✅Filtros:
+    Generación
+    Pokedex
+    Elementos
+    Habitat
 
 🔄Formas de ordenar resultados (por el momento funciona solo por página, porque sino habria que cargar los datos de todo el array
 de resultados)

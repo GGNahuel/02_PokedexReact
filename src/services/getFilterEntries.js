@@ -27,59 +27,57 @@ const FILTER_TYPES = {
 }
 
 function checkValidFilterType (filterType = String) {
-  return Object.keys(FILTER_TYPES).includes(filterType)
+  if (!Object.keys(FILTER_TYPES).includes(filterType)) {
+    console.warn('El filtro elegido no corresponde con los definidos')
+    return false
+  }
+  return true
 }
 
 export async function getEntriesFromOptionFilter (arrayToFilter, itemName, filterType) {
-  if (!checkValidFilterType(filterType)) {
-    console.warn('El filtro elegido no corresponde con los definidos')
-    return
-  }
+  if (checkValidFilterType(filterType)) {
+    const LINK = PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + itemName
+    const dataApi = await getPokemonInfo(LINK)
 
-  const LINK = PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + itemName
-  const dataApi = await getPokemonInfo(LINK)
+    if (dataApi) {
+      const entries = dataApi[FILTER_TYPES[filterType].entriesArrayName]
+      entries.sort(function (a, b) {
+        const idA = regExpIDPKMN.exec(a.url)
+        const idB = regExpIDPKMN.exec(b.url)
+        return idA - idB
+      })
 
-  if (dataApi) {
-    const entries = dataApi[FILTER_TYPES[filterType].entriesArrayName]
-    entries.sort(function (a, b) {
-      const idA = regExpIDPKMN.exec(a.url)
-      const idB = regExpIDPKMN.exec(b.url)
-      return idA - idB
-    })
+      const tempResults = entries.filter(pokemon1 => {
+        return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
+      })
 
-    const tempResults = entries.filter(pokemon1 => {
-      return arrayToFilter.some(pokemon2 => pokemon1.name === pokemon2.name)
-    })
-
-    return tempResults
+      return tempResults
+    }
   }
 }
 
 export async function getEntriesFromCheckboxsFilter (arrayToFilter, selectedItems, filterType = String) {
-  if (!checkValidFilterType(filterType)) {
-    console.warn('El filtro elegido no corresponde con los definidos')
-    return
+  if (checkValidFilterType(filterType)) {
+    const setLinkFromIndex = indx => PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + selectedItems[indx].toLowerCase()
+    const entriesArrayName = FILTER_TYPES[filterType].entriesArrayName
+    const nameRoute = FILTER_TYPES[filterType].routeToEntrieName
+
+    const itemApi1 = await getPokemonInfo(setLinkFromIndex(0))
+    let filterResults = itemApi1[entriesArrayName]
+
+    for (let itemIndx = 1; itemIndx < selectedItems.length; itemIndx++) {
+      const itemApi2 = await getPokemonInfo(setLinkFromIndex(itemIndx))
+      const pokemonsInApi2 = itemApi2[entriesArrayName]
+
+      filterResults = filterResults.filter(pokemonA => {
+        return pokemonsInApi2.some(pokemonB => pokemonA[nameRoute].name === pokemonB[nameRoute].name)
+      })
+    }
+
+    const tempResults = filterResults.filter(pokemon1 => {
+      return arrayToFilter.some(pokemon2 => pokemon2.name === pokemon1[nameRoute].name)
+    }).map(element => element[nameRoute])
+
+    return tempResults
   }
-
-  const setLinkFromIndex = indx => PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + selectedItems[indx].toLowerCase()
-  const entriesArrayName = FILTER_TYPES[filterType].entriesArrayName
-  const nameRoute = FILTER_TYPES[filterType].routeToEntrieName
-
-  const itemApi1 = await getPokemonInfo(setLinkFromIndex(0))
-  let filterResults = itemApi1[entriesArrayName]
-
-  for (let itemIndx = 1; itemIndx < selectedItems.length; itemIndx++) {
-    const itemApi2 = await getPokemonInfo(setLinkFromIndex(itemIndx))
-    const pokemonsInApi2 = itemApi2[entriesArrayName]
-
-    filterResults = filterResults.filter(pokemonA => {
-      return pokemonsInApi2.some(pokemonB => pokemonA[nameRoute].name === pokemonB[nameRoute].name)
-    })
-  }
-
-  const tempResults = filterResults.filter(pokemon1 => {
-    return arrayToFilter.some(pokemon2 => pokemon2.name === pokemon1[nameRoute].name)
-  }).map(element => element[nameRoute])
-
-  return tempResults
 }

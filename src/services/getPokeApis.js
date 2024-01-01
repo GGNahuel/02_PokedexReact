@@ -16,7 +16,7 @@ export async function getPokemonInfo (urlPokemon) {
     const pokemonInfo = await pokemonLink.json()
     return pokemonInfo
   } catch (error) {
-    return 'Error al obtener la info del pokemon. ' + error
+    console.warn('Error al obtener la info del pokemon. ' + error)
   }
 }
 
