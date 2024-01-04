@@ -3,6 +3,7 @@ import { DetailsFilterElement } from '../others/DetailsFilterElement'
 import { SearchContext } from '../../context/searchContext'
 import { useFilterNodes } from '../../hooks/useFilterNodes'
 import { fixedText } from '../../services/fixText'
+import { FILTERS_INFO, STATS_FOR_SORTING } from '../../services/constantes'
 
 export function FilterSort () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
@@ -13,34 +14,44 @@ export function FilterSort () {
 
   const getSelectedItems = () => {
     const formNode = document.getElementById('filters_sorts')
+    const selectedItems = {}
 
-    const selectedGeneration = formNode.generation_filter.value
-    const selectedPokedexes = checkboxNames.pokedexNames.filter(pokedexName => formNode[pokedexName].checked && pokedexName)
-    const selectedTypes = checkboxNames.typeNames.filter(typeName => formNode[typeName].checked && typeName)
-    const selectedHabitat = formNode.habitat_filter.value
-    const selectedSort = formNode.sortResults.value
+    for (const key in FILTERS_INFO) {
+      if (FILTERS_INFO[key].inputType === 'radio') {
+        selectedItems[key + 'Selected'] = formNode[key + '_filter'].value
+      }
+      if (FILTERS_INFO[key].inputType === 'checkbox') {
+        selectedItems[key + 'Selected'] = checkboxNames[key + 'Names'].filter(itemName => formNode[itemName].checked && itemName)
+      }
+    }
 
-    return { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort }
+    selectedItems.sortSelected = formNode.sortResults.value
+
+    return selectedItems
   }
 
   const checkSelectedItems = () => {
-    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort } = getSelectedItems()
+    const selectedItems = getSelectedItems()
 
-    const lengthcondition = selectedPokedexes.length === filters.pokedex.length && selectedTypes.length === filters.type.length
-    const samePokedexes = selectedPokedexes.every((item, index) => item === filters.pokedex[index])
-    const sameTypes = selectedTypes.every((item, index) => item === filters.types[index])
-    const sameHabitats = selectedHabitat === filters.habitat
-    const sameGeneration = selectedGeneration === filters.generation
-    const sameSort = selectedSort === resultsDetails.sort
+    const sameSort = selectedItems.sortSelected === resultsDetails.sort
+    let sameFilters = true
+    let sameLength = true
+    for (const key in FILTERS_INFO) {
+      if ((FILTERS_INFO[key].inputType === 'radio' && selectedItems[key + 'Selected'] !== filters[key]) ||
+      (FILTERS_INFO[key].inputType === 'checkbox' && !selectedItems[key + 'Selected'].every((item, index) => item === filters[key][index]))
+      ) sameFilters = false
+      if (FILTERS_INFO[key].inputType === 'checkbox' && selectedItems[key + 'Selected'].length !== filters[key].length
+      ) sameLength = false
+    }
 
-    const condition = lengthcondition && sameGeneration && sameTypes && samePokedexes && sameHabitats && sameSort
+    const condition = sameLength && sameFilters && sameSort
     setEqualsFilters(condition)
   }
 
   const changeForm = (checkboxesToChange) => {
     const formNode = document.getElementById('filters_sorts')
 
-    checkboxNames[`${checkboxesToChange}Names`].forEach(name => {
+    checkboxNames[checkboxesToChange + 'Names'].forEach(name => {
       formNode[name].checked = false
     })
 
@@ -50,7 +61,11 @@ export function FilterSort () {
   const handleSubmit = (ev) => {
     ev.preventDefault()
 
-    const { selectedGeneration, selectedPokedexes, selectedTypes, selectedHabitat, selectedSort } = getSelectedItems()
+    const selectedItems = getSelectedItems()
+    const newFilters = {}
+    for (const key in FILTERS_INFO) {
+      newFilters[key] = selectedItems[key + 'Selected']
+    }
 
     setResultsDetails(prevState => {
       const searchValue = prevState.filters.search
@@ -58,12 +73,9 @@ export function FilterSort () {
         ...prevState,
         filters: {
           search: searchValue,
-          generation: selectedGeneration,
-          pokedex: selectedPokedexes,
-          type: selectedTypes,
-          habitat: selectedHabitat
+          ...newFilters
         },
-        sort: selectedSort
+        sort: selectedItems.sortSelected
       })
     })
 
@@ -75,56 +87,31 @@ export function FilterSort () {
       <details>
         <summary>Filtros:</summary>
         <ul>
-          <DetailsFilterElement title='Generación'>
-            <label><input type='radio' name='generation_filter' defaultChecked value='all' onChange={checkSelectedItems} /> Todas</label>
-            {checkboxNames.generationNames.map(generation => (
-              <label key={generation}><input type='radio' name='generation_filter' value={generation} onChange={checkSelectedItems} />
-                {fixedText(generation)}
-              </label>
-            ))}
-          </DetailsFilterElement>
-
-          <DetailsFilterElement title='Pokedexes' hasResetButtonType='pokedex' hasResetButtonFunc={changeForm}>
-            {checkboxNames.pokedexNames.map(pokedexName => (
-              <label key={pokedexName}><input type='checkbox' name={pokedexName} onChange={checkSelectedItems} />
-                {fixedText(pokedexName)}
-              </label>
-            ))}
-          </DetailsFilterElement>
-
-          <DetailsFilterElement title='Elementos' hasResetButtonType='type' hasResetButtonFunc={changeForm}>
-            {checkboxNames.typeNames.map(type => (
-              <label key={type}><input type='checkbox' name={type} onChange={checkSelectedItems} />
-                {type}
-              </label>
-            ))}
-          </DetailsFilterElement>
-
-          <DetailsFilterElement title='Hábitat'>
-            <label><input type='radio' name='habitat_filter' defaultChecked value='all' onChange={checkSelectedItems} />Todas</label>
-            {checkboxNames.habitatNames.map(habitat => (
-              <label key={habitat}><input type='radio' name='habitat_filter' value={habitat} onChange={checkSelectedItems} />
-                {fixedText(habitat)}
-              </label>
-            ))}
-          </DetailsFilterElement>
+          {Object.keys(FILTERS_INFO).map(filterName =>
+            <DetailsFilterElement
+              key={filterName}
+              title={fixedText(filterName)} inputType={FILTERS_INFO[filterName].inputType}
+              filterName={filterName} namesArray={checkboxNames[filterName + 'Names']}
+              hasResetButtonFunc={changeForm} onChangeFunction={checkSelectedItems}
+            />
+          )}
         </ul>
       </details>
-      <DetailsFilterElement title='Ordenar por'>
-        <label><input type='radio' name='sortResults' value='default' defaultChecked onChange={checkSelectedItems} /> Por defecto</label>
-        <label><input type='radio' name='sortResults' value='name' onChange={checkSelectedItems} /> Alfabeticamente</label>
-        <fieldset>
-          <legend>Estadística <span className='normal' title='Por cuestiones de rendimiento esto solo ordenará la página actual'>❔</span></legend>
-          <label><input type='radio' name='sortResults' value='hp' onChange={checkSelectedItems} /> Hp</label>
-          <label><input type='radio' name='sortResults' value='attack' onChange={checkSelectedItems} /> Ataque</label>
-          <label><input type='radio' name='sortResults' value='defense' onChange={checkSelectedItems} /> Defensa</label>
-          <label><input type='radio' name='sortResults' value='special-attack' onChange={checkSelectedItems} /> Ataque especial</label>
-          <label><input type='radio' name='sortResults' value='special-defense' onChange={checkSelectedItems} /> Defensa especial</label>
-          <label><input type='radio' name='sortResults' value='speed' onChange={checkSelectedItems} /> Velocidad</label>
-          <label><input type='radio' name='sortResults' value='weight' onChange={checkSelectedItems} /> Peso</label>
-          <label><input type='radio' name='sortResults' value='height' onChange={checkSelectedItems} /> Altura</label>
-        </fieldset>
-      </DetailsFilterElement>
+      <details className='filter_details'>
+        <summary>Ordenar por</summary>
+        <div>
+          <label><input type='radio' name='sortResults' value='default' defaultChecked onChange={checkSelectedItems} /> Por defecto</label>
+          <label><input type='radio' name='sortResults' value='name' onChange={checkSelectedItems} /> Alfabeticamente</label>
+          <fieldset>
+            <legend>Estadística <span className='normal' title='Por cuestiones de rendimiento esto solo ordenará la página actual'>❔</span></legend>
+            {STATS_FOR_SORTING.map(statName =>
+              <label key={statName}><input type='radio' name='sortResults' value={statName} onChange={checkSelectedItems} />
+                {fixedText(statName)}
+              </label>
+            )}
+          </fieldset>
+        </div>
+      </details>
       <div>
         {!equalsSelectedTempFilters && <p>Hay cambios sin aplicar</p>}
         <button type='submit'>Aplicar Cambios</button>

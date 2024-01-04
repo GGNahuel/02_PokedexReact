@@ -1,36 +1,23 @@
 import { useEffect, useState } from 'react'
+import { FILTERS_INFO, PREFIX_API } from '../services/constantes'
+
+const SUFIX_LIMIT_API = '?limit=100/'
 
 export function useFilterNodes () {
-  const [checkboxNames, setCheckboxNames] = useState({
-    generationNames: [],
-    pokedexNames: [],
-    typeNames: [],
-    habitatNames: []
-  })
+  const [checkboxNames, setCheckboxNames] = useState({})
 
   useEffect(() => {
     async function getFilterList () {
-      const SUFIX_LIMIT_API = '?limit=100/'
       try {
-        const apiGenerations = await fetch('https://pokeapi.co/api/v2/generation/' + SUFIX_LIMIT_API)
-        const dataGenerations = await apiGenerations.json()
-        const generations = dataGenerations.results.map(generation => generation.name)
+        for (const key in FILTERS_INFO) {
+          const apiData = await fetch(PREFIX_API + FILTERS_INFO[key].urlSufix + SUFIX_LIMIT_API)
+          const data = await apiData.json()
+          const arrayOfNames = data.results.map(element => element.name)
 
-        const apiTypes = await fetch('https://pokeapi.co/api/v2/type/' + SUFIX_LIMIT_API)
-        const dataTypes = await apiTypes.json()
-        const types = dataTypes.results.map(element => element.name.toUpperCase())
-
-        const apiPokedex = await fetch('https://pokeapi.co/api/v2/pokedex/' + SUFIX_LIMIT_API)
-        const dataPokedex = await apiPokedex.json()
-        const pokedexes = dataPokedex.results.map(pokedex => pokedex.name)
-
-        const apiHabitat = await fetch('https://pokeapi.co/api/v2/pokemon-habitat/' + SUFIX_LIMIT_API)
-        const dataHabitat = await apiHabitat.json()
-        const habitats = dataHabitat.results.map(element => element.name)
-
-        setCheckboxNames({
-          generationNames: generations, pokedexNames: pokedexes, typeNames: types, habitatNames: habitats
-        })
+          const newCheckboxNames = checkboxNames
+          newCheckboxNames[key + 'Names'] = arrayOfNames
+          setCheckboxNames(newCheckboxNames)
+        }
       } catch (error) {
         console.log('error con los filtros de generacion' + error)
       }

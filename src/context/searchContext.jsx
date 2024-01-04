@@ -13,16 +13,6 @@ export function SearchContextProvider ({ children }) {
       type: [],
       habitat: 'all'
     },
-    filterInputTypes: {
-      optionInput: {
-        filterTypes: ['generation', 'habitat'],
-        defaultValue: 'all'
-      },
-      checkboxInput: {
-        filterTypes: ['pokedex', 'type'],
-        defaultValue: 0
-      }
-    },
     sort: 'default'
   })
 

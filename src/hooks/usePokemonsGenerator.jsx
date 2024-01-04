@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { SearchContext } from '../context/searchContext'
-import { POKEMON_PREFIX_API, regExpIDPKMN } from '../services/constantes'
+import { POKEMON_PREFIX_API, regExpIDPKMN, FILTERS_INFO } from '../services/constantes'
 import { getNationalPokedex, getPokemonInfo } from '../services/getPokeApis'
 import { getEntriesFromOptionFilter, getEntriesFromCheckboxsFilter } from '../services/getFilterEntries'
 
 export function usePokemonsGenerator () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
-  const { page, filters, sort, filterInputTypes } = resultsDetails
+  const { page, filters, sort } = resultsDetails
 
   const [pkmns, setPkmns] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -78,12 +78,11 @@ export function usePokemonsGenerator () {
         }
       }
 
-      const { optionInput, checkboxInput } = filterInputTypes
-      for (const key in filters) {
-        if (optionInput.filterTypes.includes(key) && filters[key] !== optionInput.defaultValue) {
+      for (const key in FILTERS_INFO) {
+        if (FILTERS_INFO[key].inputType === 'radio' && filters[key] !== FILTERS_INFO[key].default) {
           tempResults = await getEntriesFromOptionFilter(tempResults, filters[key], key)
         }
-        if (checkboxInput.filterTypes.includes(key) && filters[key].length !== checkboxInput.defaultValue) {
+        if (FILTERS_INFO[key].inputType === 'checkbox' && filters[key].length !== FILTERS_INFO[key].default) {
           tempResults = await getEntriesFromCheckboxsFilter(tempResults, filters[key], key)
         }
       }

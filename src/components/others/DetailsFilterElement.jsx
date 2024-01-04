@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { fixedText } from '../../services/fixText'
 
-export function DetailsFilterElement ({ title, children, hasResetButtonType, hasResetButtonFunc }) {
+export function DetailsFilterElement ({
+  title, filterName, inputType, namesArray, hasResetButtonFunc, onChangeFunction
+}) {
   const [state, setState] = useState('closed')
 
   const handleOpen = (ev) => {
@@ -16,13 +19,30 @@ export function DetailsFilterElement ({ title, children, hasResetButtonType, has
   return (
     <details className='filter_details'>
       <summary onClick={handleOpen}>{title}</summary>
-      <div>
-        {children}
-      </div>
-      {hasResetButtonType &&
-        <div className='filter_buttons_container'>
-          <button type='button' onClick={() => { hasResetButtonFunc(hasResetButtonType) }}>Resetear</button>
-        </div>}
+      {inputType === 'radio' && (
+        <div>
+          <label><input type='radio' name={`${filterName}_filter`} defaultChecked value='all' onChange={onChangeFunction} /> Todas</label>
+          {namesArray?.map(name => (
+            <label key={name}><input type='radio' name={`${filterName}_filter`} value={name} onChange={onChangeFunction} />
+              {fixedText(name)}
+            </label>
+          ))}
+        </div>
+      )}
+      {inputType === 'checkbox' && (
+        <>
+          <div>
+            {namesArray?.map(name => (
+              <label key={name}><input type='checkbox' name={name} onChange={onChangeFunction} />
+                {fixedText(name)}
+              </label>
+            ))}
+          </div>
+          <div className='filter_buttons_container'>
+            <button type='button' onClick={() => { hasResetButtonFunc(filterName) }}>Resetear</button>
+          </div>
+        </>
+      )}
     </details>
   )
 }

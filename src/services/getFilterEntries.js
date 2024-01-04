@@ -34,9 +34,9 @@ function checkValidFilterType (filterType = String) {
   return true
 }
 
-export async function getEntriesFromOptionFilter (arrayToFilter, itemName, filterType) {
+export async function getEntriesFromOptionFilter (arrayToFilter, selectedItem, filterType) {
   if (checkValidFilterType(filterType)) {
-    const LINK = PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + itemName
+    const LINK = PREFIX_API + FILTER_TYPES[filterType].linkRoute + '/' + selectedItem
     const dataApi = await getPokemonInfo(LINK)
 
     if (dataApi) {
