@@ -1,51 +1,22 @@
 import { useContext, useState } from 'react'
+
 import { DetailsFilterElement } from '../others/DetailsFilterElement'
+
 import { SearchContext } from '../../context/searchContext'
 import { useFilterNodes } from '../../hooks/useFilterNodes'
 import { fixedText } from '../../services/fixText'
+import { checkItemsAreEqualsWithCurrent, getSelectedItems } from '../../services/filterItems'
 import { FILTERS_INFO, STATS_FOR_SORTING } from '../../services/constantes'
 
 export function FilterSort () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
-  const { filters } = resultsDetails
   const [equalsSelectedTempFilters, setEqualsFilters] = useState(true)
 
   const { checkboxNames } = useFilterNodes()
 
-  const getSelectedItems = () => {
-    const formNode = document.getElementById('filters_sorts')
-    const selectedItems = {}
-
-    for (const key in FILTERS_INFO) {
-      if (FILTERS_INFO[key].inputType === 'radio') {
-        selectedItems[key + 'Selected'] = formNode[key + '_filter'].value
-      }
-      if (FILTERS_INFO[key].inputType === 'checkbox') {
-        selectedItems[key + 'Selected'] = checkboxNames[key + 'Names'].filter(itemName => formNode[itemName].checked && itemName)
-      }
-    }
-
-    selectedItems.sortSelected = formNode.sortResults.value
-
-    return selectedItems
-  }
-
   const checkSelectedItems = () => {
-    const selectedItems = getSelectedItems()
-
-    const sameSort = selectedItems.sortSelected === resultsDetails.sort
-    let sameFilters = true
-    let sameLength = true
-    for (const key in FILTERS_INFO) {
-      if ((FILTERS_INFO[key].inputType === 'radio' && selectedItems[key + 'Selected'] !== filters[key]) ||
-      (FILTERS_INFO[key].inputType === 'checkbox' && !selectedItems[key + 'Selected'].every((item, index) => item === filters[key][index]))
-      ) sameFilters = false
-      if (FILTERS_INFO[key].inputType === 'checkbox' && selectedItems[key + 'Selected'].length !== filters[key].length
-      ) sameLength = false
-    }
-
-    const condition = sameLength && sameFilters && sameSort
-    setEqualsFilters(condition)
+    const newState = checkItemsAreEqualsWithCurrent(resultsDetails, checkboxNames)
+    setEqualsFilters(newState)
   }
 
   const changeForm = (checkboxesToChange) => {
@@ -61,7 +32,7 @@ export function FilterSort () {
   const handleSubmit = (ev) => {
     ev.preventDefault()
 
-    const selectedItems = getSelectedItems()
+    const { selectedItems } = getSelectedItems(checkboxNames)
     const newFilters = {}
     for (const key in FILTERS_INFO) {
       newFilters[key] = selectedItems[key + 'Selected']
