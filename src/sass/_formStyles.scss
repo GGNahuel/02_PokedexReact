@@ -15,7 +15,7 @@
     }
 
     summary {
-        background-color: transparentize($color: $color-principal, $amount: 0.6);
+        background-color: transparentize($color: $color-principal, $amount: 0.75);
         padding: .2rem 2rem;
         border-bottom: 1px solid;
         border-radius: 10px 10px 0 0;
@@ -37,6 +37,7 @@
     }
     summary:hover {
         background-color: $color-principal-claro;
+        color: $color-claro;
     }
 
     details[open] > summary:before {
@@ -45,7 +46,7 @@
 
     details[open]>summary {
         margin-bottom: .5rem;
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid;
     }
 
     details>div>details {
@@ -68,7 +69,7 @@
     &>.filter_buttons_container{
         display: flex;
         justify-content: flex-end;
-        gap: 1em;
+        gap: 1rem;
     }
 }
 

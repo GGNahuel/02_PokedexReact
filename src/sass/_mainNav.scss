@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: .5rem;
+    box-sizing: border-box;
 }
 
 .nav_logo {
@@ -13,12 +14,41 @@
 .nav_busqueda {
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: .5rem;
     gap: 0.8rem;
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
 }
 
 .nav_modo {
-    height: min-content;
+    width: 64px;
+    height: 32px;
+    background-color: darken($color-claro,25);
+    border-radius: 32px;
+    border: 3px solid $color-theme;
+    display: flex; justify-content: center; flex-direction: column;
+    position: relative;
+    cursor: pointer;
+}
+
+#theme_switcher {
+    appearance: none;
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    left: 3px;
+    background-color: $color-claro;
+    border: 3px solid $color-oscuro;
+    border-radius: 100%;
+    transition: background-color 300ms;
+    cursor: pointer;
+    
+
+    &:checked {
+        background-color: $color-oscuro;
+        border-color: $color-claro;
+        align-self: flex-end;
+        right: 3px;
+        left: inherit;
+    }
 }

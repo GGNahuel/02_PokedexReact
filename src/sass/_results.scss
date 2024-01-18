@@ -96,6 +96,7 @@ $margin-between: 1.5rem;
     box-sizing: border-box;
     max-height: 100vh;
     overflow-y: scroll;
+    display: flex; flex-direction: column;
 
     &>section {
         @include borde(10px);
@@ -111,6 +112,11 @@ $margin-between: 1.5rem;
 
     .tarjeta_img {
         @include borde(100%)
+    }
+
+    .jump_btn {
+        align-self: flex-end;
+        margin-bottom: .5rem;
     }
 }
 

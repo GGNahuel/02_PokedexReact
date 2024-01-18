@@ -24,6 +24,9 @@
 .dark_Theme .tarjetaPKMN:hover .tarjeta_img {
   filter: drop-shadow(0 0 5px rgb(241, 241, 241));
 }
+.dark_Theme .tarjetaPKMN.activa .tarjeta_img {
+  filter: drop-shadow(0 0 5px rgb(241, 241, 241));
+}
 .dark_Theme #filters_sorts {
   background-color: rgba(241, 241, 241, 0.25);
 }
@@ -34,18 +37,19 @@
 }
 *::-webkit-scrollbar-thumb {
   background-color: #590000;
-  border: 2px solid rgb(241, 241, 241);
+  border: 2px solid rgb(155, 0, 0);
   border-radius: 20px;
 }
 *::-webkit-scrollbar {
   width: 0.8rem;
+  margin: 2px;
 }
 
-body {
+#app {
   font-family: "Noto sans", sans-serif;
   font-size: 1rem;
   overflow-y: scroll;
-  margin-right: 0.8rem;
+  height: 100vh;
 }
 
 h3 {
@@ -111,8 +115,8 @@ main {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background-color: rgb(241, 241, 241);
-  color: #0c0000;
+  min-height: calc(100% - (1rem + 64px));
+  box-sizing: border-box;
 }
 
 header {
@@ -124,7 +128,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 .nav_logo {
@@ -135,14 +140,43 @@ header {
 .nav_busqueda {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   gap: 0.8rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
 }
 
 .nav_modo {
-  height: min-content;
+  width: 64px;
+  height: 32px;
+  background-color: #b1b1b1;
+  border-radius: 32px;
+  border: 3px solid rgb(155, 0, 0);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+}
+
+#theme_switcher {
+  appearance: none;
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  left: 3px;
+  background-color: rgb(241, 241, 241);
+  border: 3px solid #0c0000;
+  border-radius: 100%;
+  transition: background-color 300ms;
+  cursor: pointer;
+}
+#theme_switcher:checked {
+  background-color: #0c0000;
+  border-color: rgb(241, 241, 241);
+  align-self: flex-end;
+  right: 3px;
+  left: inherit;
 }
 
 #filters_sorts {
@@ -161,7 +195,7 @@ header {
   gap: 1rem;
 }
 #filters_sorts summary {
-  background-color: rgba(12, 0, 0, 0.4);
+  background-color: rgba(12, 0, 0, 0.25);
   padding: 0.2rem 2rem;
   border-bottom: 1px solid;
   border-radius: 10px 10px 0 0;
@@ -183,13 +217,14 @@ header {
 }
 #filters_sorts summary:hover {
   background-color: #590000;
+  color: rgb(241, 241, 241);
 }
 #filters_sorts details[open] > summary:before {
   transform: rotate(90deg);
 }
 #filters_sorts details[open] > summary {
   margin-bottom: 0.5rem;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid;
 }
 #filters_sorts details > div > details {
   margin-left: 1.4rem;
@@ -208,7 +243,7 @@ header {
 .filter_details > .filter_buttons_container {
   display: flex;
   justify-content: flex-end;
-  gap: 1em;
+  gap: 1rem;
 }
 
 #pokemonSection {
@@ -299,6 +334,8 @@ header {
   box-sizing: border-box;
   max-height: 100vh;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 #selected_card > section {
   border: solid 2px rgb(241, 241, 241);
@@ -314,6 +351,10 @@ header {
 #selected_card .tarjeta_img {
   border: solid 2px rgb(241, 241, 241);
   border-radius: 100%;
+}
+#selected_card .jump_btn {
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
 }
 
 .tarjeta_mainInfo {
@@ -502,6 +543,7 @@ header {
 
 .page_selector {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 

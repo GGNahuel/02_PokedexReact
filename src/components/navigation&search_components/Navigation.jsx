@@ -1,15 +1,16 @@
 import { useContext } from 'react'
 import { SearchContext } from '../../context/searchContext'
+import { GlobalSettings } from '../../context/globalSettingsContext'
 
 export function Nav () {
   const { setResultsDetails } = useContext(SearchContext)
+  const { globalSettings, setGlobalSettings } = useContext(GlobalSettings)
 
   const updateSearch = (event) => {
     event.preventDefault()
     const value = event.target.searcher.value
     setResultsDetails(prevState => {
       const prevFilters = prevState.filters
-
       return ({
         ...prevState,
         filters: {
@@ -30,7 +31,14 @@ export function Nav () {
           <input type='search' name='searcher' id='searcher' placeholder='Nombre o id del pokemon' />
           <button type='submit'>Buscar</button>
         </form>
-        <button className='nav_modo'>Cambiar modo nocturno/diurno</button>
+        <label className='nav_modo'>
+          <input
+            type='checkbox' name='theme_switcher' id='theme_switcher' onChange={() => {
+              const newThemeValue = globalSettings.theme === 'light' ? 'dark' : 'light'
+              setGlobalSettings(prev => ({ ...prev, theme: newThemeValue }))
+            }} defaultChecked={globalSettings.theme === 'dark'}
+          />
+        </label>
       </nav>
     </header>
   )

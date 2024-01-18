@@ -1,22 +1,18 @@
 import { SearchContextProvider } from './context/searchContext'
+import { GlobalSettingsProvider } from './context/globalSettingsContext'
 
 import { Nav } from './components/navigation&search_components/Navigation'
-import { PageSelector } from './components/navigation&search_components/PageSelector'
-import { SectionResultados } from './components/SectionResultados'
-import { FilterSort } from './components/navigation&search_components/FilterSort'
 
+import { MainContainer } from './components/MainContainer'
 import './styles.css'
 
 export function App () {
   return (
-    <SearchContextProvider>
-      <Nav />
-      <main className='light'>
-        <FilterSort />
-        <PageSelector />
-        <SectionResultados />
-        <PageSelector />
-      </main>
-    </SearchContextProvider>
+    <GlobalSettingsProvider>
+      <SearchContextProvider>
+        <Nav />
+        <MainContainer />
+      </SearchContextProvider>
+    </GlobalSettingsProvider>
   )
 }

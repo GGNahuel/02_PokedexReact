@@ -59,13 +59,18 @@ const DetailsElements = ({ damageRelations, evolutionData, locationAreas, specie
   </>
 )
 
-export function ExpandedCardBody ({ dataObj }) {
+export function ExpandedCardBody ({ dataObj, closeFunction }) {
   const { name, id, stats, weight, height, sprite, alternativeSprite, elements, locationsURL, speciesURL } = renameProps(dataObj)
 
   const { damageRelations, specieData, evolutionData, locationAreas } = useDetailedPokemonInfo({ locationsURL, speciesURL, elements })
 
   return (
     <aside id='selected_card'>
+      <button type='button' className='jump_btn' onClick={closeFunction}>
+        <span className='material-symbols-outlined'>
+          close
+        </span>
+      </button>
       <header className='tarjeta_header'>
         <h3>{name.toUpperCase()}</h3>
         <h3>{id}</h3>

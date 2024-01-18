@@ -12,20 +12,21 @@ $ancho-scroll: 0.8rem;
 
     &::-webkit-scrollbar-thumb {
         background-color: $color-principal-claro;
-        border: 2px solid $color-secundario;
+        border: 2px solid $color-theme;
         border-radius: 20px;
     }
-
+    
     &::-webkit-scrollbar {
         width: $ancho-scroll;
+        margin: 2px;
     }
 }
 
-body{
+#app{
     font-family: $main-font;
     font-size: 1rem;
     overflow-y: scroll;
-    margin-right: $ancho-scroll;
+    height: 100vh;
 }
 
 h3{
@@ -98,8 +99,8 @@ main{
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: $color-secundario;
-    color: $color-principal;
+    min-height: calc(100% - (1rem + 64px));
+    box-sizing: border-box;
 }
 header {
     background-color: $color-principal-claro;

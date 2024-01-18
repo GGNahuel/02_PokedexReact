@@ -29,8 +29,9 @@ $color-principal-claro: lighten($color-principal, 15%);
         color: $color-claro;
     }
 
-    .tarjetaPKMN:hover .tarjeta_img {
-        filter: drop-shadow(0 0 5px $color-claro)
+    .tarjetaPKMN{
+        &:hover .tarjeta_img {filter: drop-shadow(0 0 5px $color-claro)}
+        &.activa .tarjeta_img {filter: drop-shadow(0 0 5px $color-claro)}
     }
 
     #filters_sorts {
