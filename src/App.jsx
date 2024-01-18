@@ -11,7 +11,7 @@ export function App () {
   return (
     <SearchContextProvider>
       <Nav />
-      <main>
+      <main className='light'>
         <FilterSort />
         <PageSelector />
         <SectionResultados />

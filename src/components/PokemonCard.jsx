@@ -17,10 +17,10 @@ export function TarjetaPkmn (props) {
   return (
     <>
       <article className={classes} id={'pkmn' + id} onClick={clickEvent}>
-        <div className='tarjeta_header'>
+        <header className='tarjeta_header'>
           <h3>{name.toUpperCase()}</h3>
           <h3>{id}</h3>
-        </div>
+        </header>
         <div className='tarjeta_body'>
           <CardBody sprite={sprite} elements={elements} alternativeSprite={alternativeSprite} />
         </div>

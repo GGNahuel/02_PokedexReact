@@ -1,5 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { SearchContext } from '../../context/searchContext'
+import { IconFirstLastPage } from '../others/Icons'
+
+const IconBacwardForward = ({ isForward = false }) => (
+  <span className='material-symbols-outlined'>
+    {isForward ? 'fast_forward' : 'fast_rewind'}
+  </span>
+)
 
 export function PageSelector () {
   const { resultsDetails, setResultsDetails } = useContext(SearchContext)
@@ -60,12 +67,32 @@ export function PageSelector () {
   }, [page])
 
   return (
-    <div>
-      {totalPages > 7 && <button onClick={() => jumpPages(-3)} disabled={page <= 3}>ant</button>}
+    <div className='page_selector'>
+      <button
+        className='jump_btn' disabled={page === 1} onClick={() => {
+          setResultsDetails(prev => ({
+            ...prev,
+            page: 1
+          }))
+        }}
+      >
+        <IconFirstLastPage toFirstPage />
+      </button>
+      {totalPages > 7 && <button className='jump_btn' onClick={() => jumpPages(-3)} disabled={page <= 3}><IconBacwardForward /></button>}
       {pageButtons.map(element => (
         <PageButton key={element.page} page={element.page} selectedPage={page} />
       ))}
-      {totalPages > 7 && <button onClick={() => jumpPages(3)} disabled={page > totalPages - 3}>sig</button>}
+      {totalPages > 7 && <button className='jump_btn' onClick={() => jumpPages(3)} disabled={page > totalPages - 3}><IconBacwardForward isForward /></button>}
+      <button
+        className='jump_btn' disabled={page === totalPages} onClick={() => {
+          setResultsDetails(prev => ({
+            ...prev,
+            page: totalPages
+          }))
+        }}
+      >
+        <IconFirstLastPage />
+      </button>
     </div>
   )
 }

@@ -75,4 +75,5 @@ Funciones adicionales:
         Que muestre fortalezas y debilidades de los elementos del equipo
         Que aparezcan las pokedexes (o juegos) en los que se puede armar?
         Con sus movimientos?
+    Buscador de equipos
     Lista de "posteos" de equipos de otros usuarios, que se podran dar likes y guardar copias en la cuenta

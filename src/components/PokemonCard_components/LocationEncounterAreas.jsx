@@ -1,4 +1,5 @@
 import { renameLocationEncounterAreas } from '../../services/renameObjectProps'
+import { fixedText } from '../../services/fixText'
 
 export function LocationEncounterAreas ({ dataObjt }) {
   const { location, versionDetails, versionNames, maxChances, encounterDetails } = renameLocationEncounterAreas(dataObjt)
@@ -17,7 +18,7 @@ export function LocationEncounterAreas ({ dataObjt }) {
             return (
               <ul key={index}>Metodo/s de obtención:
                 <li>
-                  {element.method.name + ' '}
+                  {fixedText(element.method.name) + ' '}
                   {element.condition_values.length > 0 &&
                     'condición:' + element.condition_values.map(condition => condition.name)}
                 </li>

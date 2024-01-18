@@ -1,11 +1,39 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+.light_Theme {
+  color: #0c0000;
+  background-color: rgb(241, 241, 241);
+}
+.light_Theme aside {
+  background-color: #b1b1b1;
+  color: #0c0000;
+}
+.light_Theme #filters_sorts {
+  background-color: rgba(155, 0, 0, 0.25);
+}
+
+.dark_Theme {
+  color: rgb(241, 241, 241);
+  background-color: #0c0000;
+}
+.dark_Theme aside {
+  background-color: #260000;
+  color: rgb(241, 241, 241);
+}
+.dark_Theme .tarjetaPKMN:hover .tarjeta_img {
+  filter: drop-shadow(0 0 5px rgb(241, 241, 241));
+}
+.dark_Theme #filters_sorts {
+  background-color: rgba(241, 241, 241, 0.25);
+}
+
 * {
   padding: 0;
   margin: 0;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: #a70000;
+  background-color: #590000;
   border: 2px solid rgb(241, 241, 241);
   border-radius: 20px;
 }
@@ -29,7 +57,7 @@ ul {
 }
 
 button {
-  background-color: #da0000;
+  background-color: rgb(155, 0, 0);
   padding: 0.5rem 0.8rem;
   color: rgb(241, 241, 241);
   font-family: "Noto sans", sans-serif;
@@ -40,14 +68,14 @@ button {
   cursor: pointer;
 }
 button:hover {
-  background-color: #a70000;
+  background-color: #820000;
 }
 button:active {
   border-color: rgb(241, 241, 241);
 }
 button.btn_secondary {
   background-color: rgb(241, 241, 241);
-  color: rgb(116, 0, 0);
+  color: #0c0000;
 }
 button.btn_secondary:hover {
   background-color: #cbcbcb;
@@ -67,6 +95,10 @@ button + button {
   margin-left: 5px;
 }
 
+.jump_btn {
+  padding: 0.4rem 0.2rem 0.2rem;
+}
+
 input[type=search], input[type=number] {
   padding: 3px;
   border: black 2px solid;
@@ -79,14 +111,19 @@ main {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
+  background-color: rgb(241, 241, 241);
+  color: #0c0000;
+}
+
+header {
+  background-color: #590000;
+  color: rgb(241, 241, 241);
 }
 
 #main_nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgb(116, 0, 0);
-  color: rgb(241, 241, 241);
   padding: 1rem;
 }
 
@@ -114,10 +151,8 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: rgba(116, 0, 0, 0.25);
   padding: 1rem;
   border-radius: 10px;
-  cursor: default;
 }
 #filters_sorts > div {
   align-self: flex-end;
@@ -125,10 +160,45 @@ main {
   align-items: center;
   gap: 1rem;
 }
+#filters_sorts summary {
+  background-color: rgba(12, 0, 0, 0.4);
+  padding: 0.2rem 2rem;
+  border-bottom: 1px solid;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+}
+#filters_sorts summary:before {
+  content: "";
+  border-width: 0.4rem;
+  border-style: solid;
+  border-color: transparent transparent transparent rgb(155, 0, 0);
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+  transform: rotate(0);
+  transform-origin: 0.2rem 50%;
+  transition: 0.25s transform ease;
+}
+#filters_sorts summary:hover {
+  background-color: #590000;
+}
+#filters_sorts details[open] > summary:before {
+  transform: rotate(90deg);
+}
+#filters_sorts details[open] > summary {
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid black;
+}
+#filters_sorts details > div > details {
+  margin-left: 1.4rem;
+}
 
 .filter_details > div {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 150px));
+  padding: 0 1rem 1rem;
 }
 .filter_details > div > fieldset {
   grid-column: 3/none;
@@ -158,7 +228,7 @@ main {
 
 .tarjetaPKMN {
   border-radius: 10px;
-  border: 5px solid black;
+  border: 3px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,8 +237,17 @@ main {
   flex-grow: 0.2;
   cursor: pointer;
 }
+.tarjetaPKMN:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.tarjetaPKMN:hover .tarjeta_img {
+  filter: drop-shadow(0 0 5px black);
+}
 .tarjetaPKMN.activa {
   border-color: red;
+}
+.tarjetaPKMN.activa .tarjeta_img {
+  filter: drop-shadow(0 0 5px black);
 }
 
 .tarjeta_header {
@@ -178,9 +257,8 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: rgb(116, 0, 0);
-  color: rgb(241, 241, 241);
-  z-index: -1;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
   box-shadow: 0 2px 2px grey;
   box-sizing: border-box;
 }
@@ -193,6 +271,7 @@ main {
   width: 192px;
   height: 192px;
   image-rendering: pixelated;
+  transition: filter 0.2s linear;
 }
 
 .tarjeta_tipos {
@@ -201,40 +280,55 @@ main {
   gap: 1rem;
 }
 
-.evolPath_main {
-  border: 1px solid;
+.evolPath_link > .evolPath_link {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid;
+  position: relative;
+}
+.evolPath_link > .evolPath_link .icon_subdir {
+  position: absolute;
+  left: -2rem;
+  top: -0.2rem;
 }
 
 #selected_card {
-  background-color: black;
   position: sticky;
   top: 0;
-  color: white;
   padding: 0.5em;
   box-sizing: border-box;
   max-height: 100vh;
   overflow-y: scroll;
 }
-#selected_card > div {
-  margin: 3rem 0;
+#selected_card > section {
+  border: solid 2px rgb(241, 241, 241);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
 }
 #selected_card .tarjeta_header {
   border-radius: 10px;
-  margin-top: 0;
+  margin-bottom: 1.5rem;
 }
 #selected_card .tarjeta_img {
   border: solid 2px rgb(241, 241, 241);
-  border-radius: 50px;
-}
-#selected_card .tarjeta_tipos {
-  flex-direction: column;
+  border-radius: 100%;
 }
 
 .tarjeta_mainInfo {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+
+.tarjeta_seccionTitle {
+  text-align: right;
+}
+
+.tarjeta_stats {
+  text-align: right;
 }
 
 .tipos_daños {
@@ -301,9 +395,14 @@ main {
   grid-area: noDmgTo1;
 }
 
+.lugarDeObtencion + .lugarDeObtencion {
+  margin-top: 1rem;
+}
+
 .typeTag {
   padding: 0.2rem 0.4rem;
   border-radius: 5px;
+  border: 2px black solid;
 }
 
 .typeTags_container {
@@ -401,6 +500,11 @@ main {
   color: black;
 }
 
+.page_selector {
+  display: flex;
+  align-items: center;
+}
+
 #loading_container {
   display: flex;
   flex-direction: column;
@@ -467,6 +571,10 @@ main {
   100% {
     transform: rotate(0deg);
   }
+}
+.icon_reversed {
+  transform-origin: center;
+  transform: rotate(180deg);
 }
 
 /*# sourceMappingURL=styles.css.map */

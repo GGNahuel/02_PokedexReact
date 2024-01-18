@@ -1,0 +1,39 @@
+$color-theme: rgb(155, 0, 0);
+$color-oscuro: darken($color-theme, 28%);
+$color-claro: rgb(241, 241, 241);
+
+$color-principal: $color-oscuro;
+$color-secundario: $color-claro;
+
+$color-principal-claro: lighten($color-principal, 15%);
+
+.light_Theme {
+    color: $color-oscuro;
+    background-color: $color-claro;
+
+    aside {
+        background-color: darken($color: $color-secundario, $amount: 25);
+        color: $color-principal;
+    }
+
+    #filters_sorts {
+        background-color: transparentize($color: $color-theme, $amount: 0.75);
+    }
+}
+.dark_Theme {
+    color: $color-claro;
+    background-color: $color-oscuro;
+
+    aside {
+        background-color: lighten($color: $color-oscuro, $amount: 5);
+        color: $color-claro;
+    }
+
+    .tarjetaPKMN:hover .tarjeta_img {
+        filter: drop-shadow(0 0 5px $color-claro)
+    }
+
+    #filters_sorts {
+        background-color: transparentize($color: $color-secundario, $amount: 0.75);
+    }
+}

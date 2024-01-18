@@ -1,4 +1,5 @@
 import { renameEvolutionProps } from '../../services/renameObjectProps'
+import { IconSubdirectory } from '../others/Icons'
 
 export function EvolutionElements ({ obj }) {
   const { nameLink, evolutionDetails, evolvesTo, idLink, spriteSource } = renameEvolutionProps(obj)
@@ -13,11 +14,12 @@ export function EvolutionElements ({ obj }) {
           : <p key={arrayCondition.condition}>Condición: {arrayCondition.condition} = {arrayCondition.value}</p>
       )}
       {evolvesTo.length > 0 &&
-        <div className='evolPath_main'>
-          {evolvesTo.map(element => (
-            <EvolutionElements key={renameEvolutionProps(element).nameLink} obj={element} />
-          ))}
-        </div>}
+        evolvesTo.map(element => (
+          <div key={renameEvolutionProps(element).nameLink} className='evolPath_link'>
+            <IconSubdirectory />
+            <EvolutionElements obj={element} />
+          </div>
+        ))}
     </>
   )
 }

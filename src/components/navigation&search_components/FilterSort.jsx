@@ -57,7 +57,7 @@ export function FilterSort () {
     <form id='filters_sorts' onSubmit={ev => { handleSubmit(ev) }}>
       <details>
         <summary>Filtros:</summary>
-        <ul>
+        <div>
           {Object.keys(FILTERS_INFO).map(filterName =>
             <DetailsFilterElement
               key={filterName}
@@ -66,7 +66,7 @@ export function FilterSort () {
               hasResetButtonFunc={changeForm} onChangeFunction={checkSelectedItems}
             />
           )}
-        </ul>
+        </div>
       </details>
       <details className='filter_details'>
         <summary>Ordenar por</summary>
