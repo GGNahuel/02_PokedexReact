@@ -25,20 +25,23 @@ export function Nav () {
     <header>
       <nav id='main_nav'>
         <img className='nav_logo' src='/logo_pokedex.png' alt='' />
-        <form onSubmit={updateSearch} className='nav_busqueda'>
-          <label htmlFor='searcher'>Búsqueda
+        <section className='nav_options'>
+          <form onSubmit={updateSearch} className='nav_busqueda'>
+            <label>
+              <input type='search' name='searcher' placeholder='Nombre o id del pokemon' />
+            </label>
+            <button type='submit' className='jump_btn'><span className='material-symbols-outlined'>search</span></button>
+          </form>
+          <label className='nav_modo'>
+            <input
+              type='checkbox' name='theme_switcher' id='theme_switcher' onChange={() => {
+                const newThemeValue = globalSettings.theme === 'light' ? 'dark' : 'light'
+                setGlobalSettings(prev => ({ ...prev, theme: newThemeValue }))
+              }} defaultChecked={globalSettings.theme === 'dark'}
+            />
           </label>
-          <input type='search' name='searcher' id='searcher' placeholder='Nombre o id del pokemon' />
-          <button type='submit'>Buscar</button>
-        </form>
-        <label className='nav_modo'>
-          <input
-            type='checkbox' name='theme_switcher' id='theme_switcher' onChange={() => {
-              const newThemeValue = globalSettings.theme === 'light' ? 'dark' : 'light'
-              setGlobalSettings(prev => ({ ...prev, theme: newThemeValue }))
-            }} defaultChecked={globalSettings.theme === 'dark'}
-          />
-        </label>
+        </section>
+        <button type='button' className='jump_btn'><span className='material-symbols-outlined'>menu</span></button>
       </nav>
     </header>
   )
